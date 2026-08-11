@@ -46,27 +46,73 @@ class SiteFooter extends StatelessWidget {
                   children: [
                     Image.asset(
                       'assets/images/header_logo.png',
-                      height: 40,
+                      height: 28,
                       fit: BoxFit.contain,
-                      color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                      color: isDark
+                          ? AppColors.textPrimaryDark
+                          : AppColors.textPrimaryLight,
                       errorBuilder: (context, error, stackTrace) => Text(
                         AppConfig.studioName,
                         style: AppTypography.heading2(
-                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                          color: isDark
+                              ? AppColors.textPrimaryDark
+                              : AppColors.textPrimaryLight,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6),
                     Text(
                       '${AppConfig.studioTagline}.',
-                      style: AppTypography.bodyMedium(
-                        color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                      style: AppTypography.bodySmall(
+                        color: isDark
+                            ? AppColors.textSecondaryDark
+                            : AppColors.textSecondaryLight,
                       ),
                     ),
-                    const SizedBox(height: 24),
-                    _FooterNavGroup(isDark: isDark),
-                    const SizedBox(height: 24),
-                    _FooterSocialGroup(isDark: isDark, launchUrl: _launchUrl),
+                    const SizedBox(height: 20),
+                    Wrap(
+                      spacing: 16,
+                      runSpacing: 8,
+                      children: [
+                        _FooterLink(
+                          label: 'Services',
+                          onTap: () => context.go('/services'),
+                        ),
+                        _FooterLink(
+                          label: 'About',
+                          onTap: () => context.go('/about'),
+                        ),
+                        _FooterLink(
+                          label: 'Contact',
+                          onTap: () => context.go('/contact'),
+                        ),
+                        _FooterLink(
+                          label: 'Start a project →',
+                          onTap: () => context.go('/start-a-project'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+                    Wrap(
+                      spacing: 16,
+                      runSpacing: 8,
+                      children: [
+                        _FooterLink(
+                          label: AppConfig.contactEmail,
+                          onTap: () =>
+                              _launchUrl('mailto:${AppConfig.contactEmail}'),
+                        ),
+                        _FooterLink(
+                          label: 'Instagram',
+                          onTap: () => _launchUrl(AppConfig.instagramUrl),
+                        ),
+                        _FooterLink(
+                          label: 'WhatsApp',
+                          onTap: () => _launchUrl(
+                              'https://wa.me/${AppConfig.whatsappNumber}'),
+                        ),
+                      ],
+                    ),
                   ],
                 )
               else

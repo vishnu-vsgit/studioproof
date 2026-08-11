@@ -282,15 +282,6 @@ class _ContactScreenState extends State<ContactScreen> {
           onTap: () => _launchUrl(AppConfig.instagramUrl),
           isDark: isDark,
         ),
-        const SizedBox(height: 16),
-        _ContactCard(
-          icon: Icons.code_rounded,
-          title: 'GitHub',
-          value: 'vishnu-vsgit/studioproof',
-          subtitle: 'View code & open issues',
-          onTap: () => _launchUrl(AppConfig.githubUrl),
-          isDark: isDark,
-        ),
       ],
     );
   }
