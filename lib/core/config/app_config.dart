@@ -11,7 +11,7 @@ class AppConfig {
   static const String instagramHandle = '@studioproof.design';
   static const String instagramUrl = 'https://instagram.com/studioproof.design';
   static const String linkedinUrl = 'https://linkedin.com/company/studioproof';
-  static const String githubUrl = 'https://github.com/studioproof';
+  static const String githubUrl = 'https://github.com/vishnu-vsgit/studioproof';
   
   // Primary Tools used
   static const List<String> primaryTools = [
