@@ -16,7 +16,7 @@ class StudioProofApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'StudioProof | Independent Graphic Design Studio',
+      title: 'StudioProof',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
