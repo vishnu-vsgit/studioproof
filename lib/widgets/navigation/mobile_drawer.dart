@@ -19,7 +19,7 @@ class MobileDrawer extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -29,7 +29,7 @@ class MobileDrawer extends StatelessWidget {
                 children: [
                   Image.asset(
                     'assets/images/header_logo.png',
-                    height: 30,
+                    height: 26,
                     fit: BoxFit.contain,
                     color: isDark
                         ? AppColors.textPrimaryDark
@@ -46,7 +46,7 @@ class MobileDrawer extends StatelessWidget {
                   IconButton(
                     icon: Icon(
                       Icons.close_rounded,
-                      size: 32,
+                      size: 28,
                       color: isDark
                           ? AppColors.textPrimaryDark
                           : AppColors.textPrimaryLight,
@@ -55,12 +55,16 @@ class MobileDrawer extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
-              const Divider(),
-              const SizedBox(height: 40),
+              const SizedBox(height: 16),
+              Divider(
+                color: isDark ? AppColors.borderDark : AppColors.borderLight,
+                height: 1,
+              ),
+              const SizedBox(height: 24),
 
               // Drawer Links
               _MobileNavItem(
+                number: '01',
                 label: 'Services',
                 subtitle: 'One-off & recurring design support',
                 isActive: currentPath == '/services',
@@ -69,18 +73,20 @@ class MobileDrawer extends StatelessWidget {
                   context.go('/services');
                 },
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
               _MobileNavItem(
+                number: '02',
                 label: 'About',
-                subtitle: 'Designer bio & tools',
+                subtitle: 'Designer bio & core stack',
                 isActive: currentPath == '/about',
                 onTap: () {
                   Navigator.of(context).pop();
                   context.go('/about');
                 },
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
               _MobileNavItem(
+                number: '03',
                 label: 'Contact',
                 subtitle: 'Direct email & instant channels',
                 isActive: currentPath == '/contact',
@@ -91,7 +97,7 @@ class MobileDrawer extends StatelessWidget {
               ),
               const Spacer(),
 
-              // Mobile "Start a project" CTA
+              // Mobile "Start a project" CTA Button
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -102,7 +108,7 @@ class MobileDrawer extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.accent,
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
                     ),
@@ -113,7 +119,18 @@ class MobileDrawer extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
+              Center(
+                child: Text(
+                  AppConfig.contactEmail,
+                  style: AppTypography.bodySmall(
+                    color: isDark
+                        ? AppColors.textMutedDark
+                        : AppColors.textMutedLight,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
             ],
           ),
         ),
@@ -123,12 +140,14 @@ class MobileDrawer extends StatelessWidget {
 }
 
 class _MobileNavItem extends StatelessWidget {
+  final String number;
   final String label;
   final String subtitle;
   final bool isActive;
   final VoidCallback onTap;
 
   const _MobileNavItem({
+    required this.number,
     required this.label,
     required this.subtitle,
     required this.isActive,
@@ -139,46 +158,76 @@ class _MobileNavItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                label,
-                style: AppTypography.displaySmall(
-                  color: isActive
-                      ? AppColors.accent
-                      : (isDark
-                            ? AppColors.textPrimaryDark
-                            : AppColors.textPrimaryLight),
-                ),
-              ),
-              if (isActive) ...[
-                const SizedBox(width: 12),
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: AppColors.accent,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ],
-            ],
-          ),
-          const SizedBox(height: 4),
-          Text(
-            subtitle,
-            style: AppTypography.bodySmall(
-              color: isDark
-                  ? AppColors.textSecondaryDark
-                  : AppColors.textSecondaryLight,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
+          decoration: BoxDecoration(
+            color: isActive
+                ? (isDark ? AppColors.surfaceDark : AppColors.surfaceLight)
+                : Colors.transparent,
+            border: Border.all(
+              color: isActive
+                  ? AppColors.accent
+                  : (isDark ? AppColors.borderDark : AppColors.borderLight),
             ),
           ),
-        ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        number,
+                        style: AppTypography.labelUppercase(
+                          color: AppColors.accent,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        label,
+                        style: AppTypography.heading2(
+                          color: isActive
+                              ? AppColors.accent
+                              : (isDark
+                                  ? AppColors.textPrimaryDark
+                                  : AppColors.textPrimaryLight),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Icon(
+                    Icons.arrow_forward_rounded,
+                    size: 18,
+                    color: isActive
+                        ? AppColors.accent
+                        : (isDark
+                            ? AppColors.textMutedDark
+                            : AppColors.textMutedLight),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Padding(
+                padding: const EdgeInsets.only(left: 32.0),
+                child: Text(
+                  subtitle,
+                  style: AppTypography.bodySmall(
+                    color: isDark
+                        ? AppColors.textSecondaryDark
+                        : AppColors.textSecondaryLight,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
