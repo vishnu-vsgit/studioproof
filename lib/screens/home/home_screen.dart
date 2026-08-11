@@ -27,14 +27,16 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 1. HERO SECTION (Full viewport fold)
+          // 1. HERO SECTION (Balanced 2-Column Split Layout)
           Container(
             width: double.infinity,
             constraints: BoxConstraints(
               minHeight: isMobile
                   ? 0.0
-                  : (MediaQuery.of(context).size.height - 140.0)
-                      .clamp(440.0, 750.0),
+                  : (MediaQuery.of(context).size.height - 140.0).clamp(
+                      440.0,
+                      750.0,
+                    ),
             ),
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
@@ -46,93 +48,51 @@ class HomeScreen extends StatelessWidget {
                 constraints: const BoxConstraints(
                   maxWidth: ResponsiveBreakpoints.maxContentWidth,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Studio Tagline Badge
-                    Row(
-                      children: [
-                        Container(
-                          width: 8,
-                          height: 8,
-                          decoration: const BoxDecoration(
-                            color: AppColors.accent,
-                            shape: BoxShape.circle,
+                child: isMobile
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildHeroMainContent(
+                            context,
+                            isDark,
+                            isMobile,
+                            scale,
                           ),
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          AppConfig.studioTagline.toUpperCase(),
-                          style: AppTypography.labelUppercase(
+                        ],
+                      )
+                    : Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // Left Column: Headline, Bio & CTA
+                          Expanded(
+                            flex: 6,
+                            child: _buildHeroMainContent(
+                              context,
+                              isDark,
+                              isMobile,
+                              scale,
+                            ),
+                          ),
+                          const SizedBox(width: 48),
+
+                          // Vertical Divider line
+                          Container(
+                            height: 340,
+                            width: 1,
                             color: isDark
-                                ? AppColors.textMutedDark
-                                : AppColors.textMutedLight,
-                            scale: scale,
+                                ? AppColors.borderDark
+                                : AppColors.borderLight,
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
+                          const SizedBox(width: 48),
 
-                    // Display Headline
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 960),
-                      child: Text(
-                        'Good ideas deserve better visuals.',
-                        style: isMobile
-                            ? AppTypography.displaySmall(
-                                color: isDark
-                                    ? AppColors.textPrimaryDark
-                                    : AppColors.textPrimaryLight,
-                                scale: scale,
-                              )
-                            : AppTypography.displayLarge(
-                                color: isDark
-                                    ? AppColors.textPrimaryDark
-                                    : AppColors.textPrimaryLight,
-                                scale: scale,
-                              ),
+                          // Right Column: "WHAT WE DELIVER" checklist
+                          Expanded(
+                            flex: 5,
+                            child: _buildHeroDeliverablesPanel(isDark),
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 24),
-
-                    // Supporting Copy
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 680),
-                      child: Text(
-                        'Designing posters, campaigns and visual identities for colleges, startups, businesses and people with something worth saying.',
-                        style: AppTypography.bodyLarge(
-                          color: isDark
-                              ? AppColors.textSecondaryDark
-                              : AppColors.textSecondaryLight,
-                          scale: scale,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 36),
-
-                    // Action Button ("Start a project")
-                    ElevatedButton(
-                      onPressed: () => context.go('/start-a-project'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.accent,
-                        foregroundColor: Colors.white,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: isMobile ? 28 : 36,
-                          vertical: isMobile ? 18 : 22,
-                        ),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
-                        ),
-                      ),
-                      child: Text(
-                        'Start a project →',
-                        style: AppTypography.buttonText(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
               ),
             ),
           ),
@@ -607,6 +567,171 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildHeroMainContent(
+    BuildContext context,
+    bool isDark,
+    bool isMobile,
+    double scale,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Studio Tagline Badge
+        Row(
+          children: [
+            Container(
+              width: 8,
+              height: 8,
+              decoration: const BoxDecoration(
+                color: AppColors.accent,
+                shape: BoxShape.circle,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Text(
+              AppConfig.studioTagline.toUpperCase(),
+              style: AppTypography.labelUppercase(
+                color: isDark
+                    ? AppColors.textMutedDark
+                    : AppColors.textMutedLight,
+                scale: scale,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+
+        // Display Headline
+        Text(
+          'Good ideas deserve better visuals.',
+          style: isMobile
+              ? AppTypography.displaySmall(
+                  color: isDark
+                      ? AppColors.textPrimaryDark
+                      : AppColors.textPrimaryLight,
+                  scale: scale,
+                )
+              : AppTypography.displayLarge(
+                  color: isDark
+                      ? AppColors.textPrimaryDark
+                      : AppColors.textPrimaryLight,
+                  scale: scale,
+                ),
+        ),
+        const SizedBox(height: 24),
+
+        // Supporting Copy
+        Text(
+          'Designing posters, campaigns and visual identities for colleges, startups, businesses and people with something worth saying.',
+          style: AppTypography.bodyLarge(
+            color: isDark
+                ? AppColors.textSecondaryDark
+                : AppColors.textSecondaryLight,
+            scale: scale,
+          ),
+        ),
+        const SizedBox(height: 36),
+
+        // Action Button ("Start a project")
+        ElevatedButton(
+          onPressed: () => context.go('/start-a-project'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.accent,
+            foregroundColor: Colors.white,
+            padding: EdgeInsets.symmetric(
+              horizontal: isMobile ? 28 : 36,
+              vertical: isMobile ? 18 : 22,
+            ),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
+          child: Text(
+            'Start a project →',
+            style: AppTypography.buttonText(color: Colors.white),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHeroDeliverablesPanel(bool isDark) {
+    final deliverables = [
+      {
+        'num': '01',
+        'title': 'Event Key Visuals',
+        'desc': 'Main Posters, Stage Backdrops, Wristbands & Digital Banners',
+      },
+      {
+        'num': '02',
+        'title': 'Campaign & Social Graphics',
+        'desc': 'Carousel Templates, Story Formats & Feed Announcement Assets',
+      },
+      {
+        'num': '03',
+        'title': 'Startup Brand Identity',
+        'desc': 'Investor Pitch Decks, Product Launches & Identity Assets',
+      },
+      {
+        'num': '04',
+        'title': 'Production-Ready Files',
+        'desc': 'Print PDFs, High-Res PNGs & Source Files Included',
+      },
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'WHAT WE DELIVER',
+          style: AppTypography.labelUppercase(color: AppColors.accent),
+        ),
+        const SizedBox(height: 20),
+        ...deliverables.map((item) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 20.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item['num']!,
+                  style: AppTypography.buttonText(color: AppColors.accent),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item['title']!,
+                        style: AppTypography.heading3(
+                          color: isDark
+                              ? AppColors.textPrimaryDark
+                              : AppColors.textPrimaryLight,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        item['desc']!,
+                        style: AppTypography.bodySmall(
+                          color: isDark
+                              ? AppColors.textSecondaryDark
+                              : AppColors.textSecondaryLight,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
+      ],
     );
   }
 }
