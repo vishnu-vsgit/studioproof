@@ -64,6 +64,17 @@ class MobileDrawer extends StatelessWidget {
 
               // Drawer Links
               _MobileNavItem(
+                number: '00',
+                label: 'Home',
+                subtitle: 'Overview & recent design portfolio',
+                isActive: currentPath == '/',
+                onTap: () {
+                  Navigator.of(context).pop();
+                  context.go('/');
+                },
+              ),
+              const SizedBox(height: 12),
+              _MobileNavItem(
                 number: '01',
                 label: 'Services',
                 subtitle: 'One-off & recurring design support',
@@ -73,7 +84,7 @@ class MobileDrawer extends StatelessWidget {
                   context.go('/services');
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               _MobileNavItem(
                 number: '02',
                 label: 'About',
@@ -84,7 +95,7 @@ class MobileDrawer extends StatelessWidget {
                   context.go('/about');
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               _MobileNavItem(
                 number: '03',
                 label: 'Contact',
@@ -97,7 +108,7 @@ class MobileDrawer extends StatelessWidget {
               ),
               const Spacer(),
 
-              // Mobile "Start a project" CTA Button
+              // Quick Action Button
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -109,6 +120,7 @@ class MobileDrawer extends StatelessWidget {
                     backgroundColor: AppColors.accent,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
+                    elevation: 0,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
                     ),
@@ -119,7 +131,7 @@ class MobileDrawer extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               Center(
                 child: Text(
                   AppConfig.contactEmail,
@@ -130,7 +142,7 @@ class MobileDrawer extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
             ],
           ),
         ),

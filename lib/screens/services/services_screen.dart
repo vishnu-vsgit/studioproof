@@ -454,7 +454,7 @@ class ServicesScreen extends StatelessWidget {
   }
 }
 
-class _EditorialServiceRow extends StatelessWidget {
+class _EditorialServiceRow extends StatefulWidget {
   final String number;
   final String title;
   final String description;
@@ -470,41 +470,74 @@ class _EditorialServiceRow extends StatelessWidget {
   });
 
   @override
+  State<_EditorialServiceRow> createState() => _EditorialServiceRowState();
+}
+
+class _EditorialServiceRowState extends State<_EditorialServiceRow> {
+  bool _isExpanded = false;
+
+  @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final isMobile = ResponsiveBreakpoints.isMobile(context);
 
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: isMobile ? 32.0 : 48.0),
-      child: isMobile
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  number,
-                  style: AppTypography.heading2(color: AppColors.accent),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  title,
-                  style: AppTypography.heading1(
-                    color: isDark
-                        ? AppColors.textPrimaryDark
-                        : AppColors.textPrimaryLight,
+    if (isMobile) {
+      return InkWell(
+        onTap: () => setState(() => _isExpanded = !_isExpanded),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 4.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        widget.number,
+                        style: AppTypography.heading3(color: AppColors.accent),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        widget.title,
+                        style: AppTypography.heading3(
+                          color: isDark
+                              ? AppColors.textPrimaryDark
+                              : AppColors.textPrimaryLight,
+                        ).copyWith(fontSize: 16),
+                      ),
+                    ],
                   ),
-                ),
+                  Icon(
+                    _isExpanded
+                        ? Icons.keyboard_arrow_up_rounded
+                        : Icons.keyboard_arrow_down_rounded,
+                    color: AppColors.accent,
+                    size: 24,
+                  ),
+                ],
+              ),
+              if (_isExpanded) ...[
                 const SizedBox(height: 12),
                 Text(
-                  description,
-                  style: AppTypography.bodyLarge(
+                  widget.description,
+                  style: AppTypography.bodyMedium(
                     color: isDark
                         ? AppColors.textSecondaryDark
                         : AppColors.textSecondaryLight,
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 10),
                 Text(
-                  'Deliverables: $deliverables',
+                  'Ideal for: ${widget.idealClient}',
+                  style: AppTypography.bodySmall(
+                    color: AppColors.accent,
+                  ).copyWith(fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Deliverables: ${widget.deliverables}',
                   style: AppTypography.bodySmall(
                     color: isDark
                         ? AppColors.textMutedDark
@@ -512,68 +545,75 @@ class _EditorialServiceRow extends StatelessWidget {
                   ),
                 ),
               ],
-            )
-          : Row(
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 48.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.number,
+            style: AppTypography.heading1(color: AppColors.accent),
+          ),
+          const SizedBox(width: 32),
+          Expanded(
+            flex: 4,
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  number,
-                  style: AppTypography.heading1(color: AppColors.accent),
-                ),
-                const SizedBox(width: 32),
-                Expanded(
-                  flex: 4,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: AppTypography.heading2(
-                          color: isDark
-                              ? AppColors.textPrimaryDark
-                              : AppColors.textPrimaryLight,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Ideal for: $idealClient',
-                        style: AppTypography.labelUppercase(
-                          color: isDark
-                              ? AppColors.textMutedDark
-                              : AppColors.textMutedLight,
-                        ),
-                      ),
-                    ],
+                  widget.title,
+                  style: AppTypography.heading2(
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
                   ),
                 ),
-                const SizedBox(width: 32),
-                Expanded(
-                  flex: 5,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        description,
-                        style: AppTypography.bodyLarge(
-                          color: isDark
-                              ? AppColors.textSecondaryDark
-                              : AppColors.textSecondaryLight,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        'Deliverables: $deliverables',
-                        style: AppTypography.bodySmall(
-                          color: isDark
-                              ? AppColors.textMutedDark
-                              : AppColors.textMutedLight,
-                        ),
-                      ),
-                    ],
+                const SizedBox(height: 8),
+                Text(
+                  'Ideal for: ${widget.idealClient}',
+                  style: AppTypography.labelUppercase(
+                    color: isDark
+                        ? AppColors.textMutedDark
+                        : AppColors.textMutedLight,
                   ),
                 ),
               ],
             ),
+          ),
+          const SizedBox(width: 32),
+          Expanded(
+            flex: 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.description,
+                  style: AppTypography.bodyLarge(
+                    color: isDark
+                        ? AppColors.textSecondaryDark
+                        : AppColors.textSecondaryLight,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'Deliverables: ${widget.deliverables}',
+                  style: AppTypography.bodySmall(
+                    color: isDark
+                        ? AppColors.textMutedDark
+                        : AppColors.textMutedLight,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

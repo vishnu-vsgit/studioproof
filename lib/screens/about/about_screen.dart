@@ -28,7 +28,7 @@ class AboutScreen extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
-              vertical: isMobile ? 48.0 : 80.0,
+              vertical: isMobile ? 28.0 : 80.0,
             ),
             child: Center(
               child: Container(
@@ -45,7 +45,7 @@ class AboutScreen extends StatelessWidget {
                         scale: scale,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
                     Text(
                       AppConfig.designerBioHeadline,
                       style: isMobile
@@ -60,7 +60,7 @@ class AboutScreen extends StatelessWidget {
                                   : AppColors.textPrimaryLight,
                             ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                     Text(
                       'StudioProof is an independent graphic design platform focused on posters, campaign identities, and visual systems for campus events, startups, and creators.',
                       style: AppTypography.bodyLarge(
@@ -85,7 +85,7 @@ class AboutScreen extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
-              vertical: isMobile ? 48.0 : 80.0,
+              vertical: isMobile ? 28.0 : 80.0,
             ),
             child: Center(
               child: Container(

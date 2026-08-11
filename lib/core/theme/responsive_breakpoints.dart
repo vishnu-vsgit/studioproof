@@ -23,9 +23,9 @@ class ResponsiveBreakpoints {
   static double getHorizontalPadding(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     if (width <= mobileMax) {
-      return 20.0;
+      return 18.0;
     } else if (width <= tabletMax) {
-      return 32.0;
+      return 28.0;
     } else if (width <= 1440) {
       return 64.0;
     } else {
@@ -33,13 +33,25 @@ class ResponsiveBreakpoints {
     }
   }
 
+  /// Adaptive Vertical Section Padding based on device screen width
+  static double getVerticalPadding(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width <= mobileMax) {
+      return 28.0;
+    } else if (width <= tabletMax) {
+      return 40.0;
+    } else {
+      return 64.0;
+    }
+  }
+
   /// Adaptive Font Scale Factor for device typography
   static double getTypographyScale(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     if (width <= mobileMax) {
-      return 0.84;
+      return 0.88;
     } else if (width <= tabletMax) {
-      return 0.92;
+      return 0.94;
     } else {
       return 1.0;
     }

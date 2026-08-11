@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 1. HERO SECTION (2-column split on desktop to balance right-side space)
+          // 1. HERO SECTION
           Container(
             width: double.infinity,
             constraints: BoxConstraints(
@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
             ),
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
-              vertical: isMobile ? 36.0 : 48.0,
+              vertical: isMobile ? 28.0 : 48.0,
             ),
             alignment: Alignment.centerLeft,
             child: Center(
@@ -78,7 +78,7 @@ class HomeScreen extends StatelessWidget {
             color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
-              vertical: isMobile ? 40.0 : 64.0,
+              vertical: isMobile ? 28.0 : 64.0,
             ),
             child: Center(
               child: Container(
@@ -95,7 +95,7 @@ class HomeScreen extends StatelessWidget {
                         scale: scale,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
                     Text(
                       'Purpose-built visual communication',
                       style: isMobile
@@ -110,7 +110,7 @@ class HomeScreen extends StatelessWidget {
                                   : AppColors.textPrimaryLight,
                             ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 8),
                     Text(
                       'Clear, deliberate graphic design solutions for organizations and creators.',
                       style: AppTypography.bodyLarge(
@@ -119,38 +119,60 @@ class HomeScreen extends StatelessWidget {
                             : AppColors.textSecondaryLight,
                       ),
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 24),
 
-                    // 4 Core Highlights Cards
+                    // 4 Core Highlights Cards (2x2 Grid on Mobile for compact height)
                     if (isMobile)
                       Column(
-                        children: const [
-                          _HighlightCard(
-                            number: '01',
-                            title: 'Posters & Campaigns',
-                            description:
-                                'High-impact key visuals, festival posters, stage backdrops, and digital promotional graphics.',
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Expanded(
+                                child: _HighlightCard(
+                                  number: '01',
+                                  title: 'Posters',
+                                  description:
+                                      'Key visuals, fest posters & stage backdrops.',
+                                  isCompact: true,
+                                ),
+                              ),
+                              SizedBox(width: 12),
+                              Expanded(
+                                child: _HighlightCard(
+                                  number: '02',
+                                  title: 'Branding',
+                                  description:
+                                      'Identity systems, guidelines & logos.',
+                                  isCompact: true,
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(height: 16),
-                          _HighlightCard(
-                            number: '02',
-                            title: 'Brand Identity',
-                            description:
-                                'Clean visual identity systems, typography guidelines, and logo assets tailored for startups & clubs.',
-                          ),
-                          SizedBox(height: 16),
-                          _HighlightCard(
-                            number: '03',
-                            title: 'Fast Turnarounds',
-                            description:
-                                'Efficient turnaround times with complete production-ready print PDFs and digital PNG packages.',
-                          ),
-                          SizedBox(height: 16),
-                          _HighlightCard(
-                            number: '04',
-                            title: 'No Generic Templates',
-                            description:
-                                'Distinct visual execution focused on clarity, typographic structure, and custom visual direction.',
+                          const SizedBox(height: 12),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Expanded(
+                                child: _HighlightCard(
+                                  number: '03',
+                                  title: 'Fast Output',
+                                  description:
+                                      'Quick turnarounds & print PDF packages.',
+                                  isCompact: true,
+                                ),
+                              ),
+                              SizedBox(width: 12),
+                              Expanded(
+                                child: _HighlightCard(
+                                  number: '04',
+                                  title: 'Custom',
+                                  description:
+                                      'No templates. Pure typographic direction.',
+                                  isCompact: true,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       )
@@ -213,7 +235,7 @@ class HomeScreen extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
-              vertical: isMobile ? 48.0 : 72.0,
+              vertical: isMobile ? 32.0 : 72.0,
             ),
             child: Center(
               child: Container(
@@ -230,7 +252,7 @@ class HomeScreen extends StatelessWidget {
                         scale: scale,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
                     Text(
                       'Recent Design Works',
                       style: isMobile
@@ -245,7 +267,7 @@ class HomeScreen extends StatelessWidget {
                                   : AppColors.textPrimaryLight,
                             ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 8),
                     Text(
                       'A curated collection of poster designs, brand identities, and promotional campaigns.',
                       style: AppTypography.bodyLarge(
@@ -254,7 +276,7 @@ class HomeScreen extends StatelessWidget {
                             : AppColors.textSecondaryLight,
                       ),
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 24),
 
                     // Horizontal Work Carousel featuring User's Actual Design Works
                     WorkCarouselWidget(projects: allProjects),
@@ -274,7 +296,7 @@ class HomeScreen extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
-              vertical: isMobile ? 48.0 : 72.0,
+              vertical: isMobile ? 32.0 : 72.0,
             ),
             child: Center(
               child: Container(
@@ -291,13 +313,13 @@ class HomeScreen extends StatelessWidget {
                         scale: scale,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
                     ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 960),
                       child: Text(
                         'From one-off posters to ongoing design support, I work with people and teams who need their ideas to look as good as they sound.',
                         style: isMobile
-                            ? AppTypography.heading1(
+                            ? AppTypography.heading2(
                                 color: isDark
                                     ? AppColors.textPrimaryDark
                                     : AppColors.textPrimaryLight,
@@ -322,12 +344,12 @@ class HomeScreen extends StatelessWidget {
             height: 1,
           ),
 
-          // 5. PROCESS SECTION
+          // 5. PROCESS SECTION (Interactive Horizontal Step Cards on Mobile)
           Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
-              vertical: isMobile ? 48.0 : 72.0,
+              vertical: isMobile ? 32.0 : 72.0,
             ),
             child: Center(
               child: Container(
@@ -344,7 +366,7 @@ class HomeScreen extends StatelessWidget {
                         scale: scale,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
                     Text(
                       'How we work together',
                       style: isMobile
@@ -359,32 +381,45 @@ class HomeScreen extends StatelessWidget {
                                   : AppColors.textPrimaryLight,
                             ),
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 24),
 
                     if (isMobile)
-                      Column(
-                        children: const [
-                          _ProcessStepItem(
-                            number: '01',
-                            title: 'Tell us what you need',
-                            body:
-                                'Share your goals, deadline, assets and context through a short enquiry form or email.',
-                          ),
-                          SizedBox(height: 28),
-                          _ProcessStepItem(
-                            number: '02',
-                            title: 'We design',
-                            body:
-                                'We develop clear visual concepts, refine details in Figma & Photoshop, and iterate until sharp.',
-                          ),
-                          SizedBox(height: 28),
-                          _ProcessStepItem(
-                            number: '03',
-                            title: 'You receive final files',
-                            body:
-                                'Get production-ready print PDFs, high-res digital PNGs, source files and social sizes.',
-                          ),
-                        ],
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        child: Row(
+                          children: const [
+                            SizedBox(
+                              width: 260,
+                              child: _ProcessStepItem(
+                                number: '01',
+                                title: 'Tell us what you need',
+                                body:
+                                    'Share goals, deadline & context through quick enquiry.',
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            SizedBox(
+                              width: 260,
+                              child: _ProcessStepItem(
+                                number: '02',
+                                title: 'We design',
+                                body:
+                                    'We develop visual concepts in Figma & Photoshop.',
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            SizedBox(
+                              width: 260,
+                              child: _ProcessStepItem(
+                                number: '03',
+                                title: 'You receive final files',
+                                body:
+                                    'Get print PDFs, high-res PNGs & source files.',
+                              ),
+                            ),
+                          ],
+                        ),
                       )
                     else
                       Row(
@@ -435,7 +470,7 @@ class HomeScreen extends StatelessWidget {
             color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
-              vertical: isMobile ? 48.0 : 72.0,
+              vertical: isMobile ? 32.0 : 72.0,
             ),
             child: Center(
               child: Container(
@@ -454,7 +489,7 @@ class HomeScreen extends StatelessWidget {
                                   : AppColors.textPrimaryLight,
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 8),
                           Text(
                             'Whether it’s a single event poster or ongoing monthly design support, let’s talk.',
                             style: AppTypography.bodyLarge(
@@ -463,15 +498,19 @@ class HomeScreen extends StatelessWidget {
                                   : AppColors.textSecondaryLight,
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 20),
                           ElevatedButton(
                             onPressed: () => context.go('/start-a-project'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.accent,
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 28,
-                                vertical: 18,
+                                horizontal: 24,
+                                vertical: 16,
+                              ),
+                              elevation: 0,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
                               ),
                             ),
                             child: Text(
@@ -568,7 +607,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 24),
+        SizedBox(height: isMobile ? 16 : 24),
 
         // Display Headline
         Text(
@@ -587,7 +626,7 @@ class HomeScreen extends StatelessWidget {
                   scale: scale,
                 ),
         ),
-        const SizedBox(height: 24),
+        SizedBox(height: isMobile ? 12 : 24),
 
         // Supporting Copy
         Text(
@@ -599,26 +638,87 @@ class HomeScreen extends StatelessWidget {
             scale: scale,
           ),
         ),
-        const SizedBox(height: 36),
+        SizedBox(height: isMobile ? 20 : 36),
 
-        // Action Button ("Start a project")
-        ElevatedButton(
-          onPressed: () => context.go('/start-a-project'),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.accent,
-            foregroundColor: Colors.white,
-            padding: EdgeInsets.symmetric(
-              horizontal: isMobile ? 28 : 36,
-              vertical: isMobile ? 18 : 22,
+        // Compact Studio Spec Pills on Mobile
+        if (isMobile) ...[
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+              border: Border.all(
+                color: isDark ? AppColors.borderDark : AppColors.borderLight,
+              ),
             ),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.zero,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.flash_on_rounded, size: 16, color: AppColors.accent),
+                const SizedBox(width: 8),
+                Text(
+                  'Posters • Branding • Fast Turnaround',
+                  style: AppTypography.bodySmall(
+                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                  ).copyWith(fontWeight: FontWeight.w600),
+                ),
+              ],
             ),
           ),
-          child: Text(
-            'Start a project →',
-            style: AppTypography.buttonText(color: Colors.white),
-          ),
+          const SizedBox(height: 20),
+        ],
+
+        // Action Buttons
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(
+              onPressed: () => context.go('/start-a-project'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.accent,
+                foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(
+                  horizontal: isMobile ? 20 : 36,
+                  vertical: isMobile ? 14 : 22,
+                ),
+                elevation: 0,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+              ),
+              child: Text(
+                'Start a project →',
+                style: AppTypography.buttonText(color: Colors.white),
+              ),
+            ),
+            if (isMobile) ...[
+              const SizedBox(width: 12),
+              OutlinedButton(
+                onPressed: () => context.go('/services'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
+                  side: BorderSide(
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
+                  ),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
+                ),
+                child: Text(
+                  'Services',
+                  style: AppTypography.buttonText(
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
+                  ),
+                ),
+              ),
+            ],
+          ],
         ),
       ],
     );
@@ -777,11 +877,13 @@ class _HighlightCard extends StatelessWidget {
   final String number;
   final String title;
   final String description;
+  final bool isCompact;
 
   const _HighlightCard({
     required this.number,
     required this.title,
     required this.description,
+    this.isCompact = false,
   });
 
   @override
@@ -789,7 +891,7 @@ class _HighlightCard extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(28.0),
+      padding: EdgeInsets.all(isCompact ? 16.0 : 28.0),
       decoration: BoxDecoration(
         color: isDark ? AppColors.bgDark : AppColors.bgLight,
         border: Border.all(
@@ -803,19 +905,25 @@ class _HighlightCard extends StatelessWidget {
             number,
             style: AppTypography.labelUppercase(color: AppColors.accent),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: isCompact ? 8 : 16),
           Text(
             title,
-            style: AppTypography.heading3(
-              color: isDark
-                  ? AppColors.textPrimaryDark
-                  : AppColors.textPrimaryLight,
-            ),
+            style: isCompact
+                ? AppTypography.heading3(
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
+                  ).copyWith(fontSize: 16)
+                : AppTypography.heading3(
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
+                  ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: isCompact ? 4 : 8),
           Text(
             description,
-            style: AppTypography.bodyMedium(
+            style: AppTypography.bodySmall(
               color: isDark
                   ? AppColors.textSecondaryDark
                   : AppColors.textSecondaryLight,

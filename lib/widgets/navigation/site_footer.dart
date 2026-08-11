@@ -69,47 +69,83 @@ class SiteFooter extends StatelessWidget {
                             : AppColors.textSecondaryLight,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Wrap(
-                      spacing: 16,
-                      runSpacing: 8,
+                    const SizedBox(height: 24),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _FooterLink(
-                          label: 'Services',
-                          onTap: () => context.go('/services'),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'NAVIGATION',
+                                style: AppTypography.labelUppercase(
+                                  color: isDark
+                                      ? AppColors.textMutedDark
+                                      : AppColors.textMutedLight,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              _FooterLink(
+                                label: 'Home',
+                                onTap: () => context.go('/'),
+                              ),
+                              const SizedBox(height: 8),
+                              _FooterLink(
+                                label: 'Services',
+                                onTap: () => context.go('/services'),
+                              ),
+                              const SizedBox(height: 8),
+                              _FooterLink(
+                                label: 'About',
+                                onTap: () => context.go('/about'),
+                              ),
+                              const SizedBox(height: 8),
+                              _FooterLink(
+                                label: 'Contact',
+                                onTap: () => context.go('/contact'),
+                              ),
+                            ],
+                          ),
                         ),
-                        _FooterLink(
-                          label: 'About',
-                          onTap: () => context.go('/about'),
-                        ),
-                        _FooterLink(
-                          label: 'Contact',
-                          onTap: () => context.go('/contact'),
-                        ),
-                        _FooterLink(
-                          label: 'Start a project →',
-                          onTap: () => context.go('/start-a-project'),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 14),
-                    Wrap(
-                      spacing: 16,
-                      runSpacing: 8,
-                      children: [
-                        _FooterLink(
-                          label: AppConfig.contactEmail,
-                          onTap: () =>
-                              _launchUrl('mailto:${AppConfig.contactEmail}'),
-                        ),
-                        _FooterLink(
-                          label: 'Instagram',
-                          onTap: () => _launchUrl(AppConfig.instagramUrl),
-                        ),
-                        _FooterLink(
-                          label: 'WhatsApp',
-                          onTap: () => _launchUrl(
-                              'https://wa.me/${AppConfig.whatsappNumber}'),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'CONNECT',
+                                style: AppTypography.labelUppercase(
+                                  color: isDark
+                                      ? AppColors.textMutedDark
+                                      : AppColors.textMutedLight,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              _FooterLink(
+                                label: 'Email Us',
+                                onTap: () => _launchUrl(
+                                    'mailto:${AppConfig.contactEmail}'),
+                              ),
+                              const SizedBox(height: 8),
+                              _FooterLink(
+                                label: 'Instagram',
+                                onTap: () =>
+                                    _launchUrl(AppConfig.instagramUrl),
+                              ),
+                              const SizedBox(height: 8),
+                              _FooterLink(
+                                label: 'WhatsApp',
+                                onTap: () => _launchUrl(
+                                    'https://wa.me/${AppConfig.whatsappNumber}'),
+                              ),
+                              const SizedBox(height: 8),
+                              _FooterLink(
+                                label: 'Start Project →',
+                                onTap: () => context.go('/start-a-project'),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
