@@ -650,8 +650,8 @@ class _HeroStudioBadgeCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Image.asset(
-                'assets/images/sp_logo.png',
-                height: 40,
+                'assets/images/sp_transparent.png',
+                height: 36,
                 fit: BoxFit.contain,
                 color: isDark
                     ? AppColors.textPrimaryDark
@@ -695,7 +695,7 @@ class _HeroStudioBadgeCard extends StatelessWidget {
 
           // Studio Artboard Details
           _BadgeStatRow(
-            label: 'PRACTICE',
+            label: 'CORE SERVICES',
             value: 'Graphic & Campaign Design',
             isDark: isDark,
           ),
