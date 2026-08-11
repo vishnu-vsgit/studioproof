@@ -27,16 +27,14 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 1. HERO SECTION (Balanced 2-Column Split Layout)
+          // 1. HERO SECTION (2-column split on desktop to balance right-side space)
           Container(
             width: double.infinity,
             constraints: BoxConstraints(
               minHeight: isMobile
                   ? 0.0
-                  : (MediaQuery.of(context).size.height - 140.0).clamp(
-                      440.0,
-                      750.0,
-                    ),
+                  : (MediaQuery.of(context).size.height - 140.0)
+                      .clamp(440.0, 750.0),
             ),
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
@@ -49,47 +47,19 @@ class HomeScreen extends StatelessWidget {
                   maxWidth: ResponsiveBreakpoints.maxContentWidth,
                 ),
                 child: isMobile
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildHeroMainContent(
-                            context,
-                            isDark,
-                            isMobile,
-                            scale,
-                          ),
-                        ],
-                      )
+                    ? _buildHeroLeftText(context, isDark, isMobile, scale)
                     : Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // Left Column: Headline, Bio & CTA
                           Expanded(
                             flex: 6,
-                            child: _buildHeroMainContent(
-                              context,
-                              isDark,
-                              isMobile,
-                              scale,
-                            ),
+                            child: _buildHeroLeftText(
+                                context, isDark, isMobile, scale),
                           ),
                           const SizedBox(width: 48),
-
-                          // Vertical Divider line
-                          Container(
-                            height: 340,
-                            width: 1,
-                            color: isDark
-                                ? AppColors.borderDark
-                                : AppColors.borderLight,
-                          ),
-                          const SizedBox(width: 48),
-
-                          // Right Column: "WHAT WE DELIVER" checklist
                           Expanded(
                             flex: 5,
-                            child: _buildHeroDeliverablesPanel(isDark),
+                            child: _HeroStudioBadgeCard(isDark: isDark),
                           ),
                         ],
                       ),
@@ -570,15 +540,11 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeroMainContent(
-    BuildContext context,
-    bool isDark,
-    bool isMobile,
-    double scale,
-  ) {
+  Widget _buildHeroLeftText(
+      BuildContext context, bool isDark, bool isMobile, double scale) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Studio Tagline Badge
         Row(
@@ -595,9 +561,8 @@ class HomeScreen extends StatelessWidget {
             Text(
               AppConfig.studioTagline.toUpperCase(),
               style: AppTypography.labelUppercase(
-                color: isDark
-                    ? AppColors.textMutedDark
-                    : AppColors.textMutedLight,
+                color:
+                    isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                 scale: scale,
               ),
             ),
@@ -658,79 +623,151 @@ class HomeScreen extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildHeroDeliverablesPanel(bool isDark) {
-    final deliverables = [
-      {
-        'num': '01',
-        'title': 'Event Key Visuals',
-        'desc': 'Main Posters, Stage Backdrops, Wristbands & Digital Banners',
-      },
-      {
-        'num': '02',
-        'title': 'Campaign & Social Graphics',
-        'desc': 'Carousel Templates, Story Formats & Feed Announcement Assets',
-      },
-      {
-        'num': '03',
-        'title': 'Startup Brand Identity',
-        'desc': 'Investor Pitch Decks, Product Launches & Identity Assets',
-      },
-      {
-        'num': '04',
-        'title': 'Production-Ready Files',
-        'desc': 'Print PDFs, High-Res PNGs & Source Files Included',
-      },
-    ];
+class _HeroStudioBadgeCard extends StatelessWidget {
+  final bool isDark;
 
+  const _HeroStudioBadgeCard({required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(32.0),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        border: Border.all(
+          color: isDark ? AppColors.borderDark : AppColors.borderLight,
+          width: 1.5,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Monogram & Status Header Row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image.asset(
+                'assets/images/sp_logo.png',
+                height: 40,
+                fit: BoxFit.contain,
+                color: isDark
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
+                errorBuilder: (context, error, stackTrace) => Text(
+                  'SP',
+                  style: AppTypography.displayMedium(color: AppColors.accent),
+                ),
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: AppColors.accent.withValues(alpha: 0.12),
+                  border: Border.all(color: AppColors.accent),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 6,
+                      height: 6,
+                      decoration: const BoxDecoration(
+                        color: AppColors.accent,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'STUDIO SPEC SHEET',
+                      style: AppTypography.labelUppercase(
+                        color: AppColors.accent,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 28),
+
+          // Studio Artboard Details
+          _BadgeStatRow(
+            label: 'PRACTICE',
+            value: 'Graphic & Campaign Design',
+            isDark: isDark,
+          ),
+          const SizedBox(height: 14),
+          Divider(
+            color: isDark ? AppColors.borderDark : AppColors.borderLight,
+            height: 1,
+          ),
+          const SizedBox(height: 14),
+          _BadgeStatRow(
+            label: 'PRIMARY STACK',
+            value: 'Figma • Adobe Photoshop',
+            isDark: isDark,
+          ),
+          const SizedBox(height: 14),
+          Divider(
+            color: isDark ? AppColors.borderDark : AppColors.borderLight,
+            height: 1,
+          ),
+          const SizedBox(height: 14),
+          _BadgeStatRow(
+            label: 'DELIVERABLES',
+            value: 'Print PDFs • Digital PNGs • Sources',
+            isDark: isDark,
+          ),
+          const SizedBox(height: 14),
+          Divider(
+            color: isDark ? AppColors.borderDark : AppColors.borderLight,
+            height: 1,
+          ),
+          const SizedBox(height: 14),
+          _BadgeStatRow(
+            label: 'LOCATION',
+            value: 'India • Remote Worldwide',
+            isDark: isDark,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BadgeStatRow extends StatelessWidget {
+  final String label;
+  final String value;
+  final bool isDark;
+
+  const _BadgeStatRow({
+    required this.label,
+    required this.value,
+    required this.isDark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'WHAT WE DELIVER',
-          style: AppTypography.labelUppercase(color: AppColors.accent),
+          label,
+          style: AppTypography.labelUppercase(
+            color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+          ),
         ),
-        const SizedBox(height: 20),
-        ...deliverables.map((item) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item['num']!,
-                  style: AppTypography.buttonText(color: AppColors.accent),
-                ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        item['title']!,
-                        style: AppTypography.heading3(
-                          color: isDark
-                              ? AppColors.textPrimaryDark
-                              : AppColors.textPrimaryLight,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        item['desc']!,
-                        style: AppTypography.bodySmall(
-                          color: isDark
-                              ? AppColors.textSecondaryDark
-                              : AppColors.textSecondaryLight,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        }),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: AppTypography.bodyMedium(
+            color:
+                isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+          ),
+        ),
       ],
     );
   }
