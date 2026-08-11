@@ -651,7 +651,7 @@ class _HeroStudioBadgeCard extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/images/sp_transparent.png',
-                height: 36,
+                height: 38,
                 fit: BoxFit.contain,
                 color: isDark
                     ? AppColors.textPrimaryDark
