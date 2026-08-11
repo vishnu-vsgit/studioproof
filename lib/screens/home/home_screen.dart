@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final isMobile = ResponsiveBreakpoints.isMobile(context);
+    final isMobile = ResponsiveBreakpoints.isMobileOrTablet(context);
     final horizontalPadding = ResponsiveBreakpoints.getHorizontalPadding(
       context,
     );
@@ -27,21 +27,27 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 1. HERO SECTION
+          // 1. HERO SECTION (Full viewport fold)
           Container(
             width: double.infinity,
-            padding: EdgeInsets.only(
-              left: horizontalPadding,
-              right: horizontalPadding,
-              top: isMobile ? 36.0 : 64.0,
-              bottom: isMobile ? 40.0 : 64.0,
+            constraints: BoxConstraints(
+              minHeight: isMobile
+                  ? 0.0
+                  : (MediaQuery.of(context).size.height - 140.0)
+                      .clamp(440.0, 750.0),
             ),
+            padding: EdgeInsets.symmetric(
+              horizontal: horizontalPadding,
+              vertical: isMobile ? 36.0 : 48.0,
+            ),
+            alignment: Alignment.centerLeft,
             child: Center(
               child: Container(
                 constraints: const BoxConstraints(
                   maxWidth: ResponsiveBreakpoints.maxContentWidth,
                 ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Studio Tagline Badge
@@ -67,7 +73,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 24),
 
                     // Display Headline
                     ConstrainedBox(
@@ -106,9 +112,9 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 36),
 
-                    // Action Button (Only "Start a project")
+                    // Action Button ("Start a project")
                     ElevatedButton(
-                      onPressed: () => context.go('/contact'),
+                      onPressed: () => context.go('/start-a-project'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.accent,
                         foregroundColor: Colors.white,
@@ -125,8 +131,200 @@ class HomeScreen extends StatelessWidget {
                         style: AppTypography.buttonText(color: Colors.white),
                       ),
                     ),
+                  ],
+                ),
+              ),
+            ),
+          ),
 
-                    const SizedBox(height: 56),
+          Divider(
+            color: isDark ? AppColors.borderDark : AppColors.borderLight,
+            height: 1,
+          ),
+
+          // 2. CONTENT BETWEEN HERO & RECENT DESIGNS: CORE HIGHLIGHTS SECTION
+          Container(
+            width: double.infinity,
+            color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+            padding: EdgeInsets.symmetric(
+              horizontal: horizontalPadding,
+              vertical: isMobile ? 40.0 : 64.0,
+            ),
+            child: Center(
+              child: Container(
+                constraints: const BoxConstraints(
+                  maxWidth: ResponsiveBreakpoints.maxContentWidth,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'WHAT WE DO',
+                      style: AppTypography.labelUppercase(
+                        color: AppColors.accent,
+                        scale: scale,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Purpose-built visual communication',
+                      style: isMobile
+                          ? AppTypography.heading1(
+                              color: isDark
+                                  ? AppColors.textPrimaryDark
+                                  : AppColors.textPrimaryLight,
+                            )
+                          : AppTypography.displayMedium(
+                              color: isDark
+                                  ? AppColors.textPrimaryDark
+                                  : AppColors.textPrimaryLight,
+                            ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      'Clear, deliberate graphic design solutions for organizations and creators.',
+                      style: AppTypography.bodyLarge(
+                        color: isDark
+                            ? AppColors.textSecondaryDark
+                            : AppColors.textSecondaryLight,
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+
+                    // 4 Core Highlights Cards
+                    if (isMobile)
+                      Column(
+                        children: const [
+                          _HighlightCard(
+                            number: '01',
+                            title: 'Posters & Campaigns',
+                            description:
+                                'High-impact key visuals, festival posters, stage backdrops, and digital promotional graphics.',
+                          ),
+                          SizedBox(height: 16),
+                          _HighlightCard(
+                            number: '02',
+                            title: 'Brand Identity',
+                            description:
+                                'Clean visual identity systems, typography guidelines, and logo assets tailored for startups & clubs.',
+                          ),
+                          SizedBox(height: 16),
+                          _HighlightCard(
+                            number: '03',
+                            title: 'Fast Turnarounds',
+                            description:
+                                'Efficient turnaround times with complete production-ready print PDFs and digital PNG packages.',
+                          ),
+                          SizedBox(height: 16),
+                          _HighlightCard(
+                            number: '04',
+                            title: 'No Generic Templates',
+                            description:
+                                'Distinct visual execution focused on clarity, typographic structure, and custom visual direction.',
+                          ),
+                        ],
+                      )
+                    else
+                      IntrinsicHeight(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: const [
+                            Expanded(
+                              child: _HighlightCard(
+                                number: '01',
+                                title: 'Posters & Campaigns',
+                                description:
+                                    'High-impact key visuals, festival posters, stage backdrops, and digital promotional graphics.',
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                            Expanded(
+                              child: _HighlightCard(
+                                number: '02',
+                                title: 'Brand Identity',
+                                description:
+                                    'Clean visual identity systems, typography guidelines, and logo assets tailored for startups & clubs.',
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                            Expanded(
+                              child: _HighlightCard(
+                                number: '03',
+                                title: 'Fast Turnarounds',
+                                description:
+                                    'Efficient turnaround times with complete production-ready print PDFs and digital PNG packages.',
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                            Expanded(
+                              child: _HighlightCard(
+                                number: '04',
+                                title: 'No Generic Templates',
+                                description:
+                                    'Distinct visual execution focused on clarity, typographic structure, and custom visual direction.',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          Divider(
+            color: isDark ? AppColors.borderDark : AppColors.borderLight,
+            height: 1,
+          ),
+
+          // 3. DEDICATED RECENT DESIGN WORKS SECTION
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(
+              horizontal: horizontalPadding,
+              vertical: isMobile ? 48.0 : 72.0,
+            ),
+            child: Center(
+              child: Container(
+                constraints: const BoxConstraints(
+                  maxWidth: ResponsiveBreakpoints.maxContentWidth,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'SELECTED PORTFOLIO',
+                      style: AppTypography.labelUppercase(
+                        color: AppColors.accent,
+                        scale: scale,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Recent Design Works',
+                      style: isMobile
+                          ? AppTypography.heading1(
+                              color: isDark
+                                  ? AppColors.textPrimaryDark
+                                  : AppColors.textPrimaryLight,
+                            )
+                          : AppTypography.displayMedium(
+                              color: isDark
+                                  ? AppColors.textPrimaryDark
+                                  : AppColors.textPrimaryLight,
+                            ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      'A curated collection of poster designs, brand identities, and promotional campaigns.',
+                      style: AppTypography.bodyLarge(
+                        color: isDark
+                            ? AppColors.textSecondaryDark
+                            : AppColors.textSecondaryLight,
+                      ),
+                    ),
+                    const SizedBox(height: 40),
 
                     // Horizontal Work Carousel featuring User's Actual Design Works
                     WorkCarouselWidget(projects: allProjects),
@@ -136,9 +334,12 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
 
-          const Divider(),
+          Divider(
+            color: isDark ? AppColors.borderDark : AppColors.borderLight,
+            height: 1,
+          ),
 
-          // 2. STUDIO STATEMENT SECTION
+          // 4. STUDIO STATEMENT SECTION
           Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(
@@ -186,9 +387,12 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
 
-          const Divider(),
+          Divider(
+            color: isDark ? AppColors.borderDark : AppColors.borderLight,
+            height: 1,
+          ),
 
-          // 3. PROCESS SECTION
+          // 5. PROCESS SECTION
           Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(
@@ -290,9 +494,12 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
 
-          const Divider(),
+          Divider(
+            color: isDark ? AppColors.borderDark : AppColors.borderLight,
+            height: 1,
+          ),
 
-          // 4. CALL-TO-ACTION BANNER
+          // 6. CALL-TO-ACTION BANNER
           Container(
             width: double.infinity,
             color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
@@ -328,7 +535,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 24),
                           ElevatedButton(
-                            onPressed: () => context.go('/contact'),
+                            onPressed: () => context.go('/start-a-project'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.accent,
                               foregroundColor: Colors.white,
@@ -374,7 +581,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 48),
                           ElevatedButton(
-                            onPressed: () => context.go('/contact'),
+                            onPressed: () => context.go('/start-a-project'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.accent,
                               foregroundColor: Colors.white,
@@ -396,6 +603,60 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HighlightCard extends StatelessWidget {
+  final String number;
+  final String title;
+  final String description;
+
+  const _HighlightCard({
+    required this.number,
+    required this.title,
+    required this.description,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      padding: const EdgeInsets.all(28.0),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.bgDark : AppColors.bgLight,
+        border: Border.all(
+          color: isDark ? AppColors.borderDark : AppColors.borderLight,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            number,
+            style: AppTypography.labelUppercase(color: AppColors.accent),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            title,
+            style: AppTypography.heading3(
+              color: isDark
+                  ? AppColors.textPrimaryDark
+                  : AppColors.textPrimaryLight,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            description,
+            style: AppTypography.bodyMedium(
+              color: isDark
+                  ? AppColors.textSecondaryDark
+                  : AppColors.textSecondaryLight,
             ),
           ),
         ],

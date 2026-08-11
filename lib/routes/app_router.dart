@@ -3,6 +3,7 @@ import '../screens/home/home_screen.dart';
 import '../screens/services/services_screen.dart';
 import '../screens/about/about_screen.dart';
 import '../screens/contact/contact_screen.dart';
+import '../screens/contact/start_project_screen.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/',
@@ -26,6 +27,11 @@ final GoRouter appRouter = GoRouter(
       path: '/contact',
       name: 'contact',
       builder: (context, state) => const ContactScreen(),
+    ),
+    GoRoute(
+      path: '/start-a-project',
+      name: 'start-a-project',
+      builder: (context, state) => const StartProjectScreen(),
     ),
   ],
   errorBuilder: (context, state) => const HomeScreen(),

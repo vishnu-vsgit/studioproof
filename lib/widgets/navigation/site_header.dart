@@ -18,7 +18,7 @@ class SiteHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final isMobile = ResponsiveBreakpoints.isMobile(context);
+    final isMobile = ResponsiveBreakpoints.isMobileOrTablet(context);
     final horizontalPadding = ResponsiveBreakpoints.getHorizontalPadding(context);
 
     return Container(
@@ -48,11 +48,19 @@ class SiteHeader extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        AppConfig.studioName,
-                        style: AppTypography.heading2(
-                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-                        ).copyWith(letterSpacing: 1.0, fontWeight: FontWeight.bold),
+                      Image.asset(
+                        'assets/images/header_logo.png',
+                        height: 28,
+                        fit: BoxFit.contain,
+                        color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Text(
+                            AppConfig.studioName,
+                            style: AppTypography.heading2(
+                              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                            ).copyWith(letterSpacing: -0.5, fontWeight: FontWeight.bold),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -88,7 +96,7 @@ class SiteHeader extends StatelessWidget {
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: OutlinedButton(
-                        onPressed: () => context.go('/contact'),
+                        onPressed: () => context.go('/start-a-project'),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                           side: BorderSide(

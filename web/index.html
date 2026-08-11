@@ -8,22 +8,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
   <!-- SEO & Open Graph Meta Tags -->
-  <title>STUDIO PROOF | Independent Graphic Design Studio</title>
+  <title>StudioProof | Independent Graphic Design Studio</title>
   <meta name="description" content="Independent graphic design studio designing posters, campaigns, and visual identities for colleges, startups, businesses, and creators.">
   <meta name="keywords" content="graphic design, studio, posters, college fest design, startup branding, social media campaign, editorial design">
   
-  <meta property="og:title" content="STUDIO PROOF | Independent Graphic Design Studio">
+  <meta property="og:title" content="StudioProof | Independent Graphic Design Studio">
   <meta property="og:description" content="Designing posters, campaigns and visual identities for colleges, startups, businesses and people with something worth saying.">
   <meta property="og:type" content="website">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="STUDIO PROOF">
+  <meta name="apple-mobile-web-app-title" content="StudioProof">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png?v=2"/>
 
   <!-- Google Fonts Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,21 +33,168 @@
   <link rel="manifest" href="manifest.json">
 
   <style>
+    :root {
+      --bg-color: #FBF9F5;
+      --surface-color: #F4F1EA;
+      --skeleton-base: #ECE8DF;
+      --text-color: #111110;
+      --border-color: #E5E2DA;
+      --accent-color: #D94A26;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #121210;
+        --surface-color: #1B1B18;
+        --skeleton-base: #242420;
+        --text-color: #F7F6F2;
+        --border-color: #2C2C27;
+      }
+    }
+
     body {
-      background-color: #FBF9F5;
+      background-color: var(--bg-color);
       margin: 0;
       padding: 0;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      color: #111110;
+      color: var(--text-color);
       overflow-x: hidden;
     }
     ::selection {
       background: #D94A26;
       color: #FFFFFF;
     }
+
+    /* Initial Skeleton Loader Styles */
+    .initial-skeleton-container {
+      width: 100%;
+      min-height: 100vh;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .skeleton-header {
+      height: 80px;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--bg-color);
+    }
+
+    .skeleton-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .skeleton-content {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 64px 48px;
+      box-sizing: border-box;
+    }
+
+    .skeleton-box {
+      background-color: var(--skeleton-base);
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skeleton-box::after {
+      content: "";
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+      transform: translateX(-100%);
+      background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0,
+        rgba(255, 255, 255, 0.15) 30%,
+        rgba(255, 255, 255, 0.35) 60%,
+        rgba(255, 255, 255, 0)
+      );
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .skeleton-hero {
+      margin-bottom: 64px;
+    }
+
+    .skeleton-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .skeleton-card {
+      height: 260px;
+      background-color: var(--surface-color);
+      border: 1px solid var(--border-color);
+      padding: 28px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 768px) {
+      .skeleton-header { padding: 0 20px; }
+      .skeleton-content { padding: 40px 20px; }
+      .skeleton-nav-links { display: none; }
+      .skeleton-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
+  <!-- Initial Skeleton Loader displayed instantly while Flutter engine initializes -->
+  <div class="initial-skeleton-container" id="loading-skeleton">
+    <div class="skeleton-header">
+      <div class="skeleton-box" style="width: 150px; height: 28px;"></div>
+      <div class="skeleton-nav-links">
+        <div class="skeleton-box" style="width: 64px; height: 14px;"></div>
+        <div class="skeleton-box" style="width: 64px; height: 14px;"></div>
+        <div class="skeleton-box" style="width: 64px; height: 14px;"></div>
+        <div class="skeleton-box" style="width: 110px; height: 38px;"></div>
+      </div>
+    </div>
+    <div class="skeleton-content">
+      <div class="skeleton-hero">
+        <div class="skeleton-box" style="width: 110px; height: 14px; margin-bottom: 20px; background-color: var(--accent-color); opacity: 0.8;"></div>
+        <div class="skeleton-box" style="width: 65%; height: 44px; margin-bottom: 14px;"></div>
+        <div class="skeleton-box" style="width: 45%; height: 44px; margin-bottom: 24px;"></div>
+        <div class="skeleton-box" style="width: 85%; height: 16px; margin-bottom: 10px;"></div>
+        <div class="skeleton-box" style="width: 55%; height: 16px;"></div>
+      </div>
+      <div class="skeleton-grid">
+        <div class="skeleton-card">
+          <div class="skeleton-box" style="width: 35%; height: 14px;"></div>
+          <div class="skeleton-box" style="width: 75%; height: 24px;"></div>
+          <div class="skeleton-box" style="width: 100%; height: 50px;"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-box" style="width: 35%; height: 14px;"></div>
+          <div class="skeleton-box" style="width: 75%; height: 24px;"></div>
+          <div class="skeleton-box" style="width: 100%; height: 50px;"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-box" style="width: 35%; height: 14px;"></div>
+          <div class="skeleton-box" style="width: 75%; height: 24px;"></div>
+          <div class="skeleton-box" style="width: 100%; height: 50px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

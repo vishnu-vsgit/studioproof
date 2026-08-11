@@ -25,26 +25,28 @@ class _PageScaffoldState extends State<PageScaffold> {
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: MobileDrawer(currentPath: widget.currentPath),
-      body: Column(
-        children: [
-          SiteHeader(
-            currentPath: widget.currentPath,
-            onOpenMobileMenu: () {
-              _scaffoldKey.currentState?.openEndDrawer();
-            },
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              child: Column(
-                children: [
-                  widget.body,
-                  const SiteFooter(),
-                ],
+      body: SelectionArea(
+        child: Column(
+          children: [
+            SiteHeader(
+              currentPath: widget.currentPath,
+              onOpenMobileMenu: () {
+                _scaffoldKey.currentState?.openEndDrawer();
+              },
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: Column(
+                  children: [
+                    widget.body,
+                    const SiteFooter(),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

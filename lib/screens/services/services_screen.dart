@@ -11,7 +11,7 @@ class ServicesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final isMobile = ResponsiveBreakpoints.isMobile(context);
+    final isMobile = ResponsiveBreakpoints.isMobileOrTablet(context);
     final horizontalPadding = ResponsiveBreakpoints.getHorizontalPadding(
       context,
     );
@@ -206,7 +206,7 @@ class ServicesScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 32),
                           ElevatedButton(
-                            onPressed: () => context.go('/contact'),
+                            onPressed: () => context.go('/start-a-project'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.accent,
                               foregroundColor: Colors.white,
@@ -283,7 +283,7 @@ class ServicesScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 32),
                                 ElevatedButton(
-                                  onPressed: () => context.go('/contact'),
+                                  onPressed: () => context.go('/start-a-project'),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.accent,
                                     foregroundColor: Colors.white,
@@ -352,7 +352,7 @@ class ServicesScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 32),
                           OutlinedButton(
-                            onPressed: () => context.go('/contact'),
+                            onPressed: () => context.go('/start-a-project'),
                             style: OutlinedButton.styleFrom(
                               foregroundColor: isDark
                                   ? AppColors.textPrimaryDark
@@ -417,7 +417,7 @@ class ServicesScreen extends StatelessWidget {
                           Expanded(
                             flex: 4,
                             child: OutlinedButton(
-                              onPressed: () => context.go('/contact'),
+                              onPressed: () => context.go('/start-a-project'),
                               style: OutlinedButton.styleFrom(
                                 foregroundColor: isDark
                                     ? AppColors.textPrimaryDark

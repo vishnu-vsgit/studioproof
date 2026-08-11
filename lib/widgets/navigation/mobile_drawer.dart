@@ -7,10 +7,7 @@ import '../../core/theme/app_typography.dart';
 class MobileDrawer extends StatelessWidget {
   final String currentPath;
 
-  const MobileDrawer({
-    super.key,
-    required this.currentPath,
-  });
+  const MobileDrawer({super.key, required this.currentPath});
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +27,29 @@ class MobileDrawer extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    AppConfig.studioName,
-                    style: AppTypography.heading2(
-                      color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                  Image.asset(
+                    'assets/images/header_logo.png',
+                    height: 30,
+                    fit: BoxFit.contain,
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
+                    errorBuilder: (context, error, stackTrace) => Text(
+                      AppConfig.studioName,
+                      style: AppTypography.heading2(
+                        color: isDark
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimaryLight,
+                      ),
                     ),
                   ),
                   IconButton(
                     icon: Icon(
                       Icons.close_rounded,
                       size: 32,
-                      color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                      color: isDark
+                          ? AppColors.textPrimaryDark
+                          : AppColors.textPrimaryLight,
                     ),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
@@ -73,7 +82,7 @@ class MobileDrawer extends StatelessWidget {
               const SizedBox(height: 32),
               _MobileNavItem(
                 label: 'Contact',
-                subtitle: 'Project enquiry & details',
+                subtitle: 'Direct email & instant channels',
                 isActive: currentPath == '/contact',
                 onTap: () {
                   Navigator.of(context).pop();
@@ -88,7 +97,7 @@ class MobileDrawer extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    context.go('/contact');
+                    context.go('/start-a-project');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.accent,
@@ -140,7 +149,11 @@ class _MobileNavItem extends StatelessWidget {
               Text(
                 label,
                 style: AppTypography.displaySmall(
-                  color: isActive ? AppColors.accent : (isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight),
+                  color: isActive
+                      ? AppColors.accent
+                      : (isDark
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimaryLight),
                 ),
               ),
               if (isActive) ...[
@@ -160,7 +173,9 @@ class _MobileNavItem extends StatelessWidget {
           Text(
             subtitle,
             style: AppTypography.bodySmall(
-              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+              color: isDark
+                  ? AppColors.textSecondaryDark
+                  : AppColors.textSecondaryLight,
             ),
           ),
         ],

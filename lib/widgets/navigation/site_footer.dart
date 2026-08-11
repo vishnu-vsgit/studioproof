@@ -19,7 +19,7 @@ class SiteFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final isMobile = ResponsiveBreakpoints.isMobile(context);
+    final isMobile = ResponsiveBreakpoints.isMobileOrTablet(context);
     final horizontalPadding = ResponsiveBreakpoints.getHorizontalPadding(context);
     final scale = ResponsiveBreakpoints.getTypographyScale(context);
 
@@ -44,10 +44,16 @@ class SiteFooter extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      AppConfig.studioName,
-                      style: AppTypography.heading2(
-                        color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                    Image.asset(
+                      'assets/images/header_logo.png',
+                      height: 40,
+                      fit: BoxFit.contain,
+                      color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                      errorBuilder: (context, error, stackTrace) => Text(
+                        AppConfig.studioName,
+                        style: AppTypography.heading2(
+                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -74,10 +80,16 @@ class SiteFooter extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            AppConfig.studioName,
-                            style: AppTypography.heading2(
-                              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                          Image.asset(
+                            'assets/images/header_logo.png',
+                            height: 40,
+                            fit: BoxFit.contain,
+                            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                            errorBuilder: (context, error, stackTrace) => Text(
+                              AppConfig.studioName,
+                              style: AppTypography.heading2(
+                                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -200,11 +212,6 @@ class _FooterSocialGroup extends StatelessWidget {
         _FooterLink(
           label: 'Instagram: ${AppConfig.instagramHandle}',
           onTap: () => launchUrl(AppConfig.instagramUrl),
-        ),
-        const SizedBox(height: 8),
-        _FooterLink(
-          label: 'LinkedIn',
-          onTap: () => launchUrl(AppConfig.linkedinUrl),
         ),
         const SizedBox(height: 8),
         _FooterLink(

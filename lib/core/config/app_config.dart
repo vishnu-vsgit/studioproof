@@ -1,16 +1,15 @@
 /// Studio Proof - Centralized Application Configuration
 class AppConfig {
-  static const String studioName = 'STUDIO PROOF';
+  static const String studioName = 'StudioProof';
   static const String studioTagline = 'Independent Graphic Design Studio';
   static const String designerTitle = 'Graphic Designer & Student';
   static const String designerBioHeadline = 'Still learning. Already designing.';
   
   // Primary Contact Info
-  static const String contactEmail = 'vishnu_vs@ahalia.ac.in';
+  static const String contactEmail = 'studioproof.ds@gmail.com';
   static const String whatsappNumber = '918778944493';
   static const String instagramHandle = '@studioproof.design';
   static const String instagramUrl = 'https://instagram.com/studioproof.design';
-  static const String linkedinUrl = 'https://linkedin.com/company/studioproof';
   static const String githubUrl = 'https://github.com/vishnu-vsgit/studioproof';
   
   // Primary Tools used
