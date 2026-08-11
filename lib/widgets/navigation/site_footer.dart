@@ -175,25 +175,55 @@ class SiteFooter extends StatelessWidget {
               const SizedBox(height: 24),
 
               // Bottom Line: Copyright & Tagline
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '© ${DateTime.now().year} ${AppConfig.studioName}. All rights reserved.',
-                    style: AppTypography.bodySmall(
-                      color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-                      scale: scale,
+              if (isMobile)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '© ${DateTime.now().year} ${AppConfig.studioName}. All rights reserved.',
+                      style: AppTypography.bodySmall(
+                        color: isDark
+                            ? AppColors.textMutedDark
+                            : AppColors.textMutedLight,
+                        scale: scale,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Designed & built with curiosity.',
-                    style: AppTypography.bodySmall(
-                      color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-                      scale: scale,
+                    const SizedBox(height: 6),
+                    Text(
+                      'Designed & built with curiosity.',
+                      style: AppTypography.bodySmall(
+                        color: isDark
+                            ? AppColors.textMutedDark
+                            : AppColors.textMutedLight,
+                        scale: scale,
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                )
+              else
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '© ${DateTime.now().year} ${AppConfig.studioName}. All rights reserved.',
+                      style: AppTypography.bodySmall(
+                        color: isDark
+                            ? AppColors.textMutedDark
+                            : AppColors.textMutedLight,
+                        scale: scale,
+                      ),
+                    ),
+                    Text(
+                      'Designed & built with curiosity.',
+                      style: AppTypography.bodySmall(
+                        color: isDark
+                            ? AppColors.textMutedDark
+                            : AppColors.textMutedLight,
+                        scale: scale,
+                      ),
+                    ),
+                  ],
+                ),
             ],
           ),
         ),
