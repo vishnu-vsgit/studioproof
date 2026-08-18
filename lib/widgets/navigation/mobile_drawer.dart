@@ -77,7 +77,7 @@ class MobileDrawer extends StatelessWidget {
               _MobileNavItem(
                 number: '01',
                 label: 'Services',
-                subtitle: 'One-off & recurring design support',
+                subtitle: 'Single poster & recurring design support',
                 isActive: currentPath == '/services',
                 onTap: () {
                   Navigator.of(context).pop();

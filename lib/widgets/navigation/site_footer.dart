@@ -289,7 +289,11 @@ class _FooterNavGroup extends StatelessWidget {
         const SizedBox(height: 8),
         _FooterLink(label: 'About Studio', onTap: () => context.go('/about')),
         const SizedBox(height: 8),
-        _FooterLink(label: 'Start a Project', onTap: () => context.go('/contact')),
+        _FooterLink(label: 'Start a Project', onTap: () => context.go('/start-a-project')),
+        const SizedBox(height: 8),
+        _FooterLink(label: 'Privacy Policy', onTap: () => context.go('/privacy-policy')),
+        const SizedBox(height: 8),
+        _FooterLink(label: 'Terms & Conditions', onTap: () => context.go('/terms-and-conditions')),
       ],
     );
   }

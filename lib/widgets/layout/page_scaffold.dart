@@ -7,6 +7,8 @@ import '../navigation/site_header.dart';
 import '../navigation/mobile_drawer.dart';
 import '../navigation/site_footer.dart';
 
+import '../common/floating_whatsapp_button.dart';
+
 class PageScaffold extends StatefulWidget {
   final Widget body;
   final String currentPath;
@@ -23,6 +25,42 @@ class PageScaffold extends StatefulWidget {
 
 class _PageScaffoldState extends State<PageScaffold> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final ScrollController _scrollController = ScrollController();
+  bool _showWhatsappButton = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    final shouldShow = _scrollController.offset > 120;
+    if (shouldShow != _showWhatsappButton) {
+      setState(() {
+        _showWhatsappButton = shouldShow;
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant PageScaffold oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.currentPath != widget.currentPath) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_scrollController.hasClients) {
+          _scrollController.jumpTo(0.0);
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,31 +71,74 @@ class _PageScaffoldState extends State<PageScaffold> {
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: MobileDrawer(currentPath: widget.currentPath),
-      body: SelectionArea(
-        child: Column(
-          children: [
-            SiteHeader(
-              currentPath: widget.currentPath,
-              onOpenMobileMenu: () {
-                _scaffoldKey.currentState?.openEndDrawer();
-              },
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const ClampingScrollPhysics(),
-                child: Column(
-                  children: [
-                    widget.body,
-                    const SiteFooter(),
-                  ],
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              SelectionContainer.disabled(
+                child: SiteHeader(
+                  currentPath: widget.currentPath,
+                  onOpenMobileMenu: () {
+                    _scaffoldKey.currentState?.openEndDrawer();
+                  },
+                ),
+              ),
+              Expanded(
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification notification) {
+                    if (notification.metrics.axis == Axis.vertical) {
+                      final shouldShow = notification.metrics.pixels > 50;
+                      if (shouldShow != _showWhatsappButton) {
+                        setState(() {
+                          _showWhatsappButton = shouldShow;
+                        });
+                      }
+                    }
+                    return false;
+                  },
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    physics: const ClampingScrollPhysics(),
+                    child: Column(
+                      children: [
+                        SelectionArea(
+                          child: widget.body,
+                        ),
+                        SelectionContainer.disabled(
+                          child: const SiteFooter(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          // Floating WhatsApp Quick Chat Button
+          Positioned(
+            right: isMobile ? 16.0 : 28.0,
+            bottom: (isMobile && !hideBottomBarOnPaths) ? 16.0 : 28.0,
+            child: SelectionContainer.disabled(
+              child: AnimatedSlide(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOutCubic,
+                offset: _showWhatsappButton ? Offset.zero : const Offset(0, 0.4),
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 250),
+                  opacity: _showWhatsappButton ? 1.0 : 0.0,
+                  child: IgnorePointer(
+                    ignoring: !_showWhatsappButton,
+                    child: const FloatingWhatsappButton(),
+                  ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       bottomNavigationBar: (isMobile && !hideBottomBarOnPaths)
-          ? Container(
+          ? SelectionContainer.disabled(
+              child: Container(
               height: 60.0,
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               decoration: BoxDecoration(
@@ -120,8 +201,9 @@ class _PageScaffoldState extends State<PageScaffold> {
                   ),
                 ],
               ),
-            )
-          : null,
+            ),
+          )
+        : null,
     );
   }
 }

@@ -63,7 +63,7 @@ class ServicesScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Direct graphic design services for one-off promotional needs and recurring monthly design partnerships.',
+                      'Direct graphic design services for standalone promotional needs and recurring monthly design partnerships.',
                       style: AppTypography.bodyLarge(
                         color: isDark
                             ? AppColors.textSecondaryDark
@@ -327,14 +327,14 @@ class ServicesScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'ONE-OFF PROJECTS',
+                            'STANDALONE PROJECTS',
                             style: AppTypography.labelUppercase(
                               color: AppColors.accent,
                             ),
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            'Have a one-time design project?',
+                            'Have a single design project?',
                             style: AppTypography.heading1(
                               color: isDark
                                   ? AppColors.textPrimaryDark
@@ -387,14 +387,14 @@ class ServicesScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'ONE-OFF PROJECTS',
+                                  'STANDALONE PROJECTS',
                                   style: AppTypography.labelUppercase(
                                     color: AppColors.accent,
                                   ),
                                 ),
                                 const SizedBox(height: 16),
                                 Text(
-                                  'Have a one-time design project?',
+                                  'Have a single design project?',
                                   style: AppTypography.displaySmall(
                                     color: isDark
                                         ? AppColors.textPrimaryDark

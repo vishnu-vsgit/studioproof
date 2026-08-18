@@ -3,12 +3,28 @@ import '../models/project_model.dart';
 class PortfolioData {
   static const List<Project> projects = [
     Project(
+      id: 'robotics-workshop',
+      title: 'ROBOTICS WORKSHOP — IEDC ASET',
+      category: 'Workshop Poster',
+      year: '2026',
+      tagline: 'High-impact promotional poster featuring bold typography and futuristic mechanical robotics imagery.',
+      clientType: 'IEDC ASET',
+      description: 'Official event poster design for the 2-day Robotics Workshop (Build • Program • Automate) presented by IEDC ASET.',
+      deliverables: [
+        'Workshop Key Visual Poster',
+        'Instagram Announcement Graphic',
+        'Campus & Digital Screen Collateral',
+      ],
+      imageAsset: 'assets/images/work_4.jpg',
+      aspectRatio: 0.8,
+    ),
+    Project(
       id: 'sync-guests',
       title: 'SYNC 2026 — Special Guests',
       category: 'College Fest Poster',
       year: '2026',
-      tagline: 'Inaugural session guest announcement poster for SYNC 2026 at Ahalia School of Engineering & Technology.',
-      clientType: 'College Fest / Ahalia Engineering',
+      tagline: 'Inaugural session guest announcement poster for SYNC 2026.',
+      clientType: 'Campus Event Series',
       description: 'Custom event poster design announcing special guests for the inaugural session of SYNC 2026.',
       deliverables: [
         'Special Guest Reveal Poster',
@@ -24,7 +40,7 @@ class PortfolioData {
       category: 'Hackathon Campaign',
       year: '2026',
       tagline: 'High-contrast rooftop banner creative for the Human x AI Hackathon Prelims Registration.',
-      clientType: 'Hackathon / CodeFlow Studio',
+      clientType: 'Hackathon Campaign',
       description: 'Bold promotional creative designed for prelims registration announcements across social feeds and digital platforms.',
       deliverables: [
         'Campaign Key Visual',

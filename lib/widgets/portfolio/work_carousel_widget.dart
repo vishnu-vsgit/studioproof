@@ -116,43 +116,13 @@ class _WorkCarouselWidgetState extends State<WorkCarouselWidget> {
                 margin: const EdgeInsets.only(right: 24.0),
                 child: ProjectArtworkCard(
                   project: project,
-                  onTap: () {
-                    // Show full-resolution image dialog modal when clicked
-                    _showImageLightbox(context, project);
-                  },
+                  onTap: null, // Cards locked: showcase presentation view
                 ),
               );
             },
           ),
         ),
       ],
-    );
-  }
-
-  void _showImageLightbox(BuildContext context, Project project) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          insetPadding: const EdgeInsets.all(20),
-          child: Stack(
-            alignment: Alignment.topRight,
-            children: [
-              ClipRRect(
-                child: Image.asset(
-                  project.imageAsset,
-                  fit: BoxFit.contain,
-                ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.close_rounded, color: Colors.white, size: 30),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

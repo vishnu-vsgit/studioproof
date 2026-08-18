@@ -177,9 +177,11 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
   }
 
   Future<void> _launchUrl(String urlString) async {
-    final Uri url = Uri.parse(urlString);
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
+    final Uri? url = Uri.tryParse(urlString);
+    if (url != null && (url.scheme == 'https' || url.scheme == 'mailto')) {
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      }
     }
   }
 
@@ -730,6 +732,13 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                       style: AppTypography.buttonText(color: Colors.white),
                     ),
             ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'By submitting this form, you agree to our Privacy Policy & Terms.',
+            style: AppTypography.bodySmall(
+              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+            ).copyWith(fontSize: 11),
           ),
         ],
       ),

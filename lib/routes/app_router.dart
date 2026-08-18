@@ -4,6 +4,8 @@ import '../screens/services/services_screen.dart';
 import '../screens/about/about_screen.dart';
 import '../screens/contact/contact_screen.dart';
 import '../screens/contact/start_project_screen.dart';
+import '../screens/legal/privacy_policy_screen.dart';
+import '../screens/legal/terms_screen.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/',
@@ -32,6 +34,16 @@ final GoRouter appRouter = GoRouter(
       path: '/start-a-project',
       name: 'start-a-project',
       builder: (context, state) => const StartProjectScreen(),
+    ),
+    GoRoute(
+      path: '/privacy-policy',
+      name: 'privacy-policy',
+      builder: (context, state) => const PrivacyPolicyScreen(),
+    ),
+    GoRoute(
+      path: '/terms-and-conditions',
+      name: 'terms-and-conditions',
+      builder: (context, state) => const TermsScreen(),
     ),
   ],
   errorBuilder: (context, state) => const HomeScreen(),

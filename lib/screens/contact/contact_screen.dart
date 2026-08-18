@@ -35,9 +35,11 @@ class _ContactScreenState extends State<ContactScreen> {
   }
 
   Future<void> _launchUrl(String urlString) async {
-    final Uri url = Uri.parse(urlString);
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
+    final Uri? url = Uri.tryParse(urlString);
+    if (url != null && (url.scheme == 'https' || url.scheme == 'mailto')) {
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      }
     }
   }
 
@@ -480,6 +482,13 @@ class _ContactScreenState extends State<ContactScreen> {
                     ),
             ),
           ),
+          const SizedBox(height: 12),
+          Text(
+            'By submitting this form, you agree to our Privacy Policy & Terms.',
+            style: AppTypography.bodySmall(
+              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+            ).copyWith(fontSize: 11),
+          ),
         ],
       ),
     );
@@ -539,10 +548,11 @@ class _ContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: onTap,
+    return SelectionContainer.disabled(
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: onTap,
         child: Container(
           padding: const EdgeInsets.all(20.0),
           decoration: BoxDecoration(
@@ -606,6 +616,6 @@ class _ContactCard extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }

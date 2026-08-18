@@ -72,6 +72,59 @@ class HomeScreen extends StatelessWidget {
             height: 1,
           ),
 
+          // 1.5 CLIENT TRUST & AVAILABILITY BANNER
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(
+              horizontal: horizontalPadding,
+              vertical: isMobile ? 16.0 : 20.0,
+            ),
+            color: isDark ? AppColors.surfaceSubtleDark : AppColors.surfaceSubtleLight,
+            child: Center(
+              child: Container(
+                constraints: const BoxConstraints(
+                  maxWidth: ResponsiveBreakpoints.maxContentWidth,
+                ),
+                child: Wrap(
+                  alignment: isMobile ? WrapAlignment.start : WrapAlignment.spaceBetween,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 24,
+                  runSpacing: 12,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF22C55E), // Live Status Green Indicator
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          'ACCEPTING NEW COMMISSIONS & RECURRING PARTNERSHIPS',
+                          style: AppTypography.labelUppercase(
+                            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                            scale: scale,
+                          ).copyWith(fontWeight: FontWeight.w700, fontSize: 11 * scale),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      'GRAPHIC DESIGN FOR: IEDC ASET • CAMPUS COMMUNITIES • INDIVIDUALS',
+                      style: AppTypography.labelUppercase(
+                        color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                        scale: scale,
+                      ).copyWith(fontSize: 10.5 * scale, letterSpacing: 1.2),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
           // 2. CONTENT BETWEEN HERO & RECENT DESIGNS: CORE HIGHLIGHTS SECTION
           Container(
             width: double.infinity,
@@ -317,7 +370,7 @@ class HomeScreen extends StatelessWidget {
                     ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 960),
                       child: Text(
-                        'From one-off posters to ongoing design support, I work with people and teams who need their ideas to look as good as they sound.',
+                        'From standalone event posters to ongoing design support, I work with people and teams who need their ideas to look as good as they sound.',
                         style: isMobile
                             ? AppTypography.heading2(
                                 color: isDark
@@ -611,7 +664,7 @@ class HomeScreen extends StatelessWidget {
 
         // Display Headline
         Text(
-          'Good ideas deserve better visuals.',
+          'Visual design that commands attention.',
           style: isMobile
               ? AppTypography.displaySmall(
                   color: isDark
@@ -630,7 +683,7 @@ class HomeScreen extends StatelessWidget {
 
         // Supporting Copy
         Text(
-          'Designing posters, campaigns and visual identities for colleges, startups, businesses and people with something worth saying.',
+          'High-impact posters, campaign key visuals, and graphic support for campus events, workshops, startups, and growing brands.',
           style: AppTypography.bodyLarge(
             color: isDark
                 ? AppColors.textSecondaryDark

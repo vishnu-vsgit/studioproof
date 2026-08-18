@@ -25,11 +25,9 @@ class ResponsiveBreakpoints {
     if (width <= mobileMax) {
       return 18.0;
     } else if (width <= tabletMax) {
-      return 28.0;
-    } else if (width <= 1440) {
-      return 64.0;
+      return 36.0;
     } else {
-      return (width - maxContentWidth) / 2;
+      return 64.0;
     }
   }
 

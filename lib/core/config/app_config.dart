@@ -3,7 +3,7 @@ class AppConfig {
   static const String studioName = 'StudioProof';
   static const String studioTagline = 'Independent Graphic Design Studio';
   static const String designerTitle = 'Graphic Designer & Student';
-  static const String designerBioHeadline = 'Still learning. Already designing.';
+  static const String designerBioHeadline = 'Clear visual direction. Designed for real impact.';
   
   // Primary Contact Info
   static const String contactEmail = 'studioproof.ds@gmail.com';
