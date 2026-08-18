@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
-              vertical: isMobile ? 16.0 : 20.0,
+              vertical: isMobile ? 18.0 : 20.0,
             ),
             color: isDark ? AppColors.surfaceSubtleDark : AppColors.surfaceSubtleLight,
             child: Center(
@@ -85,42 +85,80 @@ class HomeScreen extends StatelessWidget {
                 constraints: const BoxConstraints(
                   maxWidth: ResponsiveBreakpoints.maxContentWidth,
                 ),
-                child: Wrap(
-                  alignment: isMobile ? WrapAlignment.start : WrapAlignment.spaceBetween,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 24,
-                  runSpacing: 12,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 8,
-                          height: 8,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFF22C55E), // Live Status Green Indicator
-                            shape: BoxShape.circle,
+                child: isMobile
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(top: 4),
+                                width: 8,
+                                height: 8,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF22C55E), // Live Status Green Indicator
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  'ACCEPTING NEW COMMISSIONS & RECURRING PARTNERSHIPS',
+                                  style: AppTypography.labelUppercase(
+                                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                                    scale: scale,
+                                  ).copyWith(fontWeight: FontWeight.w700, fontSize: 11 * scale),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          'ACCEPTING NEW COMMISSIONS & RECURRING PARTNERSHIPS',
-                          style: AppTypography.labelUppercase(
-                            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-                            scale: scale,
-                          ).copyWith(fontWeight: FontWeight.w700, fontSize: 11 * scale),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      'GRAPHIC DESIGN FOR: IEDC ASET • CAMPUS COMMUNITIES • INDIVIDUALS',
-                      style: AppTypography.labelUppercase(
-                        color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
-                        scale: scale,
-                      ).copyWith(fontSize: 10.5 * scale, letterSpacing: 1.2),
-                    ),
-                  ],
-                ),
+                          const SizedBox(height: 10),
+                          Text(
+                            'GRAPHIC DESIGN FOR: IEDC ASET • CAMPUS COMMUNITIES • INDIVIDUALS',
+                            style: AppTypography.labelUppercase(
+                              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                              scale: scale,
+                            ).copyWith(fontSize: 10 * scale, letterSpacing: 1.1),
+                          ),
+                        ],
+                      )
+                    : Wrap(
+                        alignment: WrapAlignment.spaceBetween,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 24,
+                        runSpacing: 12,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: 8,
+                                height: 8,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF22C55E),
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                'ACCEPTING NEW COMMISSIONS & RECURRING PARTNERSHIPS',
+                                style: AppTypography.labelUppercase(
+                                  color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                                  scale: scale,
+                                ).copyWith(fontWeight: FontWeight.w700, fontSize: 11 * scale),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            'GRAPHIC DESIGN FOR: IEDC ASET • CAMPUS COMMUNITIES • INDIVIDUALS',
+                            style: AppTypography.labelUppercase(
+                              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                              scale: scale,
+                            ).copyWith(fontSize: 10.5 * scale, letterSpacing: 1.2),
+                          ),
+                        ],
+                      ),
               ),
             ),
           ),
@@ -131,7 +169,7 @@ class HomeScreen extends StatelessWidget {
             color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
-              vertical: isMobile ? 28.0 : 64.0,
+              vertical: isMobile ? 40.0 : 64.0,
             ),
             child: Center(
               child: Container(
@@ -172,60 +210,38 @@ class HomeScreen extends StatelessWidget {
                             : AppColors.textSecondaryLight,
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 28),
 
-                    // 4 Core Highlights Cards (2x2 Grid on Mobile for compact height)
+                    // 4 Core Highlights Cards (Spacious 1-column on mobile, 4-column on desktop)
                     if (isMobile)
                       Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Expanded(
-                                child: _HighlightCard(
-                                  number: '01',
-                                  title: 'Posters',
-                                  description:
-                                      'Key visuals, fest posters & stage backdrops.',
-                                  isCompact: true,
-                                ),
-                              ),
-                              SizedBox(width: 12),
-                              Expanded(
-                                child: _HighlightCard(
-                                  number: '02',
-                                  title: 'Branding',
-                                  description:
-                                      'Identity systems, guidelines & logos.',
-                                  isCompact: true,
-                                ),
-                              ),
-                            ],
+                        children: const [
+                          _HighlightCard(
+                            number: '01',
+                            title: 'Posters & Campaigns',
+                            description:
+                                'High-impact key visuals, festival posters, stage backdrops, and digital promotional graphics.',
                           ),
-                          const SizedBox(height: 12),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Expanded(
-                                child: _HighlightCard(
-                                  number: '03',
-                                  title: 'Fast Output',
-                                  description:
-                                      'Quick turnarounds & print PDF packages.',
-                                  isCompact: true,
-                                ),
-                              ),
-                              SizedBox(width: 12),
-                              Expanded(
-                                child: _HighlightCard(
-                                  number: '04',
-                                  title: 'Custom',
-                                  description:
-                                      'No templates. Pure typographic direction.',
-                                  isCompact: true,
-                                ),
-                              ),
-                            ],
+                          SizedBox(height: 16),
+                          _HighlightCard(
+                            number: '02',
+                            title: 'Brand Identity',
+                            description:
+                                'Clean visual identity systems, typography guidelines, and logo assets tailored for startups & clubs.',
+                          ),
+                          SizedBox(height: 16),
+                          _HighlightCard(
+                            number: '03',
+                            title: 'Fast Turnarounds',
+                            description:
+                                'Efficient turnaround times with complete production-ready print PDFs and digital PNG packages.',
+                          ),
+                          SizedBox(height: 16),
+                          _HighlightCard(
+                            number: '04',
+                            title: 'No Generic Templates',
+                            description:
+                                'Distinct visual execution focused on clarity, typographic structure, and custom visual direction.',
                           ),
                         ],
                       )
@@ -650,12 +666,14 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
-            Text(
-              AppConfig.studioTagline.toUpperCase(),
-              style: AppTypography.labelUppercase(
-                color:
-                    isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-                scale: scale,
+            Expanded(
+              child: Text(
+                AppConfig.studioTagline.toUpperCase(),
+                style: AppTypography.labelUppercase(
+                  color:
+                      isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                  scale: scale,
+                ),
               ),
             ),
           ],
@@ -708,11 +726,13 @@ class HomeScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.flash_on_rounded, size: 16, color: AppColors.accent),
                 const SizedBox(width: 8),
-                Text(
-                  'Posters • Branding • Fast Turnaround',
-                  style: AppTypography.bodySmall(
-                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-                  ).copyWith(fontWeight: FontWeight.w600),
+                Flexible(
+                  child: Text(
+                    'Posters • Branding • Fast Turnaround',
+                    style: AppTypography.bodySmall(
+                      color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                    ).copyWith(fontWeight: FontWeight.w600),
+                  ),
                 ),
               ],
             ),
@@ -721,8 +741,10 @@ class HomeScreen extends StatelessWidget {
         ],
 
         // Action Buttons
-        Row(
-          mainAxisSize: MainAxisSize.min,
+        Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             ElevatedButton(
               onPressed: () => context.go('/start-a-project'),
@@ -743,8 +765,7 @@ class HomeScreen extends StatelessWidget {
                 style: AppTypography.buttonText(color: Colors.white),
               ),
             ),
-            if (isMobile) ...[
-              const SizedBox(width: 12),
+            if (isMobile)
               OutlinedButton(
                 onPressed: () => context.go('/services'),
                 style: OutlinedButton.styleFrom(
@@ -770,7 +791,6 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
           ],
         ),
       ],

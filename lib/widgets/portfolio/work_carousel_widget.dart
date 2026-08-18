@@ -46,7 +46,10 @@ class _WorkCarouselWidgetState extends State<WorkCarouselWidget> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final isMobile = ResponsiveBreakpoints.isMobile(context);
-    final cardWidth = isMobile ? 290.0 : 340.0;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final cardWidth = isMobile
+        ? (screenWidth - 48.0).clamp(240.0, 300.0)
+        : 340.0;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
