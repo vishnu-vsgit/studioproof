@@ -950,13 +950,11 @@ class _HighlightCard extends StatelessWidget {
   final String number;
   final String title;
   final String description;
-  final bool isCompact;
 
   const _HighlightCard({
     required this.number,
     required this.title,
     required this.description,
-    this.isCompact = false,
   });
 
   @override
@@ -964,7 +962,7 @@ class _HighlightCard extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: EdgeInsets.all(isCompact ? 16.0 : 28.0),
+      padding: const EdgeInsets.all(28.0),
       decoration: BoxDecoration(
         color: isDark ? AppColors.bgDark : AppColors.bgLight,
         border: Border.all(
@@ -978,22 +976,16 @@ class _HighlightCard extends StatelessWidget {
             number,
             style: AppTypography.labelUppercase(color: AppColors.accent),
           ),
-          SizedBox(height: isCompact ? 8 : 16),
+          const SizedBox(height: 16),
           Text(
             title,
-            style: isCompact
-                ? AppTypography.heading3(
-                    color: isDark
-                        ? AppColors.textPrimaryDark
-                        : AppColors.textPrimaryLight,
-                  ).copyWith(fontSize: 16)
-                : AppTypography.heading3(
-                    color: isDark
-                        ? AppColors.textPrimaryDark
-                        : AppColors.textPrimaryLight,
-                  ),
+            style: AppTypography.heading3(
+              color: isDark
+                  ? AppColors.textPrimaryDark
+                  : AppColors.textPrimaryLight,
+            ),
           ),
-          SizedBox(height: isCompact ? 4 : 8),
+          const SizedBox(height: 8),
           Text(
             description,
             style: AppTypography.bodySmall(
