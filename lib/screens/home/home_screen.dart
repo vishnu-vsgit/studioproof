@@ -131,7 +131,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            'COMPLETED GRAPHIC DESIGN & TRAINING FOR: MULTIPLE CAMPUS COMMUNITIES • INDIVIDUALS',
+                            'COMPLETED GRAPHIC DESIGN & TRAINING FOR: MULTIPLE CAMPUS COMMUNITIES & INDIVIDUALS',
                             style:
                                 AppTypography.labelUppercase(
                                   color: isDark
@@ -179,7 +179,7 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                           Text(
-                            'GRAPHIC DESIGN & TRAINING FOR: IEDC ASET • CAMPUS COMMUNITIES • INDIVIDUALS',
+                            'COMPLETED GRAPHIC DESIGN & TRAINING FOR: MULTIPLE CAMPUS COMMUNITIES & INDIVIDUALS',
                             style:
                                 AppTypography.labelUppercase(
                                   color: isDark
