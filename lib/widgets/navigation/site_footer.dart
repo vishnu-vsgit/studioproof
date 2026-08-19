@@ -223,10 +223,11 @@ class SiteFooter extends StatelessWidget {
               // Bottom Line: Copyright & Tagline
               if (isMobile)
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       '© ${DateTime.now().year} ${AppConfig.studioName}. All rights reserved.',
+                      textAlign: TextAlign.center,
                       style: AppTypography.bodySmall(
                         color: isDark
                             ? AppColors.textMutedDark
@@ -237,6 +238,7 @@ class SiteFooter extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       'Designed & built with curiosity.',
+                      textAlign: TextAlign.center,
                       style: AppTypography.bodySmall(
                         color: isDark
                             ? AppColors.textMutedDark

@@ -127,16 +127,17 @@ class HomeScreen extends StatelessWidget {
                                 Expanded(
                                   child: Text(
                                     'ACCEPTING NEW COMMISSIONS & PARTNERSHIPS',
-                                    style: AppTypography.labelUppercase(
-                                      color: isDark
-                                          ? AppColors.textPrimaryDark
-                                          : AppColors.textPrimaryLight,
-                                      scale: scale,
-                                    ).copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 11 * scale,
-                                      letterSpacing: 0.8,
-                                    ),
+                                    style:
+                                        AppTypography.labelUppercase(
+                                          color: isDark
+                                              ? AppColors.textPrimaryDark
+                                              : AppColors.textPrimaryLight,
+                                          scale: scale,
+                                        ).copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 11 * scale,
+                                          letterSpacing: 0.8,
+                                        ),
                                   ),
                                 ),
                               ],
@@ -146,15 +147,16 @@ class HomeScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 16),
                               child: Text(
                                 'Completed Graphic Design & Training for Multiple Campus Communities & Individuals',
-                                style: AppTypography.bodySmall(
-                                  color: isDark
-                                      ? AppColors.textSecondaryDark
-                                      : AppColors.textSecondaryLight,
-                                  scale: scale,
-                                ).copyWith(
-                                  fontSize: 11.5 * scale,
-                                  height: 1.35,
-                                ),
+                                style:
+                                    AppTypography.bodySmall(
+                                      color: isDark
+                                          ? AppColors.textSecondaryDark
+                                          : AppColors.textSecondaryLight,
+                                      scale: scale,
+                                    ).copyWith(
+                                      fontSize: 11.5 * scale,
+                                      height: 1.35,
+                                    ),
                               ),
                             ),
                           ],
@@ -179,7 +181,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                               const SizedBox(width: 10),
                               Text(
-                                'ACCEPTING NEW COMMISSIONS & RECURRING PARTNERSHIPS',
+                                'ACCEPTING NEW WORKS & RECURRING PARTNERSHIPS',
                                 style:
                                     AppTypography.labelUppercase(
                                       color: isDark
@@ -1062,8 +1064,9 @@ class _HighlightCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment:
-            isCompact ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
+        mainAxisAlignment: isCompact
+            ? MainAxisAlignment.spaceBetween
+            : MainAxisAlignment.start,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

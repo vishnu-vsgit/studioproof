@@ -9,10 +9,10 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; img-src 'self' https: data: blob:; font-src 'self' https: data:;">
   
   <!-- SEO & Primary Meta Tags -->
-  <title>StudioProof — Independent Graphic Design Studio</title>
-  <meta name="title" content="StudioProof — Independent Graphic Design Studio">
-  <meta name="description" content="Independent graphic design studio designing posters, key visuals, campaign collateral, and visual identities for colleges, startups, businesses, and creators.">
-  <meta name="keywords" content="StudioProof, graphic design studio, poster design, college fest poster, startup branding, campaign design, IEDC ASET, social media graphics, editorial design">
+  <title>StudioProof — Independent Graphic Design & Training Studio</title>
+  <meta name="title" content="StudioProof — Independent Graphic Design & Training Studio">
+  <meta name="description" content="Independent graphic design studio designing posters, campaign key visuals, brand identities, and conducting paid design training & workshops for campus communities, startups, creators & aspiring designers.">
+  <meta name="keywords" content="StudioProof, graphic design studio, poster design, design training, photoshop workshop, figma training, college fest poster, startup branding, campaign design, IEDC ASET, social media graphics">
   <meta name="author" content="StudioProof">
   <meta name="theme-color" content="#121210" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#FBF9F5" media="(prefers-color-scheme: light)">
@@ -20,9 +20,13 @@
   <!-- Open Graph / Facebook / WhatsApp / Instagram Sharing -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://studioproof.design/">
-  <meta property="og:title" content="StudioProof — Independent Graphic Design Studio">
-  <meta property="og:description" content="Clear visual direction. High-impact posters, campaign key visuals, and graphic support for campus events, workshops, startups, and growing brands.">
-  <meta property="og:image" content="assets/images/work_4.jpg">
+  <meta property="og:title" content="StudioProof — Independent Graphic Design & Training Studio">
+  <meta property="og:description" content="Clear visual direction. High-impact posters, campaign key visuals, brand identity, and paid design training & workshops for campus communities, startups, creators & aspiring designers.">
+  <meta property="og:image" content="https://studioproof.design/assets/images/work_4.jpg">
+  <meta property="og:image:secure_url" content="https://studioproof.design/assets/images/work_4.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="StudioProof Graphic Design Showcase">
   <meta property="og:site_name" content="StudioProof">
   <meta property="og:locale" content="en_US">
@@ -30,9 +34,39 @@
   <!-- Twitter / X Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://studioproof.design/">
-  <meta name="twitter:title" content="StudioProof — Independent Graphic Design Studio">
-  <meta name="twitter:description" content="High-impact posters, campaign key visuals, and graphic support for campus events, workshops, startups, and growing brands.">
-  <meta name="twitter:image" content="assets/images/work_4.jpg">
+  <meta name="twitter:title" content="StudioProof — Independent Graphic Design & Training Studio">
+  <meta name="twitter:description" content="High-impact posters, campaign key visuals, brand identity, and paid design training & workshops for campus communities, startups, creators & aspiring designers.">
+  <meta name="twitter:image" content="https://studioproof.design/assets/images/work_4.jpg">
+
+  <!-- Structured Data (Schema.org JSON-LD for Google Search & Social) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "StudioProof",
+    "url": "https://studioproof.design",
+    "logo": "https://studioproof.design/assets/images/header_logo.png",
+    "image": "https://studioproof.design/assets/images/work_4.jpg",
+    "description": "Independent graphic design studio designing posters, campaign key visuals, brand identities, and conducting paid design training & workshops.",
+    "email": "studioproof.ds@gmail.com",
+    "telephone": "+918778944493",
+    "knowsAbout": ["Poster Design", "Brand Identity", "Design Training", "Photoshop", "Figma", "Campaign Visuals"],
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Poster & Campaign Design"
+      },
+      {
+        "@type": "Offer",
+        "name": "Design Training & Workshops"
+      },
+      {
+        "@type": "Offer",
+        "name": "Brand Identity Design"
+      }
+    ]
+  }
+  </script>
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -147,20 +181,20 @@
     }
 
     .skeleton-hero {
-      margin-bottom: 64px;
+      margin-bottom: 40px;
     }
 
     .skeleton-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
     }
 
     .skeleton-card {
-      height: 260px;
+      height: 200px;
       background-color: var(--surface-color);
       border: 1px solid var(--border-color);
-      padding: 28px;
+      padding: 20px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -169,9 +203,10 @@
 
     @media (max-width: 768px) {
       .skeleton-header { padding: 0 20px; }
-      .skeleton-content { padding: 40px 20px; }
+      .skeleton-content { padding: 32px 20px; }
       .skeleton-nav-links { display: none; }
-      .skeleton-grid { grid-template-columns: 1fr; }
+      .skeleton-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .skeleton-card { height: 180px; padding: 14px; }
     }
   </style>
 </head>
@@ -179,9 +214,8 @@
   <!-- Initial Skeleton Loader displayed instantly while Flutter engine initializes -->
   <div class="initial-skeleton-container" id="loading-skeleton">
     <div class="skeleton-header">
-      <div class="skeleton-box" style="width: 150px; height: 28px;"></div>
+      <div class="skeleton-box" style="width: 140px; height: 26px;"></div>
       <div class="skeleton-nav-links">
-        <div class="skeleton-box" style="width: 64px; height: 14px;"></div>
         <div class="skeleton-box" style="width: 64px; height: 14px;"></div>
         <div class="skeleton-box" style="width: 64px; height: 14px;"></div>
         <div class="skeleton-box" style="width: 110px; height: 38px;"></div>
@@ -189,27 +223,49 @@
     </div>
     <div class="skeleton-content">
       <div class="skeleton-hero">
-        <div class="skeleton-box" style="width: 110px; height: 14px; margin-bottom: 20px; background-color: var(--accent-color); opacity: 0.8;"></div>
-        <div class="skeleton-box" style="width: 65%; height: 44px; margin-bottom: 14px;"></div>
-        <div class="skeleton-box" style="width: 45%; height: 44px; margin-bottom: 24px;"></div>
-        <div class="skeleton-box" style="width: 85%; height: 16px; margin-bottom: 10px;"></div>
-        <div class="skeleton-box" style="width: 55%; height: 16px;"></div>
+        <div class="skeleton-box" style="width: 180px; height: 12px; margin-bottom: 20px; background-color: var(--accent-color); opacity: 0.85;"></div>
+        <div class="skeleton-box" style="width: 70%; max-width: 520px; height: 38px; margin-bottom: 12px;"></div>
+        <div class="skeleton-box" style="width: 48%; max-width: 360px; height: 38px; margin-bottom: 20px;"></div>
+        <div class="skeleton-box" style="width: 88%; max-width: 660px; height: 14px; margin-bottom: 8px;"></div>
+        <div class="skeleton-box" style="width: 60%; max-width: 460px; height: 14px; margin-bottom: 24px;"></div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <div class="skeleton-box" style="width: 140px; height: 42px; background-color: var(--accent-color); opacity: 0.9;"></div>
+          <div class="skeleton-box" style="width: 90px; height: 42px;"></div>
+        </div>
       </div>
+
+      <!-- Status Banner Skeleton -->
+      <div style="margin-bottom: 40px; padding: 14px 16px; background-color: var(--surface-color); border: 1px solid var(--border-color); display: flex; align-items: center; gap: 10px;">
+        <div class="skeleton-box" style="width: 8px; height: 8px; border-radius: 50%; background-color: #22C55E;"></div>
+        <div class="skeleton-box" style="width: 60%; max-width: 400px; height: 12px;"></div>
+      </div>
+
+      <!-- "WHAT WE DO" Highlights 4-card (Desktop) / 2x2 Grid (Mobile) Skeleton -->
+      <div style="margin-bottom: 20px;">
+        <div class="skeleton-box" style="width: 90px; height: 12px; margin-bottom: 8px; background-color: var(--accent-color); opacity: 0.85;"></div>
+        <div class="skeleton-box" style="width: 220px; height: 24px;"></div>
+      </div>
+
       <div class="skeleton-grid">
         <div class="skeleton-card">
-          <div class="skeleton-box" style="width: 35%; height: 14px;"></div>
-          <div class="skeleton-box" style="width: 75%; height: 24px;"></div>
-          <div class="skeleton-box" style="width: 100%; height: 50px;"></div>
+          <div class="skeleton-box" style="width: 24px; height: 12px; background-color: var(--accent-color); opacity: 0.85;"></div>
+          <div class="skeleton-box" style="width: 80%; height: 18px;"></div>
+          <div class="skeleton-box" style="width: 100%; height: 32px;"></div>
         </div>
         <div class="skeleton-card">
-          <div class="skeleton-box" style="width: 35%; height: 14px;"></div>
-          <div class="skeleton-box" style="width: 75%; height: 24px;"></div>
-          <div class="skeleton-box" style="width: 100%; height: 50px;"></div>
+          <div class="skeleton-box" style="width: 24px; height: 12px; background-color: var(--accent-color); opacity: 0.85;"></div>
+          <div class="skeleton-box" style="width: 80%; height: 18px;"></div>
+          <div class="skeleton-box" style="width: 100%; height: 32px;"></div>
         </div>
         <div class="skeleton-card">
-          <div class="skeleton-box" style="width: 35%; height: 14px;"></div>
-          <div class="skeleton-box" style="width: 75%; height: 24px;"></div>
-          <div class="skeleton-box" style="width: 100%; height: 50px;"></div>
+          <div class="skeleton-box" style="width: 24px; height: 12px; background-color: var(--accent-color); opacity: 0.85;"></div>
+          <div class="skeleton-box" style="width: 80%; height: 18px;"></div>
+          <div class="skeleton-box" style="width: 100%; height: 32px;"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-box" style="width: 24px; height: 12px; background-color: var(--accent-color); opacity: 0.85;"></div>
+          <div class="skeleton-box" style="width: 80%; height: 18px;"></div>
+          <div class="skeleton-box" style="width: 100%; height: 32px;"></div>
         </div>
       </div>
     </div>
