@@ -49,10 +49,10 @@ class PrivacyPolicyScreen extends StatelessWidget {
                     Text(
                       'Privacy Policy',
                       style: isMobile
-                          ? AppTypography.heading1(
+                          ? AppTypography.heading2(
                               color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                             )
-                          : AppTypography.displayLarge(
+                          : AppTypography.displaySmall(
                               color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                             ),
                     ),
@@ -76,12 +76,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
-              vertical: isMobile ? 36.0 : 64.0,
+              vertical: isMobile ? 28.0 : 48.0,
             ),
             child: Center(
               child: Container(
                 constraints: const BoxConstraints(
-                  maxWidth: 900.0,
+                  maxWidth: 820.0,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,11 +141,11 @@ class PrivacyPolicyScreen extends StatelessWidget {
                           'Email: ${AppConfig.contactEmail}\n'
                           'WhatsApp: +${AppConfig.whatsappNumber}',
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 24),
                     OutlinedButton(
                       onPressed: () => context.go('/start-a-project'),
                       style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                         side: BorderSide(
                           color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                         ),
@@ -173,22 +173,22 @@ class PrivacyPolicyScreen extends StatelessWidget {
     required String content,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 36.0),
+      padding: const EdgeInsets.only(bottom: 28.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            style: AppTypography.heading2(
+            style: AppTypography.heading3(
               color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           Text(
             content,
-            style: AppTypography.bodyLarge(
+            style: AppTypography.bodyMedium(
               color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
-            ).copyWith(height: 1.6),
+            ).copyWith(height: 1.55),
           ),
         ],
       ),
