@@ -143,6 +143,48 @@ class MobileDrawer extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      context.go('/privacy-policy');
+                    },
+                    child: Text(
+                      'Privacy Policy',
+                      style: AppTypography.bodySmall(
+                        color: isDark
+                            ? AppColors.textMutedDark
+                            : AppColors.textMutedLight,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    '  •  ',
+                    style: AppTypography.bodySmall(
+                      color: isDark
+                          ? AppColors.textMutedDark
+                          : AppColors.textMutedLight,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      context.go('/terms-and-conditions');
+                    },
+                    child: Text(
+                      'Terms & Conditions',
+                      style: AppTypography.bodySmall(
+                        color: isDark
+                            ? AppColors.textMutedDark
+                            : AppColors.textMutedLight,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
             ],
           ),
         ),

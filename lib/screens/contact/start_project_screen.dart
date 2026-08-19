@@ -40,6 +40,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
     'Branding',
     'Presentation',
     'Business Design',
+    'Training / Workshop',
     'Other',
   ];
 
@@ -96,7 +97,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://formsubmit.co/ajax/${AppConfig.contactEmail}'),
+        Uri.parse('https://formsubmit.co/ajax/${AppConfig.formSubmitHash}'),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',

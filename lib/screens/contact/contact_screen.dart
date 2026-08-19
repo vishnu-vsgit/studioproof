@@ -66,7 +66,7 @@ class _ContactScreenState extends State<ContactScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://formsubmit.co/ajax/${AppConfig.contactEmail}'),
+        Uri.parse('https://formsubmit.co/ajax/${AppConfig.formSubmitHash}'),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',

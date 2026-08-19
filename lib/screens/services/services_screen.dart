@@ -63,7 +63,7 @@ class ServicesScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Direct graphic design services for standalone promotional needs and recurring monthly design partnerships.',
+                      'Direct graphic design services, paid training sessions, and recurring monthly design partnerships.',
                       style: AppTypography.bodyLarge(
                         color: isDark
                             ? AppColors.textSecondaryDark
@@ -78,7 +78,7 @@ class ServicesScreen extends StatelessWidget {
 
           const Divider(),
 
-          // 6 Numbered Services Editorial List
+          // 7 Numbered Services Editorial List
           Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(
@@ -148,6 +148,16 @@ class ServicesScreen extends StatelessWidget {
                     Divider(),
                     _EditorialServiceRow(
                       number: '06',
+                      title: 'Design Training & Workshops',
+                      description:
+                          'Hands-on paid training sessions in Photoshop, Figma, poster design principles, and visual layout tailored for beginners, college clubs, and aspiring designers.',
+                      deliverables:
+                          'Live 1-on-1 Mentorship, Group Masterclasses, Resource Kits & Templates',
+                      idealClient: 'Students, Campus Clubs, Creators, Junior Designers',
+                    ),
+                    Divider(),
+                    _EditorialServiceRow(
+                      number: '07',
                       title: 'Custom Projects',
                       description:
                           'Specialized graphic requests, custom typography layouts, presentation decks, or unique visual challenges.',

@@ -1,11 +1,11 @@
 {
-    "name": "startup",
-    "short_name": "startup",
+    "name": "StudioProof — Independent Graphic Design Studio",
+    "short_name": "StudioProof",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#121210",
+    "theme_color": "#D94A26",
+    "description": "Independent graphic design studio designing posters, campaigns, and visual identities for colleges, startups, businesses, and creators.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

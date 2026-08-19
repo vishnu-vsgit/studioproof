@@ -33,8 +33,10 @@ class HomeScreen extends StatelessWidget {
             constraints: BoxConstraints(
               minHeight: isMobile
                   ? 0.0
-                  : (MediaQuery.of(context).size.height - 140.0)
-                      .clamp(440.0, 750.0),
+                  : (MediaQuery.of(context).size.height - 140.0).clamp(
+                      440.0,
+                      750.0,
+                    ),
             ),
             padding: EdgeInsets.symmetric(
               horizontal: horizontalPadding,
@@ -54,7 +56,11 @@ class HomeScreen extends StatelessWidget {
                           Expanded(
                             flex: 6,
                             child: _buildHeroLeftText(
-                                context, isDark, isMobile, scale),
+                              context,
+                              isDark,
+                              isMobile,
+                              scale,
+                            ),
                           ),
                           const SizedBox(width: 48),
                           Expanded(
@@ -79,7 +85,9 @@ class HomeScreen extends StatelessWidget {
               horizontal: horizontalPadding,
               vertical: isMobile ? 18.0 : 20.0,
             ),
-            color: isDark ? AppColors.surfaceSubtleDark : AppColors.surfaceSubtleLight,
+            color: isDark
+                ? AppColors.surfaceSubtleDark
+                : AppColors.surfaceSubtleLight,
             child: Center(
               child: Container(
                 constraints: const BoxConstraints(
@@ -97,7 +105,9 @@ class HomeScreen extends StatelessWidget {
                                 width: 8,
                                 height: 8,
                                 decoration: const BoxDecoration(
-                                  color: Color(0xFF22C55E), // Live Status Green Indicator
+                                  color: Color(
+                                    0xFF22C55E,
+                                  ), // Live Status Green Indicator
                                   shape: BoxShape.circle,
                                 ),
                               ),
@@ -105,21 +115,33 @@ class HomeScreen extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   'ACCEPTING NEW COMMISSIONS & RECURRING PARTNERSHIPS',
-                                  style: AppTypography.labelUppercase(
-                                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-                                    scale: scale,
-                                  ).copyWith(fontWeight: FontWeight.w700, fontSize: 11 * scale),
+                                  style:
+                                      AppTypography.labelUppercase(
+                                        color: isDark
+                                            ? AppColors.textPrimaryDark
+                                            : AppColors.textPrimaryLight,
+                                        scale: scale,
+                                      ).copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 11 * scale,
+                                      ),
                                 ),
                               ),
                             ],
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            'GRAPHIC DESIGN FOR: IEDC ASET • CAMPUS COMMUNITIES • INDIVIDUALS',
-                            style: AppTypography.labelUppercase(
-                              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
-                              scale: scale,
-                            ).copyWith(fontSize: 10 * scale, letterSpacing: 1.1),
+                            'COMPLETED GRAPHIC DESIGN & TRAINING FOR: MULTIPLE CAMPUS COMMUNITIES • INDIVIDUALS',
+                            style:
+                                AppTypography.labelUppercase(
+                                  color: isDark
+                                      ? AppColors.textSecondaryDark
+                                      : AppColors.textSecondaryLight,
+                                  scale: scale,
+                                ).copyWith(
+                                  fontSize: 10 * scale,
+                                  letterSpacing: 1.1,
+                                ),
                           ),
                         ],
                       )
@@ -143,19 +165,31 @@ class HomeScreen extends StatelessWidget {
                               const SizedBox(width: 10),
                               Text(
                                 'ACCEPTING NEW COMMISSIONS & RECURRING PARTNERSHIPS',
-                                style: AppTypography.labelUppercase(
-                                  color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-                                  scale: scale,
-                                ).copyWith(fontWeight: FontWeight.w700, fontSize: 11 * scale),
+                                style:
+                                    AppTypography.labelUppercase(
+                                      color: isDark
+                                          ? AppColors.textPrimaryDark
+                                          : AppColors.textPrimaryLight,
+                                      scale: scale,
+                                    ).copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 11 * scale,
+                                    ),
                               ),
                             ],
                           ),
                           Text(
-                            'GRAPHIC DESIGN FOR: IEDC ASET • CAMPUS COMMUNITIES • INDIVIDUALS',
-                            style: AppTypography.labelUppercase(
-                              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
-                              scale: scale,
-                            ).copyWith(fontSize: 10.5 * scale, letterSpacing: 1.2),
+                            'GRAPHIC DESIGN & TRAINING FOR: IEDC ASET • CAMPUS COMMUNITIES • INDIVIDUALS',
+                            style:
+                                AppTypography.labelUppercase(
+                                  color: isDark
+                                      ? AppColors.textSecondaryDark
+                                      : AppColors.textSecondaryLight,
+                                  scale: scale,
+                                ).copyWith(
+                                  fontSize: 10.5 * scale,
+                                  letterSpacing: 1.2,
+                                ),
                           ),
                         ],
                       ),
@@ -203,7 +237,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Clear, deliberate graphic design solutions for organizations and creators.',
+                      'Clear, deliberate graphic design solutions and hands-on paid training sessions.',
                       style: AppTypography.bodyLarge(
                         color: isDark
                             ? AppColors.textSecondaryDark
@@ -212,36 +246,58 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 28),
 
-                    // 4 Core Highlights Cards (Spacious 1-column on mobile, 4-column on desktop)
+                    // 4 Core Highlights (Compact 2x2 Grid on Mobile, 4-column Row on Desktop)
                     if (isMobile)
                       Column(
                         children: const [
-                          _HighlightCard(
-                            number: '01',
-                            title: 'Posters & Campaigns',
-                            description:
-                                'High-impact key visuals, festival posters, stage backdrops, and digital promotional graphics.',
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: _HighlightCard(
+                                  number: '01',
+                                  title: 'Posters & Campaigns',
+                                  description:
+                                      'High-impact key visuals, festival posters & digital graphics.',
+                                  isCompact: true,
+                                ),
+                              ),
+                              SizedBox(width: 12),
+                              Expanded(
+                                child: _HighlightCard(
+                                  number: '02',
+                                  title: 'Brand Identity',
+                                  description:
+                                      'Clean visual identity, logos & typography guidelines.',
+                                  isCompact: true,
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(height: 16),
-                          _HighlightCard(
-                            number: '02',
-                            title: 'Brand Identity',
-                            description:
-                                'Clean visual identity systems, typography guidelines, and logo assets tailored for startups & clubs.',
-                          ),
-                          SizedBox(height: 16),
-                          _HighlightCard(
-                            number: '03',
-                            title: 'Fast Turnarounds',
-                            description:
-                                'Efficient turnaround times with complete production-ready print PDFs and digital PNG packages.',
-                          ),
-                          SizedBox(height: 16),
-                          _HighlightCard(
-                            number: '04',
-                            title: 'No Generic Templates',
-                            description:
-                                'Distinct visual execution focused on clarity, typographic structure, and custom visual direction.',
+                          SizedBox(height: 12),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: _HighlightCard(
+                                  number: '03',
+                                  title: 'Design Training',
+                                  description:
+                                      'Paid 1-on-1 & workshop sessions in Photoshop & Figma.',
+                                  isCompact: true,
+                                ),
+                              ),
+                              SizedBox(width: 12),
+                              Expanded(
+                                child: _HighlightCard(
+                                  number: '04',
+                                  title: 'Fast Turnarounds',
+                                  description:
+                                      'Production-ready print PDFs & digital PNG packages.',
+                                  isCompact: true,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       )
@@ -271,18 +327,18 @@ class HomeScreen extends StatelessWidget {
                             Expanded(
                               child: _HighlightCard(
                                 number: '03',
-                                title: 'Fast Turnarounds',
+                                title: 'Design Training',
                                 description:
-                                    'Efficient turnaround times with complete production-ready print PDFs and digital PNG packages.',
+                                    'Hands-on paid training sessions in Photoshop, Figma, poster design & visual layout principles.',
                               ),
                             ),
                             SizedBox(width: 20),
                             Expanded(
                               child: _HighlightCard(
                                 number: '04',
-                                title: 'No Generic Templates',
+                                title: 'Fast Turnarounds',
                                 description:
-                                    'Distinct visual execution focused on clarity, typographic structure, and custom visual direction.',
+                                    'Efficient turnaround times with complete production-ready print PDFs and digital PNG packages.',
                               ),
                             ),
                           ],
@@ -649,7 +705,11 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildHeroLeftText(
-      BuildContext context, bool isDark, bool isMobile, double scale) {
+    BuildContext context,
+    bool isDark,
+    bool isMobile,
+    double scale,
+  ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -670,8 +730,9 @@ class HomeScreen extends StatelessWidget {
               child: Text(
                 AppConfig.studioTagline.toUpperCase(),
                 style: AppTypography.labelUppercase(
-                  color:
-                      isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                  color: isDark
+                      ? AppColors.textMutedDark
+                      : AppColors.textMutedLight,
                   scale: scale,
                 ),
               ),
@@ -701,7 +762,7 @@ class HomeScreen extends StatelessWidget {
 
         // Supporting Copy
         Text(
-          'High-impact posters, campaign key visuals, and graphic support for campus events, workshops, startups, and growing brands.',
+          'High-impact posters, campaign key visuals, brand identity, and paid training sessions for campus events, startups, creators & aspiring designers.',
           style: AppTypography.bodyLarge(
             color: isDark
                 ? AppColors.textSecondaryDark
@@ -724,13 +785,19 @@ class HomeScreen extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.flash_on_rounded, size: 16, color: AppColors.accent),
+                const Icon(
+                  Icons.flash_on_rounded,
+                  size: 16,
+                  color: AppColors.accent,
+                ),
                 const SizedBox(width: 8),
                 Flexible(
                   child: Text(
-                    'Posters • Branding • Fast Turnaround',
+                    'Posters • Branding • Training Sessions',
                     style: AppTypography.bodySmall(
-                      color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                      color: isDark
+                          ? AppColors.textPrimaryDark
+                          : AppColors.textPrimaryLight,
                     ).copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -835,8 +902,10 @@ class _HeroStudioBadgeCard extends StatelessWidget {
                 ),
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.accent.withValues(alpha: 0.12),
                   border: Border.all(color: AppColors.accent),
@@ -854,7 +923,7 @@ class _HeroStudioBadgeCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'STUDIO SPEC SHEET',
+                      'STUDIO SPECSHEET',
                       style: AppTypography.labelUppercase(
                         color: AppColors.accent,
                       ),
@@ -937,8 +1006,9 @@ class _BadgeStatRow extends StatelessWidget {
         Text(
           value,
           style: AppTypography.bodyMedium(
-            color:
-                isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+            color: isDark
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
           ),
         ),
       ],
@@ -950,11 +1020,13 @@ class _HighlightCard extends StatelessWidget {
   final String number;
   final String title;
   final String description;
+  final bool isCompact;
 
   const _HighlightCard({
     required this.number,
     required this.title,
     required this.description,
+    this.isCompact = false,
   });
 
   @override
@@ -962,7 +1034,7 @@ class _HighlightCard extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(28.0),
+      padding: EdgeInsets.all(isCompact ? 16.0 : 28.0),
       decoration: BoxDecoration(
         color: isDark ? AppColors.bgDark : AppColors.bgLight,
         border: Border.all(
@@ -976,16 +1048,22 @@ class _HighlightCard extends StatelessWidget {
             number,
             style: AppTypography.labelUppercase(color: AppColors.accent),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: isCompact ? 10 : 16),
           Text(
             title,
-            style: AppTypography.heading3(
-              color: isDark
-                  ? AppColors.textPrimaryDark
-                  : AppColors.textPrimaryLight,
-            ),
+            style: isCompact
+                ? AppTypography.heading3(
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
+                  ).copyWith(fontSize: 15)
+                : AppTypography.heading3(
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
+                  ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: isCompact ? 6 : 8),
           Text(
             description,
             style: AppTypography.bodySmall(

@@ -7,6 +7,7 @@ class AppConfig {
   
   // Primary Contact Info
   static const String contactEmail = 'studioproof.ds@gmail.com';
+  static const String formSubmitHash = '4c5019a76f3f63374053c4c81cbe2736';
   static const String whatsappNumber = '918778944493';
   static const String instagramHandle = '@studioproof.design';
   static const String instagramUrl = 'https://instagram.com/studioproof.design';
@@ -34,6 +35,7 @@ class AppConfig {
     'Event & College Design',
     'Startup Design',
     'Business Design',
+    'Design Training & Workshops',
     'Custom Projects',
   ];
 }

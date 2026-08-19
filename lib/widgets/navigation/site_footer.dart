@@ -105,6 +105,16 @@ class SiteFooter extends StatelessWidget {
                                 label: 'Contact',
                                 onTap: () => context.go('/contact'),
                               ),
+                              const SizedBox(height: 8),
+                              _FooterLink(
+                                label: 'Privacy Policy',
+                                onTap: () => context.go('/privacy-policy'),
+                              ),
+                              const SizedBox(height: 8),
+                              _FooterLink(
+                                label: 'Terms & Conditions',
+                                onTap: () => context.go('/terms-and-conditions'),
+                              ),
                             ],
                           ),
                         ),
