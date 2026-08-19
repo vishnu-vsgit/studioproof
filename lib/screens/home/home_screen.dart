@@ -94,56 +94,71 @@ class HomeScreen extends StatelessWidget {
                   maxWidth: ResponsiveBreakpoints.maxContentWidth,
                 ),
                 child: isMobile
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(top: 4),
-                                width: 8,
-                                height: 8,
-                                decoration: const BoxDecoration(
-                                  color: Color(
-                                    0xFF22C55E,
-                                  ), // Live Status Green Indicator
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  'ACCEPTING NEW COMMISSIONS & RECURRING PARTNERSHIPS',
-                                  style:
-                                      AppTypography.labelUppercase(
-                                        color: isDark
-                                            ? AppColors.textPrimaryDark
-                                            : AppColors.textPrimaryLight,
-                                        scale: scale,
-                                      ).copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 11 * scale,
-                                      ),
-                                ),
-                              ),
-                            ],
+                    ? Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 14,
+                        ),
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? AppColors.surfaceDark
+                              : AppColors.surfaceLight,
+                          border: Border.all(
+                            color: isDark
+                                ? AppColors.borderDark
+                                : AppColors.borderLight,
                           ),
-                          const SizedBox(height: 10),
-                          Text(
-                            'COMPLETED GRAPHIC DESIGN & TRAINING FOR: MULTIPLE CAMPUS COMMUNITIES & INDIVIDUALS',
-                            style:
-                                AppTypography.labelUppercase(
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 8,
+                                  height: 8,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFF22C55E),
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    'ACCEPTING NEW COMMISSIONS & PARTNERSHIPS',
+                                    style: AppTypography.labelUppercase(
+                                      color: isDark
+                                          ? AppColors.textPrimaryDark
+                                          : AppColors.textPrimaryLight,
+                                      scale: scale,
+                                    ).copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 11 * scale,
+                                      letterSpacing: 0.8,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 16),
+                              child: Text(
+                                'Completed Graphic Design & Training for Multiple Campus Communities & Individuals',
+                                style: AppTypography.bodySmall(
                                   color: isDark
                                       ? AppColors.textSecondaryDark
                                       : AppColors.textSecondaryLight,
                                   scale: scale,
                                 ).copyWith(
-                                  fontSize: 10 * scale,
-                                  letterSpacing: 1.1,
+                                  fontSize: 11.5 * scale,
+                                  height: 1.35,
                                 ),
-                          ),
-                        ],
+                              ),
+                            ),
+                          ],
+                        ),
                       )
                     : Wrap(
                         alignment: WrapAlignment.spaceBetween,
