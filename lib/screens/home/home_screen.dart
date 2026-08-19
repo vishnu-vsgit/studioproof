@@ -265,54 +265,58 @@ class HomeScreen extends StatelessWidget {
                     if (isMobile)
                       Column(
                         children: const [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: _HighlightCard(
-                                  number: '01',
-                                  title: 'Posters & Campaigns',
-                                  description:
-                                      'High-impact key visuals, festival posters & digital graphics.',
-                                  isCompact: true,
+                          IntrinsicHeight(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(
+                                  child: _HighlightCard(
+                                    number: '01',
+                                    title: 'Posters & Campaigns',
+                                    description:
+                                        'High-impact key visuals, festival posters & digital graphics.',
+                                    isCompact: true,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(width: 12),
-                              Expanded(
-                                child: _HighlightCard(
-                                  number: '02',
-                                  title: 'Brand Identity',
-                                  description:
-                                      'Clean visual identity, logos & typography guidelines.',
-                                  isCompact: true,
+                                SizedBox(width: 12),
+                                Expanded(
+                                  child: _HighlightCard(
+                                    number: '02',
+                                    title: 'Brand Identity',
+                                    description:
+                                        'Clean visual identity, logos & typography guidelines.',
+                                    isCompact: true,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           SizedBox(height: 12),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: _HighlightCard(
-                                  number: '03',
-                                  title: 'Design Training',
-                                  description:
-                                      'Paid 1-on-1 & workshop sessions in Photoshop & Figma.',
-                                  isCompact: true,
+                          IntrinsicHeight(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(
+                                  child: _HighlightCard(
+                                    number: '03',
+                                    title: 'Design Training',
+                                    description:
+                                        'Paid 1-on-1 & workshop sessions in Photoshop & Figma.',
+                                    isCompact: true,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(width: 12),
-                              Expanded(
-                                child: _HighlightCard(
-                                  number: '04',
-                                  title: 'Fast Turnarounds',
-                                  description:
-                                      'Production-ready print PDFs & digital PNG packages.',
-                                  isCompact: true,
+                                SizedBox(width: 12),
+                                Expanded(
+                                  child: _HighlightCard(
+                                    number: '04',
+                                    title: 'Fast Turnarounds',
+                                    description:
+                                        'Production-ready print PDFs & digital PNG packages.',
+                                    isCompact: true,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ],
                       )
@@ -1058,34 +1062,41 @@ class _HighlightCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment:
+            isCompact ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
         children: [
-          Text(
-            number,
-            style: AppTypography.labelUppercase(color: AppColors.accent),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                number,
+                style: AppTypography.labelUppercase(color: AppColors.accent),
+              ),
+              SizedBox(height: isCompact ? 8 : 16),
+              Text(
+                title,
+                style: isCompact
+                    ? AppTypography.heading3(
+                        color: isDark
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimaryLight,
+                      ).copyWith(fontSize: 15, height: 1.25)
+                    : AppTypography.heading3(
+                        color: isDark
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimaryLight,
+                      ),
+              ),
+            ],
           ),
-          SizedBox(height: isCompact ? 10 : 16),
-          Text(
-            title,
-            style: isCompact
-                ? AppTypography.heading3(
-                    color: isDark
-                        ? AppColors.textPrimaryDark
-                        : AppColors.textPrimaryLight,
-                  ).copyWith(fontSize: 15)
-                : AppTypography.heading3(
-                    color: isDark
-                        ? AppColors.textPrimaryDark
-                        : AppColors.textPrimaryLight,
-                  ),
-          ),
-          SizedBox(height: isCompact ? 6 : 8),
+          SizedBox(height: isCompact ? 8 : 8),
           Text(
             description,
             style: AppTypography.bodySmall(
               color: isDark
                   ? AppColors.textSecondaryDark
                   : AppColors.textSecondaryLight,
-            ),
+            ).copyWith(height: 1.35),
           ),
         ],
       ),
