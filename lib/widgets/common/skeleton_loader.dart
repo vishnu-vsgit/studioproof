@@ -120,7 +120,6 @@ class PageSkeleton extends StatelessWidget {
                           width: 8,
                           height: 8,
                           borderRadius: 4,
-                          customColor: AppColors.accent,
                         ),
                         SizedBox(width: 10),
                         SkeletonBox(width: 120, height: 12),
@@ -185,7 +184,6 @@ class PageSkeleton extends StatelessWidget {
                     const SkeletonBox(
                       width: 100,
                       height: 12,
-                      customColor: AppColors.accent,
                     ),
                     const SizedBox(height: 12),
                     SkeletonBox(
@@ -256,7 +254,6 @@ class PageSkeleton extends StatelessWidget {
                     const SkeletonBox(
                       width: 140,
                       height: 12,
-                      customColor: AppColors.accent,
                     ),
                     const SizedBox(height: 12),
                     SkeletonBox(
@@ -336,7 +333,6 @@ class ServicesSkeleton extends StatelessWidget {
                   const SkeletonBox(
                     width: 32,
                     height: 24,
-                    customColor: AppColors.accent,
                   ),
                   const SizedBox(width: 16),
                   const Expanded(

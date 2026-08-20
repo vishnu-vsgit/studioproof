@@ -311,9 +311,9 @@ class HomeScreen extends StatelessWidget {
                                 Expanded(
                                   child: _HighlightCard(
                                     number: '04',
-                                    title: 'Fast Turnarounds',
+                                    title: 'Design Support',
                                     description:
-                                        'Production-ready print PDFs & digital PNG packages.',
+                                        'Ongoing monthly design partnership for clubs, startups & creators.',
                                     isCompact: true,
                                   ),
                                 ),
@@ -357,9 +357,9 @@ class HomeScreen extends StatelessWidget {
                             Expanded(
                               child: _HighlightCard(
                                 number: '04',
-                                title: 'Fast Turnarounds',
+                                title: 'Design Support',
                                 description:
-                                    'Efficient turnaround times with complete production-ready print PDFs and digital PNG packages.',
+                                    'Ongoing monthly design partnership for campus clubs, startups, and creators needing regular visuals.',
                               ),
                             ),
                           ],
@@ -1055,6 +1055,7 @@ class _HighlightCard extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
+      constraints: isCompact ? const BoxConstraints(minHeight: 154) : null,
       padding: EdgeInsets.all(isCompact ? 16.0 : 28.0),
       decoration: BoxDecoration(
         color: isDark ? AppColors.bgDark : AppColors.bgLight,
@@ -1076,19 +1077,25 @@ class _HighlightCard extends StatelessWidget {
                 style: AppTypography.labelUppercase(color: AppColors.accent),
               ),
               SizedBox(height: isCompact ? 8 : 16),
-              Text(
-                title,
-                style: isCompact
-                    ? AppTypography.heading3(
-                        color: isDark
-                            ? AppColors.textPrimaryDark
-                            : AppColors.textPrimaryLight,
-                      ).copyWith(fontSize: 15, height: 1.25)
-                    : AppTypography.heading3(
-                        color: isDark
-                            ? AppColors.textPrimaryDark
-                            : AppColors.textPrimaryLight,
-                      ),
+              Container(
+                constraints: isCompact
+                    ? const BoxConstraints(minHeight: 38)
+                    : null,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  title,
+                  style: isCompact
+                      ? AppTypography.heading3(
+                          color: isDark
+                              ? AppColors.textPrimaryDark
+                              : AppColors.textPrimaryLight,
+                        ).copyWith(fontSize: 15, height: 1.25)
+                      : AppTypography.heading3(
+                          color: isDark
+                              ? AppColors.textPrimaryDark
+                              : AppColors.textPrimaryLight,
+                        ),
+                ),
               ),
             ],
           ),
