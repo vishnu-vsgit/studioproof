@@ -251,7 +251,7 @@ class AboutScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 32),
                     ElevatedButton(
-                      onPressed: () => context.go('/start-a-project'),
+                      onPressed: () => context.go('/start'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.accent,
                         foregroundColor: Colors.white,

@@ -31,8 +31,8 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const ContactScreen(),
     ),
     GoRoute(
-      path: '/start-a-project',
-      name: 'start-a-project',
+      path: '/start',
+      name: 'start',
       builder: (context, state) => const StartProjectScreen(),
     ),
     GoRoute(

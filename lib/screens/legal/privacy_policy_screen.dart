@@ -143,7 +143,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     OutlinedButton(
-                      onPressed: () => context.go('/start-a-project'),
+                      onPressed: () => context.go('/start'),
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                         side: BorderSide(

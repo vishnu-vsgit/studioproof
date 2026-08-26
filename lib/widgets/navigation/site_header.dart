@@ -96,7 +96,7 @@ class SiteHeader extends StatelessWidget {
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: OutlinedButton(
-                        onPressed: () => context.go('/start-a-project'),
+                        onPressed: () => context.go('/start'),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                           side: BorderSide(
@@ -109,7 +109,7 @@ class SiteHeader extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                         ),
                         child: Text(
-                          'Start a project',
+                          'Start Project',
                           style: AppTypography.buttonText(
                             color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                           ),

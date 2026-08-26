@@ -646,7 +646,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           ElevatedButton(
-                            onPressed: () => context.go('/start-a-project'),
+                            onPressed: () => context.go('/start'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.accent,
                               foregroundColor: Colors.white,
@@ -696,7 +696,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 48),
                           ElevatedButton(
-                            onPressed: () => context.go('/start-a-project'),
+                            onPressed: () => context.go('/start'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.accent,
                               foregroundColor: Colors.white,
@@ -835,7 +835,7 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () => context.go('/start-a-project'),
+              onPressed: () => context.go('/start'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.accent,
                 foregroundColor: Colors.white,

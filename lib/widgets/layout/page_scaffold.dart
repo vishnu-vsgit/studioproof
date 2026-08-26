@@ -34,6 +34,12 @@ class _PageScaffoldState extends State<PageScaffold> {
     _scrollController.addListener(_onScroll);
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(const AssetImage('assets/images/header_logo.png'), context);
+  }
+
   void _onScroll() {
     final shouldShow = _scrollController.offset > 120;
     if (shouldShow != _showWhatsappButton) {
@@ -66,7 +72,7 @@ class _PageScaffoldState extends State<PageScaffold> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final isMobile = ResponsiveBreakpoints.isMobile(context);
-    final hideBottomBarOnPaths = widget.currentPath == '/start-a-project';
+    final hideBottomBarOnPaths = widget.currentPath == '/start';
 
     return Scaffold(
       key: _scaffoldKey,
@@ -183,7 +189,7 @@ class _PageScaffoldState extends State<PageScaffold> {
                   Expanded(
                     flex: 2,
                     child: ElevatedButton(
-                      onPressed: () => context.go('/start-a-project'),
+                      onPressed: () => context.go('/start'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.accent,
                         foregroundColor: Colors.white,
@@ -194,7 +200,7 @@ class _PageScaffoldState extends State<PageScaffold> {
                         ),
                       ),
                       child: Text(
-                        'Start a project →',
+                        'Start Project →',
                         style: AppTypography.buttonText(color: Colors.white),
                       ),
                     ),

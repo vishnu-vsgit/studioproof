@@ -152,7 +152,7 @@ class SiteFooter extends StatelessWidget {
                               const SizedBox(height: 8),
                               _FooterLink(
                                 label: 'Start Project →',
-                                onTap: () => context.go('/start-a-project'),
+                                onTap: () => context.go('/start'),
                               ),
                             ],
                           ),
@@ -301,7 +301,7 @@ class _FooterNavGroup extends StatelessWidget {
         const SizedBox(height: 8),
         _FooterLink(label: 'About Studio', onTap: () => context.go('/about')),
         const SizedBox(height: 8),
-        _FooterLink(label: 'Start a Project', onTap: () => context.go('/start-a-project')),
+        _FooterLink(label: 'Start a Project', onTap: () => context.go('/start')),
         const SizedBox(height: 8),
         _FooterLink(label: 'Privacy Policy', onTap: () => context.go('/privacy-policy')),
         const SizedBox(height: 8),

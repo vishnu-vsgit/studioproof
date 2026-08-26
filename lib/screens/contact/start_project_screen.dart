@@ -8,6 +8,8 @@ import '../../core/theme/app_typography.dart';
 import '../../core/theme/responsive_breakpoints.dart';
 import '../../widgets/layout/page_scaffold.dart';
 
+enum FormCategory { design, training }
+
 class StartProjectScreen extends StatefulWidget {
   const StartProjectScreen({super.key});
 
@@ -24,6 +26,8 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
       TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
+  FormCategory _selectedCategory = FormCategory.design;
+
   String _selectedProjectType = 'Poster';
   String _selectedBudget = 'Not sure yet';
   String _selectedDeadline = 'Flexible';
@@ -32,7 +36,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
   bool _isSubmitted = false;
   String? _errorMessage;
 
-  final List<String> _projectTypes = [
+  final List<String> _designProjectTypes = [
     'Poster',
     'Social Media',
     'Event / College',
@@ -40,11 +44,18 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
     'Branding',
     'Presentation',
     'Business Design',
-    'Training / Workshop',
-    'Other',
+    'Other Design',
   ];
 
-  final List<String> _budgetOptions = [
+  final List<String> _trainingProjectTypes = [
+    'Figma & UI Basics',
+    'Poster Design Principles',
+    'Club / College Workshop',
+    'Visual Layout & Composition',
+    'Custom Training',
+  ];
+
+  final List<String> _designBudgetOptions = [
     'Under ₹1,000',
     '₹1,000–₹3,000',
     '₹3,000–₹5,000',
@@ -53,13 +64,41 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
     'Not sure yet',
   ];
 
-  final List<String> _deadlineOptions = [
+  final List<String> _trainingBudgetOptions = [
+    'Under ₹1,000',
+    '₹1,000–₹3,000',
+    '₹3,000–₹5,000',
+    'Not sure yet',
+  ];
+
+  final List<String> _designDeadlineOptions = [
     'ASAP',
     'Within a week',
     '2–4 weeks',
     '1–2 months',
     'Flexible',
   ];
+
+  final List<String> _trainingScheduleOptions = [
+    'This Week / ASAP',
+    'Within 2 Weeks',
+    'Flexible Dates',
+  ];
+
+  List<String> get _currentProjectTypes =>
+      _selectedCategory == FormCategory.training
+          ? _trainingProjectTypes
+          : _designProjectTypes;
+
+  List<String> get _currentBudgetOptions =>
+      _selectedCategory == FormCategory.training
+          ? _trainingBudgetOptions
+          : _designBudgetOptions;
+
+  List<String> get _currentDeadlineOptions =>
+      _selectedCategory == FormCategory.training
+          ? _trainingScheduleOptions
+          : _designDeadlineOptions;
 
   @override
   void dispose() {
@@ -70,17 +109,36 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
     super.dispose();
   }
 
+  void _onCategoryChanged(FormCategory category) {
+    if (_selectedCategory == category) return;
+
+    setState(() {
+      _selectedCategory = category;
+      if (_selectedCategory == FormCategory.training) {
+        _selectedProjectType = _trainingProjectTypes.first;
+        _selectedBudget = 'Not sure yet';
+        _selectedDeadline = 'Flexible Dates';
+      } else {
+        _selectedProjectType = _designProjectTypes.first;
+        _selectedBudget = 'Not sure yet';
+        _selectedDeadline = 'Flexible';
+      }
+    });
+  }
+
   void _sendDirectEmail() {
-    final subject =
-        Uri.encodeComponent('Project Enquiry: ${_nameController.text.trim()}');
+    final isTraining = _selectedCategory == FormCategory.training;
+    final subject = Uri.encodeComponent(
+        '${isTraining ? "Training Enquiry" : "Project Enquiry"}: ${_nameController.text.trim()}');
     final body = Uri.encodeComponent(
+      'Category: ${isTraining ? "Design Training & Workshop" : "Visual Design Project"}\n'
       'Name: ${_nameController.text.trim()}\n'
       'Email: ${_emailController.text.trim()}\n'
-      'Organization: ${_organizationController.text.trim()}\n'
-      'Project Type: $_selectedProjectType\n'
-      'Budget: $_selectedBudget\n'
-      'Deadline: $_selectedDeadline\n\n'
-      'Message:\n${_descriptionController.text.trim()}',
+      'Organization / Institution: ${_organizationController.text.trim()}\n'
+      '${isTraining ? "Topic / Format" : "Project Type"}: $_selectedProjectType\n'
+      '${isTraining ? "Budget / Batch Estimate" : "Budget Range"}: $_selectedBudget\n'
+      '${isTraining ? "Preferred Schedule" : "Deadline"}: $_selectedDeadline\n\n'
+      'Details / Goals:\n${_descriptionController.text.trim()}',
     );
     _launchUrl('mailto:${AppConfig.contactEmail}?subject=$subject&body=$body');
   }
@@ -95,6 +153,8 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
       _errorMessage = null;
     });
 
+    final isTraining = _selectedCategory == FormCategory.training;
+
     try {
       final response = await http.post(
         Uri.parse('https://formsubmit.co/ajax/${AppConfig.formSubmitHash}'),
@@ -103,17 +163,24 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           'Accept': 'application/json',
         },
         body: jsonEncode({
-          '_subject': 'New Project Brief: ${_nameController.text.trim()}',
+          '_subject':
+              '${isTraining ? "New Training Enquiry" : "New Project Brief"}: ${_nameController.text.trim()}',
           '_template': 'table',
+          'Inquiry Category':
+              isTraining ? 'Design Training & Workshop' : 'Visual Design Project',
           'Name': _nameController.text.trim(),
           'Email': _emailController.text.trim(),
-          'Organization / Club': _organizationController.text.trim().isEmpty
-              ? 'N/A'
-              : _organizationController.text.trim(),
-          'Project Type': _selectedProjectType,
-          'Budget Range': _selectedBudget,
-          'Deadline': _selectedDeadline,
-          'Message': _descriptionController.text.trim(),
+          'Organization / Institution':
+              _organizationController.text.trim().isEmpty
+                  ? 'N/A'
+                  : _organizationController.text.trim(),
+          isTraining ? 'Training Topic / Format' : 'Project Type':
+              _selectedProjectType,
+          isTraining ? 'Budget / Batch Estimate' : 'Budget Range':
+              _selectedBudget,
+          isTraining ? 'Preferred Schedule' : 'Deadline': _selectedDeadline,
+          isTraining ? 'Training Goals & Topics' : 'Project Message':
+              _descriptionController.text.trim(),
         }),
       );
 
@@ -148,7 +215,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
             _errorMessage = serverMsg;
           } else {
             _errorMessage =
-                'Failed to send project brief. Please use direct email below.';
+                'Failed to send submission. Please use direct email below.';
           }
         });
       }
@@ -169,6 +236,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
       _emailController.clear();
       _organizationController.clear();
       _descriptionController.clear();
+      _selectedCategory = FormCategory.design;
       _selectedProjectType = 'Poster';
       _selectedBudget = 'Not sure yet';
       _selectedDeadline = 'Flexible';
@@ -193,9 +261,10 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
     final horizontalPadding =
         ResponsiveBreakpoints.getHorizontalPadding(context);
     final scale = ResponsiveBreakpoints.getTypographyScale(context);
+    final isTraining = _selectedCategory == FormCategory.training;
 
     return PageScaffold(
-      currentPath: '/start-a-project',
+      currentPath: '/start',
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -217,7 +286,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'START A PROJECT',
+                      isTraining
+                          ? 'BOOK A TRAINING SESSION'
+                          : 'START A PROJECT',
                       style: AppTypography.labelUppercase(
                         color: AppColors.accent,
                         scale: scale,
@@ -225,7 +296,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Tell us what you’re building',
+                      isTraining
+                          ? 'Tell us what you’d like to learn'
+                          : 'Tell us what you’re building',
                       style: isMobile
                           ? AppTypography.heading1(
                               color: isDark
@@ -240,7 +313,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Fill out the brief below with your project details, scope, and target deadline.',
+                      isTraining
+                          ? 'Fill out the form below with your learning goals, target software, preferred schedule, and batch size.'
+                          : 'Fill out the brief below with your project details, scope, and target deadline.',
                       style: AppTypography.bodyLarge(
                         color: isDark
                             ? AppColors.textSecondaryDark
@@ -276,7 +351,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                         children: [
                           _buildFormOrSuccess(isDark, isMobile),
                           const SizedBox(height: 48),
-                          _buildBriefGuidelines(isDark),
+                          _buildBriefGuidelines(isDark, isMobile),
                         ],
                       )
                     : Row(
@@ -289,7 +364,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                           const SizedBox(width: 64),
                           Expanded(
                             flex: 4,
-                            child: _buildBriefGuidelines(isDark),
+                            child: _buildBriefGuidelines(isDark, isMobile),
                           ),
                         ],
                       ),
@@ -301,7 +376,74 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
     );
   }
 
+  Widget _buildCategorySelector(bool isDark, bool isMobile) {
+    if (isMobile) {
+      return Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+          border: Border.all(
+            color: isDark ? AppColors.borderDark : AppColors.borderLight,
+          ),
+        ),
+        child: Column(
+          children: [
+            _CategoryTabButton(
+              icon: Icons.palette_outlined,
+              label: 'Design Project',
+              isSelected: _selectedCategory == FormCategory.design,
+              onTap: () => _onCategoryChanged(FormCategory.design),
+              isDark: isDark,
+            ),
+            const SizedBox(height: 4),
+            _CategoryTabButton(
+              icon: Icons.school_outlined,
+              label: 'Training / Workshop',
+              isSelected: _selectedCategory == FormCategory.training,
+              onTap: () => _onCategoryChanged(FormCategory.training),
+              isDark: isDark,
+            ),
+          ],
+        ),
+      );
+    }
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        border: Border.all(
+          color: isDark ? AppColors.borderDark : AppColors.borderLight,
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: _CategoryTabButton(
+              icon: Icons.palette_outlined,
+              label: 'Design Project',
+              isSelected: _selectedCategory == FormCategory.design,
+              onTap: () => _onCategoryChanged(FormCategory.design),
+              isDark: isDark,
+            ),
+          ),
+          const SizedBox(width: 4),
+          Expanded(
+            child: _CategoryTabButton(
+              icon: Icons.school_outlined,
+              label: 'Training / Workshop',
+              isSelected: _selectedCategory == FormCategory.training,
+              onTap: () => _onCategoryChanged(FormCategory.training),
+              isDark: isDark,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildFormOrSuccess(bool isDark, bool isMobile) {
+    final isTraining = _selectedCategory == FormCategory.training;
+
     if (_isSubmitted) {
       return Container(
         padding: const EdgeInsets.all(36.0),
@@ -319,7 +461,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                 size: 48, color: AppColors.accent),
             const SizedBox(height: 24),
             Text(
-              'Project Brief Received!',
+              isTraining
+                  ? 'Training Enquiry Received!'
+                  : 'Project Brief Received!',
               style: AppTypography.heading1(
                 color: isDark
                     ? AppColors.textPrimaryDark
@@ -328,7 +472,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              'Thank you for sharing your project details. We typically review briefs and respond within 24 hours with timeline estimates and initial concepts.',
+              isTraining
+                  ? 'Thank you for your training enquiry. We will review your learning goals and respond within 24 hours with a custom session outline and schedule options.'
+                  : 'Thank you for sharing your project details. We typically review briefs and respond within 24 hours with timeline estimates and initial concepts.',
               style: AppTypography.bodyLarge(
                 color: isDark
                     ? AppColors.textSecondaryDark
@@ -351,7 +497,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               ),
               child: Text(
-                'Submit another brief',
+                isTraining ? 'Submit another enquiry' : 'Submit another brief',
                 style: AppTypography.buttonText(
                   color: isDark
                       ? AppColors.textPrimaryDark
@@ -426,6 +572,19 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Category Selector Switcher
+          Text(
+            'INQUIRY TYPE',
+            style: AppTypography.labelUppercase(
+              color:
+                  isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+            ),
+          ),
+          const SizedBox(height: 10),
+          _buildCategorySelector(isDark, isMobile),
+
+          const SizedBox(height: 28),
+
           if (isMobile) ...[
             nameField,
             const SizedBox(height: 20),
@@ -446,7 +605,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'COMPANY / ORGANIZATION / CLUB',
+                isTraining
+                    ? 'COLLEGE / INSTITUTION / CLUB / INDIVIDUAL'
+                    : 'COMPANY / ORGANIZATION / CLUB',
                 style: AppTypography.labelUppercase(
                   color: isDark
                       ? AppColors.textMutedDark
@@ -461,8 +622,12 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                       ? AppColors.textPrimaryDark
                       : AppColors.textPrimaryLight,
                 ),
-                decoration: _inputDecoration(isDark,
-                    hint: 'e.g. Design Club / Tech Startup / Self'),
+                decoration: _inputDecoration(
+                  isDark,
+                  hint: isTraining
+                      ? 'e.g. Tech Club, IIT Madras, Design Student, or Self-Learner'
+                      : 'e.g. Design Club / Tech Startup / Self',
+                ),
               ),
             ],
           ),
@@ -470,7 +635,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           const SizedBox(height: 28),
 
           Text(
-            'PROJECT TYPE',
+            isTraining ? 'TRAINING TOPIC / FORMAT' : 'PROJECT TYPE',
             style: AppTypography.labelUppercase(
               color:
                   isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
@@ -480,7 +645,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           Wrap(
             spacing: 10,
             runSpacing: 10,
-            children: _projectTypes.map((type) {
+            children: _currentProjectTypes.map((type) {
               final isSelected = _selectedProjectType == type;
               return MouseRegion(
                 cursor: SystemMouseCursors.click,
@@ -523,7 +688,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           const SizedBox(height: 28),
 
           Text(
-            'BUDGET RANGE',
+            isTraining ? 'BUDGET / BATCH ESTIMATE' : 'BUDGET RANGE',
             style: AppTypography.labelUppercase(
               color:
                   isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
@@ -533,7 +698,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           Wrap(
             spacing: 10,
             runSpacing: 10,
-            children: _budgetOptions.map((budget) {
+            children: _currentBudgetOptions.map((budget) {
               final isSelected = _selectedBudget == budget;
               return MouseRegion(
                 cursor: SystemMouseCursors.click,
@@ -580,7 +745,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           const SizedBox(height: 28),
 
           Text(
-            'TIMELINE / DEADLINE',
+            isTraining ? 'PREFERRED TRAINING SCHEDULE' : 'TIMELINE / DEADLINE',
             style: AppTypography.labelUppercase(
               color:
                   isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
@@ -590,7 +755,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           Wrap(
             spacing: 10,
             runSpacing: 10,
-            children: _deadlineOptions.map((deadline) {
+            children: _currentDeadlineOptions.map((deadline) {
               final isSelected = _selectedDeadline == deadline;
               return MouseRegion(
                 cursor: SystemMouseCursors.click,
@@ -637,7 +802,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           const SizedBox(height: 28),
 
           Text(
-            'PROJECT DESCRIPTION & GOALS *',
+            isTraining
+                ? 'TRAINING GOALS & SPECIFIC TOPICS *'
+                : 'PROJECT DESCRIPTION & GOALS *',
             style: AppTypography.labelUppercase(
               color:
                   isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
@@ -652,12 +819,17 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                   ? AppColors.textPrimaryDark
                   : AppColors.textPrimaryLight,
             ),
-            decoration: _inputDecoration(isDark,
-                hint:
-                    'What are you creating? Mention event details, visual preferences, key dates or deliverables.'),
+            decoration: _inputDecoration(
+              isDark,
+              hint: isTraining
+                  ? 'What tools or skills do you want to learn? (e.g. Photoshop layers, poster composition, Figma UI, 1-on-1 or group size, preferred duration).'
+                  : 'What are you creating? Mention event details, visual preferences, key dates or deliverables.',
+            ),
             validator: (value) {
               if (value == null || value.trim().length < 10) {
-                return 'Please provide a short description (at least 10 characters)';
+                return isTraining
+                    ? 'Please describe your learning goals (at least 10 characters)'
+                    : 'Please provide a short description (at least 10 characters)';
               }
               return null;
             },
@@ -729,7 +901,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                       ),
                     )
                   : Text(
-                      'Submit project brief →',
+                      isTraining
+                          ? 'Submit training enquiry →'
+                          : 'Submit project brief →',
                       style: AppTypography.buttonText(color: Colors.white),
                     ),
             ),
@@ -746,9 +920,11 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
     );
   }
 
-  Widget _buildBriefGuidelines(bool isDark) {
+  Widget _buildBriefGuidelines(bool isDark, bool isMobile) {
+    final isTraining = _selectedCategory == FormCategory.training;
+
     return Container(
-      padding: const EdgeInsets.all(32.0),
+      padding: EdgeInsets.all(isMobile ? 24.0 : 32.0),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
         border: Border.all(
@@ -764,7 +940,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           ),
           const SizedBox(height: 16),
           Text(
-            '1. Brief Review',
+            isTraining ? '1. Goals & Skill Assessment' : '1. Brief Review',
             style: AppTypography.heading3(
               color: isDark
                   ? AppColors.textPrimaryDark
@@ -773,7 +949,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            'We carefully review your goals, deliverables, and timeline requirements.',
+            isTraining
+                ? 'We evaluate your requested topics, current skill level, and schedule preferences.'
+                : 'We carefully review your goals, deliverables, and timeline requirements.',
             style: AppTypography.bodySmall(
               color: isDark
                   ? AppColors.textSecondaryDark
@@ -782,7 +960,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           ),
           const SizedBox(height: 20),
           Text(
-            '2. Initial Proposal',
+            isTraining ? '2. Customized Syllabus & Quote' : '2. Initial Proposal',
             style: AppTypography.heading3(
               color: isDark
                   ? AppColors.textPrimaryDark
@@ -791,7 +969,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            'Within 24 hours, you receive a clear project quote and suggested direction.',
+            isTraining
+                ? 'Within 24 hours, you receive a custom workshop curriculum, live session schedule, and pricing.'
+                : 'Within 24 hours, you receive a clear project quote and suggested direction.',
             style: AppTypography.bodySmall(
               color: isDark
                   ? AppColors.textSecondaryDark
@@ -800,7 +980,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           ),
           const SizedBox(height: 20),
           Text(
-            '3. Production & Delivery',
+            isTraining
+                ? '3. Interactive Training & Resources'
+                : '3. Production & Delivery',
             style: AppTypography.heading3(
               color: isDark
                   ? AppColors.textPrimaryDark
@@ -809,7 +991,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            'Designs are created in Figma/Photoshop, shared for feedback, and delivered print-ready.',
+            isTraining
+                ? 'Hands-on live training conducted, accompanied by practice files, design templates, and Q&A.'
+                : 'Designs are created in Figma/Photoshop, shared for feedback, and delivered print-ready.',
             style: AppTypography.bodySmall(
               color: isDark
                   ? AppColors.textSecondaryDark
@@ -856,6 +1040,69 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           width: 1.5,
         ),
         borderRadius: BorderRadius.zero,
+      ),
+    );
+  }
+}
+
+class _CategoryTabButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+  final bool isDark;
+
+  const _CategoryTabButton({
+    required this.icon,
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+    required this.isDark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? AppColors.accent
+                : Colors.transparent,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 18,
+                color: isSelected
+                    ? Colors.white
+                    : (isDark
+                        ? AppColors.textSecondaryDark
+                        : AppColors.textSecondaryLight),
+              ),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  label,
+                  style: AppTypography.buttonText(
+                    color: isSelected
+                        ? Colors.white
+                        : (isDark
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimaryLight),
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -114,7 +114,7 @@ class MobileDrawer extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    context.go('/start-a-project');
+                    context.go('/start');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.accent,
@@ -126,7 +126,7 @@ class MobileDrawer extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Start a project →',
+                    'Start Project →',
                     style: AppTypography.buttonText(color: Colors.white),
                   ),
                 ),

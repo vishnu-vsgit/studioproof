@@ -216,7 +216,7 @@ class ServicesScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 32),
                           ElevatedButton(
-                            onPressed: () => context.go('/start-a-project'),
+                            onPressed: () => context.go('/start'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.accent,
                               foregroundColor: Colors.white,
@@ -293,7 +293,7 @@ class ServicesScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 32),
                                 ElevatedButton(
-                                  onPressed: () => context.go('/start-a-project'),
+                                  onPressed: () => context.go('/start'),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.accent,
                                     foregroundColor: Colors.white,
@@ -362,7 +362,7 @@ class ServicesScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 32),
                           OutlinedButton(
-                            onPressed: () => context.go('/start-a-project'),
+                            onPressed: () => context.go('/start'),
                             style: OutlinedButton.styleFrom(
                               foregroundColor: isDark
                                   ? AppColors.textPrimaryDark
@@ -427,7 +427,7 @@ class ServicesScreen extends StatelessWidget {
                           Expanded(
                             flex: 4,
                             child: OutlinedButton(
-                              onPressed: () => context.go('/start-a-project'),
+                              onPressed: () => context.go('/start'),
                               style: OutlinedButton.styleFrom(
                                 foregroundColor: isDark
                                     ? AppColors.textPrimaryDark
