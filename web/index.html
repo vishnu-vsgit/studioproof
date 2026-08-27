@@ -315,5 +315,21 @@
   </div>
 
   <script src="flutter_bootstrap.js" async></script>
+  
+  <!-- PWA Service Worker Registration & Installation Handler -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('flutter_service_worker.js?v=' + Date.now()).catch(function () {});
+      });
+    }
+
+    // Capture PWA install prompt event
+    window.deferredPwaPrompt = null;
+    window.addEventListener('beforeinstallprompt', function(e) {
+      e.preventDefault();
+      window.deferredPwaPrompt = e;
+    });
+  </script>
 </body>
 </html>

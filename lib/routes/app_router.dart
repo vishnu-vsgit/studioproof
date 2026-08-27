@@ -6,6 +6,7 @@ import '../screens/contact/contact_screen.dart';
 import '../screens/contact/start_project_screen.dart';
 import '../screens/legal/privacy_policy_screen.dart';
 import '../screens/legal/terms_screen.dart';
+import '../screens/error/not_found_screen.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/',
@@ -46,5 +47,5 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const TermsScreen(),
     ),
   ],
-  errorBuilder: (context, state) => const HomeScreen(),
+  errorBuilder: (context, state) => const NotFoundScreen(),
 );

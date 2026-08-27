@@ -139,6 +139,11 @@ class SiteFooter extends StatelessWidget {
                               ),
                               const SizedBox(height: 8),
                               _FooterLink(
+                                label: 'Call: ${AppConfig.phoneNumber}',
+                                onTap: () => _launchUrl(AppConfig.phoneUrl),
+                              ),
+                              const SizedBox(height: 8),
+                              _FooterLink(
                                 label: 'Instagram',
                                 onTap: () =>
                                     _launchUrl(AppConfig.instagramUrl),
@@ -335,6 +340,11 @@ class _FooterSocialGroup extends StatelessWidget {
         _FooterLink(
           label: 'Email: ${AppConfig.contactEmail}',
           onTap: () => launchUrl('mailto:${AppConfig.contactEmail}'),
+        ),
+        const SizedBox(height: 8),
+        _FooterLink(
+          label: 'Call: ${AppConfig.phoneNumber}',
+          onTap: () => launchUrl(AppConfig.phoneUrl),
         ),
         const SizedBox(height: 8),
         _FooterLink(

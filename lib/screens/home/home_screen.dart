@@ -22,8 +22,11 @@ class HomeScreen extends StatelessWidget {
 
     final allProjects = PortfolioData.projects;
 
-    return PageScaffold(
-      currentPath: '/',
+    return Title(
+      title: 'StudioProof — Independent Graphic Design Studio',
+      color: isDark ? AppColors.bgDark : AppColors.bgLight,
+      child: PageScaffold(
+        currentPath: '/',
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -722,8 +725,9 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildHeroLeftText(
     BuildContext context,

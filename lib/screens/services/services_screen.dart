@@ -17,8 +17,11 @@ class ServicesScreen extends StatelessWidget {
     );
     final scale = ResponsiveBreakpoints.getTypographyScale(context);
 
-    return PageScaffold(
-      currentPath: '/services',
+    return Title(
+      title: 'Services & Capabilities — StudioProof',
+      color: isDark ? AppColors.bgDark : AppColors.bgLight,
+      child: PageScaffold(
+        currentPath: '/services',
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -460,8 +463,9 @@ class ServicesScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 }
 
 class _EditorialServiceRow extends StatefulWidget {

@@ -22,8 +22,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _organizationController =
-      TextEditingController();
+  final TextEditingController _organizationController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
   FormCategory _selectedCategory = FormCategory.design;
@@ -35,6 +34,18 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
   bool _isSubmitting = false;
   bool _isSubmitted = false;
   String? _errorMessage;
+
+  Future<void> _launchUrl(String urlString) async {
+    final Uri? url = Uri.tryParse(urlString);
+    if (url != null &&
+        (url.scheme == 'https' ||
+            url.scheme == 'mailto' ||
+            url.scheme == 'tel')) {
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      }
+    }
+  }
 
   final List<String> _designProjectTypes = [
     'Poster',
@@ -87,18 +98,18 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
 
   List<String> get _currentProjectTypes =>
       _selectedCategory == FormCategory.training
-          ? _trainingProjectTypes
-          : _designProjectTypes;
+      ? _trainingProjectTypes
+      : _designProjectTypes;
 
   List<String> get _currentBudgetOptions =>
       _selectedCategory == FormCategory.training
-          ? _trainingBudgetOptions
-          : _designBudgetOptions;
+      ? _trainingBudgetOptions
+      : _designBudgetOptions;
 
   List<String> get _currentDeadlineOptions =>
       _selectedCategory == FormCategory.training
-          ? _trainingScheduleOptions
-          : _designDeadlineOptions;
+      ? _trainingScheduleOptions
+      : _designDeadlineOptions;
 
   @override
   void dispose() {
@@ -129,7 +140,8 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
   void _sendDirectEmail() {
     final isTraining = _selectedCategory == FormCategory.training;
     final subject = Uri.encodeComponent(
-        '${isTraining ? "Training Enquiry" : "Project Enquiry"}: ${_nameController.text.trim()}');
+      '${isTraining ? "Training Enquiry" : "Project Enquiry"}: ${_nameController.text.trim()}',
+    );
     final body = Uri.encodeComponent(
       'Category: ${isTraining ? "Design Training & Workshop" : "Visual Design Project"}\n'
       'Name: ${_nameController.text.trim()}\n'
@@ -166,14 +178,15 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           '_subject':
               '${isTraining ? "New Training Enquiry" : "New Project Brief"}: ${_nameController.text.trim()}',
           '_template': 'table',
-          'Inquiry Category':
-              isTraining ? 'Design Training & Workshop' : 'Visual Design Project',
+          'Inquiry Category': isTraining
+              ? 'Design Training & Workshop'
+              : 'Visual Design Project',
           'Name': _nameController.text.trim(),
           'Email': _emailController.text.trim(),
           'Organization / Institution':
               _organizationController.text.trim().isEmpty
-                  ? 'N/A'
-                  : _organizationController.text.trim(),
+              ? 'N/A'
+              : _organizationController.text.trim(),
           isTraining ? 'Training Topic / Format' : 'Project Type':
               _selectedProjectType,
           isTraining ? 'Budget / Batch Estimate' : 'Budget Range':
@@ -245,133 +258,129 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
     });
   }
 
-  Future<void> _launchUrl(String urlString) async {
-    final Uri? url = Uri.tryParse(urlString);
-    if (url != null && (url.scheme == 'https' || url.scheme == 'mailto')) {
-      if (await canLaunchUrl(url)) {
-        await launchUrl(url, mode: LaunchMode.externalApplication);
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final isMobile = ResponsiveBreakpoints.isMobileOrTablet(context);
-    final horizontalPadding =
-        ResponsiveBreakpoints.getHorizontalPadding(context);
+    final horizontalPadding = ResponsiveBreakpoints.getHorizontalPadding(
+      context,
+    );
     final scale = ResponsiveBreakpoints.getTypographyScale(context);
     final isTraining = _selectedCategory == FormCategory.training;
 
-    return PageScaffold(
-      currentPath: '/start',
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header Section
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.only(
-              left: horizontalPadding,
-              right: horizontalPadding,
-              top: isMobile ? 36.0 : 64.0,
-              bottom: 32.0,
-            ),
-            child: Center(
-              child: Container(
-                constraints: const BoxConstraints(
-                  maxWidth: ResponsiveBreakpoints.maxContentWidth,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      isTraining
-                          ? 'BOOK A TRAINING SESSION'
-                          : 'START A PROJECT',
-                      style: AppTypography.labelUppercase(
-                        color: AppColors.accent,
-                        scale: scale,
+    return Title(
+      title: 'Start a Project — StudioProof',
+      color: isDark ? AppColors.bgDark : AppColors.bgLight,
+      child: PageScaffold(
+        currentPath: '/start',
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header Section
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(
+                left: horizontalPadding,
+                right: horizontalPadding,
+                top: isMobile ? 36.0 : 64.0,
+                bottom: 32.0,
+              ),
+              child: Center(
+                child: Container(
+                  constraints: const BoxConstraints(
+                    maxWidth: ResponsiveBreakpoints.maxContentWidth,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        isTraining
+                            ? 'BOOK A TRAINING SESSION'
+                            : 'START A PROJECT',
+                        style: AppTypography.labelUppercase(
+                          color: AppColors.accent,
+                          scale: scale,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      isTraining
-                          ? 'Tell us what you’d like to learn'
-                          : 'Tell us what you’re building',
-                      style: isMobile
-                          ? AppTypography.heading1(
-                              color: isDark
-                                  ? AppColors.textPrimaryDark
-                                  : AppColors.textPrimaryLight,
-                            )
-                          : AppTypography.displayLarge(
-                              color: isDark
-                                  ? AppColors.textPrimaryDark
-                                  : AppColors.textPrimaryLight,
+                      const SizedBox(height: 16),
+                      Text(
+                        isTraining
+                            ? 'Tell us what you’d like to learn'
+                            : 'Tell us what you’re building',
+                        style: isMobile
+                            ? AppTypography.heading1(
+                                color: isDark
+                                    ? AppColors.textPrimaryDark
+                                    : AppColors.textPrimaryLight,
+                              )
+                            : AppTypography.displayLarge(
+                                color: isDark
+                                    ? AppColors.textPrimaryDark
+                                    : AppColors.textPrimaryLight,
+                              ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        isTraining
+                            ? 'Fill out the form below with your learning goals, target software, preferred schedule, and batch size.'
+                            : 'Fill out the brief below with your project details, scope, and target deadline.',
+                        style: AppTypography.bodyLarge(
+                          color: isDark
+                              ? AppColors.textSecondaryDark
+                              : AppColors.textSecondaryLight,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            Divider(
+              color: isDark ? AppColors.borderDark : AppColors.borderLight,
+              height: 1,
+            ),
+
+            // Brief Builder Form Section
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(
+                horizontal: horizontalPadding,
+                vertical: isMobile ? 36.0 : 64.0,
+              ),
+              child: Center(
+                child: Container(
+                  constraints: const BoxConstraints(
+                    maxWidth: ResponsiveBreakpoints.maxContentWidth,
+                  ),
+                  child: isMobile
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildFormOrSuccess(isDark, isMobile),
+                            const SizedBox(height: 48),
+                            _buildBriefGuidelines(isDark, isMobile),
+                          ],
+                        )
+                      : Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 6,
+                              child: _buildFormOrSuccess(isDark, isMobile),
                             ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      isTraining
-                          ? 'Fill out the form below with your learning goals, target software, preferred schedule, and batch size.'
-                          : 'Fill out the brief below with your project details, scope, and target deadline.',
-                      style: AppTypography.bodyLarge(
-                        color: isDark
-                            ? AppColors.textSecondaryDark
-                            : AppColors.textSecondaryLight,
-                      ),
-                    ),
-                  ],
+                            const SizedBox(width: 64),
+                            Expanded(
+                              flex: 4,
+                              child: _buildBriefGuidelines(isDark, isMobile),
+                            ),
+                          ],
+                        ),
                 ),
               ),
             ),
-          ),
-
-          Divider(
-            color: isDark ? AppColors.borderDark : AppColors.borderLight,
-            height: 1,
-          ),
-
-          // Brief Builder Form Section
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(
-              horizontal: horizontalPadding,
-              vertical: isMobile ? 36.0 : 64.0,
-            ),
-            child: Center(
-              child: Container(
-                constraints: const BoxConstraints(
-                  maxWidth: ResponsiveBreakpoints.maxContentWidth,
-                ),
-                child: isMobile
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildFormOrSuccess(isDark, isMobile),
-                          const SizedBox(height: 48),
-                          _buildBriefGuidelines(isDark, isMobile),
-                        ],
-                      )
-                    : Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 6,
-                            child: _buildFormOrSuccess(isDark, isMobile),
-                          ),
-                          const SizedBox(width: 64),
-                          Expanded(
-                            flex: 4,
-                            child: _buildBriefGuidelines(isDark, isMobile),
-                          ),
-                        ],
-                      ),
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -449,16 +458,16 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
         padding: const EdgeInsets.all(36.0),
         decoration: BoxDecoration(
           color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-          border: Border.all(
-            color: AppColors.accent,
-            width: 1.5,
-          ),
+          border: Border.all(color: AppColors.accent, width: 1.5),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Icon(Icons.check_circle_rounded,
-                size: 48, color: AppColors.accent),
+            const Icon(
+              Icons.check_circle_rounded,
+              size: 48,
+              color: AppColors.accent,
+            ),
             const SizedBox(height: 24),
             Text(
               isTraining
@@ -489,12 +498,12 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                     ? AppColors.textPrimaryDark
                     : AppColors.textPrimaryLight,
                 side: BorderSide(
-                  color: isDark
-                      ? AppColors.borderDark
-                      : AppColors.borderLight,
+                  color: isDark ? AppColors.borderDark : AppColors.borderLight,
                 ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 16,
+                ),
               ),
               child: Text(
                 isTraining ? 'Submit another enquiry' : 'Submit another brief',
@@ -523,8 +532,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
         TextFormField(
           controller: _nameController,
           style: AppTypography.bodyMedium(
-            color:
-                isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+            color: isDark
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
           ),
           decoration: _inputDecoration(isDark, hint: 'Alex Morgan'),
           validator: (value) {
@@ -550,8 +560,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
         TextFormField(
           controller: _emailController,
           style: AppTypography.bodyMedium(
-            color:
-                isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+            color: isDark
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
           ),
           decoration: _inputDecoration(isDark, hint: 'alex@domain.com'),
           validator: (value) {
@@ -576,8 +587,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           Text(
             'INQUIRY TYPE',
             style: AppTypography.labelUppercase(
-              color:
-                  isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              color: isDark
+                  ? AppColors.textMutedDark
+                  : AppColors.textMutedLight,
             ),
           ),
           const SizedBox(height: 10),
@@ -637,8 +649,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           Text(
             isTraining ? 'TRAINING TOPIC / FORMAT' : 'PROJECT TYPE',
             style: AppTypography.labelUppercase(
-              color:
-                  isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              color: isDark
+                  ? AppColors.textMutedDark
+                  : AppColors.textMutedLight,
             ),
           ),
           const SizedBox(height: 10),
@@ -654,19 +667,21 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 10),
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
                     decoration: BoxDecoration(
                       color: isSelected
                           ? AppColors.accent
                           : (isDark
-                              ? AppColors.surfaceDark
-                              : AppColors.surfaceLight),
+                                ? AppColors.surfaceDark
+                                : AppColors.surfaceLight),
                       border: Border.all(
                         color: isSelected
                             ? AppColors.accent
                             : (isDark
-                                ? AppColors.borderDark
-                                : AppColors.borderLight),
+                                  ? AppColors.borderDark
+                                  : AppColors.borderLight),
                       ),
                     ),
                     child: Text(
@@ -675,8 +690,8 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                         color: isSelected
                             ? Colors.white
                             : (isDark
-                                ? AppColors.textPrimaryDark
-                                : AppColors.textPrimaryLight),
+                                  ? AppColors.textPrimaryDark
+                                  : AppColors.textPrimaryLight),
                       ),
                     ),
                   ),
@@ -690,8 +705,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           Text(
             isTraining ? 'BUDGET / BATCH ESTIMATE' : 'BUDGET RANGE',
             style: AppTypography.labelUppercase(
-              color:
-                  isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              color: isDark
+                  ? AppColors.textMutedDark
+                  : AppColors.textMutedLight,
             ),
           ),
           const SizedBox(height: 10),
@@ -707,23 +723,25 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 10),
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
                     decoration: BoxDecoration(
                       color: isSelected
                           ? (isDark
-                              ? AppColors.textPrimaryDark
-                              : AppColors.textPrimaryLight)
+                                ? AppColors.textPrimaryDark
+                                : AppColors.textPrimaryLight)
                           : (isDark
-                              ? AppColors.surfaceDark
-                              : AppColors.surfaceLight),
+                                ? AppColors.surfaceDark
+                                : AppColors.surfaceLight),
                       border: Border.all(
                         color: isSelected
                             ? (isDark
-                                ? AppColors.textPrimaryDark
-                                : AppColors.textPrimaryLight)
+                                  ? AppColors.textPrimaryDark
+                                  : AppColors.textPrimaryLight)
                             : (isDark
-                                ? AppColors.borderDark
-                                : AppColors.borderLight),
+                                  ? AppColors.borderDark
+                                  : AppColors.borderLight),
                       ),
                     ),
                     child: Text(
@@ -732,8 +750,8 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                         color: isSelected
                             ? (isDark ? AppColors.bgDark : AppColors.bgLight)
                             : (isDark
-                                ? AppColors.textPrimaryDark
-                                : AppColors.textPrimaryLight),
+                                  ? AppColors.textPrimaryDark
+                                  : AppColors.textPrimaryLight),
                       ),
                     ),
                   ),
@@ -747,8 +765,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           Text(
             isTraining ? 'PREFERRED TRAINING SCHEDULE' : 'TIMELINE / DEADLINE',
             style: AppTypography.labelUppercase(
-              color:
-                  isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              color: isDark
+                  ? AppColors.textMutedDark
+                  : AppColors.textMutedLight,
             ),
           ),
           const SizedBox(height: 10),
@@ -764,23 +783,25 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 10),
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
                     decoration: BoxDecoration(
                       color: isSelected
                           ? (isDark
-                              ? AppColors.textPrimaryDark
-                              : AppColors.textPrimaryLight)
+                                ? AppColors.textPrimaryDark
+                                : AppColors.textPrimaryLight)
                           : (isDark
-                              ? AppColors.surfaceDark
-                              : AppColors.surfaceLight),
+                                ? AppColors.surfaceDark
+                                : AppColors.surfaceLight),
                       border: Border.all(
                         color: isSelected
                             ? (isDark
-                                ? AppColors.textPrimaryDark
-                                : AppColors.textPrimaryLight)
+                                  ? AppColors.textPrimaryDark
+                                  : AppColors.textPrimaryLight)
                             : (isDark
-                                ? AppColors.borderDark
-                                : AppColors.borderLight),
+                                  ? AppColors.borderDark
+                                  : AppColors.borderLight),
                       ),
                     ),
                     child: Text(
@@ -789,8 +810,8 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                         color: isSelected
                             ? (isDark ? AppColors.bgDark : AppColors.bgLight)
                             : (isDark
-                                ? AppColors.textPrimaryDark
-                                : AppColors.textPrimaryLight),
+                                  ? AppColors.textPrimaryDark
+                                  : AppColors.textPrimaryLight),
                       ),
                     ),
                   ),
@@ -806,8 +827,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                 ? 'TRAINING GOALS & SPECIFIC TOPICS *'
                 : 'PROJECT DESCRIPTION & GOALS *',
             style: AppTypography.labelUppercase(
-              color:
-                  isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              color: isDark
+                  ? AppColors.textMutedDark
+                  : AppColors.textMutedLight,
             ),
           ),
           const SizedBox(height: 8),
@@ -849,14 +871,17 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.error_outline_rounded,
-                          color: Colors.redAccent),
+                      const Icon(
+                        Icons.error_outline_rounded,
+                        color: Colors.redAccent,
+                      ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           _errorMessage!,
                           style: AppTypography.bodySmall(
-                              color: Colors.redAccent),
+                            color: Colors.redAccent,
+                          ),
                         ),
                       ),
                     ],
@@ -864,8 +889,11 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                   const SizedBox(height: 12),
                   TextButton.icon(
                     onPressed: _sendDirectEmail,
-                    icon: const Icon(Icons.email_outlined,
-                        size: 16, color: Colors.redAccent),
+                    icon: const Icon(
+                      Icons.email_outlined,
+                      size: 16,
+                      color: Colors.redAccent,
+                    ),
                     label: Text(
                       'Send via Email App directly →',
                       style: AppTypography.buttonText(color: Colors.redAccent),
@@ -896,8 +924,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                       width: 20,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Colors.white),
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
                     )
                   : Text(
@@ -912,7 +939,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           Text(
             'By submitting this form, you agree to our Privacy Policy & Terms.',
             style: AppTypography.bodySmall(
-              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              color: isDark
+                  ? AppColors.textMutedDark
+                  : AppColors.textMutedLight,
             ).copyWith(fontSize: 11),
           ),
         ],
@@ -960,7 +989,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           ),
           const SizedBox(height: 20),
           Text(
-            isTraining ? '2. Customized Syllabus & Quote' : '2. Initial Proposal',
+            isTraining
+                ? '2. Customized Syllabus & Quote'
+                : '2. Initial Proposal',
             style: AppTypography.heading3(
               color: isDark
                   ? AppColors.textPrimaryDark
@@ -1022,23 +1053,19 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color:
-              isDark ? AppColors.borderHoverDark : AppColors.borderHoverLight,
+          color: isDark
+              ? AppColors.borderHoverDark
+              : AppColors.borderHoverLight,
           width: 1.5,
         ),
         borderRadius: BorderRadius.zero,
       ),
       errorBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.redAccent,
-        ),
+        borderSide: BorderSide(color: Colors.redAccent),
         borderRadius: BorderRadius.zero,
       ),
       focusedErrorBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.redAccent,
-          width: 1.5,
-        ),
+        borderSide: BorderSide(color: Colors.redAccent, width: 1.5),
         borderRadius: BorderRadius.zero,
       ),
     );
@@ -1070,9 +1097,7 @@ class _CategoryTabButton extends StatelessWidget {
           duration: const Duration(milliseconds: 180),
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           decoration: BoxDecoration(
-            color: isSelected
-                ? AppColors.accent
-                : Colors.transparent,
+            color: isSelected ? AppColors.accent : Colors.transparent,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -1083,8 +1108,8 @@ class _CategoryTabButton extends StatelessWidget {
                 color: isSelected
                     ? Colors.white
                     : (isDark
-                        ? AppColors.textSecondaryDark
-                        : AppColors.textSecondaryLight),
+                          ? AppColors.textSecondaryDark
+                          : AppColors.textSecondaryLight),
               ),
               const SizedBox(width: 8),
               Flexible(
@@ -1094,8 +1119,8 @@ class _CategoryTabButton extends StatelessWidget {
                     color: isSelected
                         ? Colors.white
                         : (isDark
-                            ? AppColors.textPrimaryDark
-                            : AppColors.textPrimaryLight),
+                              ? AppColors.textPrimaryDark
+                              : AppColors.textPrimaryLight),
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),

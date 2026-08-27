@@ -16,8 +16,11 @@ class PrivacyPolicyScreen extends StatelessWidget {
     final horizontalPadding = ResponsiveBreakpoints.getHorizontalPadding(context);
     final scale = ResponsiveBreakpoints.getTypographyScale(context);
 
-    return PageScaffold(
-      currentPath: '/privacy-policy',
+    return Title(
+      title: 'Privacy Policy — StudioProof',
+      color: isDark ? AppColors.bgDark : AppColors.bgLight,
+      child: PageScaffold(
+        currentPath: '/privacy-policy',
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -164,8 +167,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildSection({
     required bool isDark,

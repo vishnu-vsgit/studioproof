@@ -36,7 +36,10 @@ class _ContactScreenState extends State<ContactScreen> {
 
   Future<void> _launchUrl(String urlString) async {
     final Uri? url = Uri.tryParse(urlString);
-    if (url != null && (url.scheme == 'https' || url.scheme == 'mailto')) {
+    if (url != null &&
+        (url.scheme == 'https' ||
+            url.scheme == 'mailto' ||
+            url.scheme == 'tel')) {
       if (await canLaunchUrl(url)) {
         await launchUrl(url, mode: LaunchMode.externalApplication);
       }
@@ -125,8 +128,11 @@ class _ContactScreenState extends State<ContactScreen> {
         ResponsiveBreakpoints.getHorizontalPadding(context);
     final scale = ResponsiveBreakpoints.getTypographyScale(context);
 
-    return PageScaffold(
-      currentPath: '/contact',
+    return Title(
+      title: 'Contact Us — StudioProof',
+      color: isDark ? AppColors.bgDark : AppColors.bgLight,
+      child: PageScaffold(
+        currentPath: '/contact',
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -229,8 +235,9 @@ class _ContactScreenState extends State<ContactScreen> {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildDirectContactChannels(bool isDark) {
     return Column(
@@ -264,6 +271,15 @@ class _ContactScreenState extends State<ContactScreen> {
           value: AppConfig.contactEmail,
           subtitle: 'Click to open email composer',
           onTap: () => _launchUrl('mailto:${AppConfig.contactEmail}'),
+          isDark: isDark,
+        ),
+        const SizedBox(height: 16),
+        _ContactCard(
+          icon: Icons.phone_outlined,
+          title: 'Phone / Call',
+          value: AppConfig.phoneNumber,
+          subtitle: 'Direct phone call',
+          onTap: () => _launchUrl(AppConfig.phoneUrl),
           isDark: isDark,
         ),
         const SizedBox(height: 16),

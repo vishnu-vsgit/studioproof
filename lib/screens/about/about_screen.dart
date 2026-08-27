@@ -18,8 +18,11 @@ class AboutScreen extends StatelessWidget {
     );
     final scale = ResponsiveBreakpoints.getTypographyScale(context);
 
-    return PageScaffold(
-      currentPath: '/about',
+    return Title(
+      title: 'About Us — StudioProof',
+      color: isDark ? AppColors.bgDark : AppColors.bgLight,
+      child: PageScaffold(
+        currentPath: '/about',
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -275,8 +278,9 @@ class AboutScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildStoryContent(bool isDark) {
     return Column(
