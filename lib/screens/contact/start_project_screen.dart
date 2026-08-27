@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/config/app_config.dart';
+import '../../core/services/supabase_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/theme/responsive_breakpoints.dart';
@@ -166,7 +167,36 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
     });
 
     final isTraining = _selectedCategory == FormCategory.training;
+    final name = _nameController.text.trim();
+    final email = _emailController.text.trim();
+    final organization = _organizationController.text.trim();
+    final description = _descriptionController.text.trim();
+    final categoryStr = isTraining ? 'Design Training & Workshop' : 'Visual Design Project';
 
+    // 1. Try Supabase Database submission
+    if (SupabaseService.isInitialized) {
+      final supabaseSaved = await SupabaseService.submitProjectBrief(
+        name: name,
+        email: email,
+        organization: organization,
+        category: categoryStr,
+        projectType: _selectedProjectType,
+        budget: _selectedBudget,
+        deadline: _selectedDeadline,
+        details: description,
+      );
+      if (supabaseSaved) {
+        if (mounted) {
+          setState(() {
+            _isSubmitting = false;
+            _isSubmitted = true;
+          });
+        }
+        return;
+      }
+    }
+
+    // 2. Fallback to FormSubmit AJAX endpoint
     try {
       final response = await http.post(
         Uri.parse('https://formsubmit.co/ajax/${AppConfig.formSubmitHash}'),
@@ -176,24 +206,20 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
         },
         body: jsonEncode({
           '_subject':
-              '${isTraining ? "New Training Enquiry" : "New Project Brief"}: ${_nameController.text.trim()}',
+              '${isTraining ? "New Training Enquiry" : "New Project Brief"}: $name',
           '_template': 'table',
-          'Inquiry Category': isTraining
-              ? 'Design Training & Workshop'
-              : 'Visual Design Project',
-          'Name': _nameController.text.trim(),
-          'Email': _emailController.text.trim(),
+          'Inquiry Category': categoryStr,
+          'Name': name,
+          'Email': email,
           'Organization / Institution':
-              _organizationController.text.trim().isEmpty
-              ? 'N/A'
-              : _organizationController.text.trim(),
+              organization.isEmpty ? 'N/A' : organization,
           isTraining ? 'Training Topic / Format' : 'Project Type':
               _selectedProjectType,
           isTraining ? 'Budget / Batch Estimate' : 'Budget Range':
               _selectedBudget,
           isTraining ? 'Preferred Schedule' : 'Deadline': _selectedDeadline,
           isTraining ? 'Training Goals & Topics' : 'Project Message':
-              _descriptionController.text.trim(),
+              description,
         }),
       );
 

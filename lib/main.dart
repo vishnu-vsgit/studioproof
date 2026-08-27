@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:provider/provider.dart';
+import 'core/services/supabase_service.dart';
 import 'core/theme/app_theme.dart';
+import 'core/theme/theme_provider.dart';
 import 'routes/app_router.dart';
 
-void main() {
+void main() async {
   // Use clean URL path strategy without '#' in Flutter Web
   usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
+  await SupabaseService.init();
   runApp(const StudioProofApp());
 }
 
@@ -15,13 +19,20 @@ class StudioProofApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'StudioProof',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      routerConfig: appRouter,
+    return ChangeNotifierProvider<ThemeProvider>(
+      create: (_) => ThemeProvider(),
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, child) {
+          return MaterialApp.router(
+            title: 'StudioProof',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: themeProvider.themeMode,
+            routerConfig: appRouter,
+          );
+        },
+      ),
     );
   }
 }

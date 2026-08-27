@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/config/app_config.dart';
+import '../../core/services/supabase_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/theme/responsive_breakpoints.dart';
@@ -67,6 +68,29 @@ class _ContactScreenState extends State<ContactScreen> {
       _errorMessage = null;
     });
 
+    final name = _nameController.text.trim();
+    final email = _emailController.text.trim();
+    final message = _messageController.text.trim();
+
+    // 1. Try Supabase Database submission
+    if (SupabaseService.isInitialized) {
+      final supabaseSaved = await SupabaseService.submitContactInquiry(
+        name: name,
+        email: email,
+        message: message,
+      );
+      if (supabaseSaved) {
+        if (mounted) {
+          setState(() {
+            _isSubmitting = false;
+            _isSubmitted = true;
+          });
+        }
+        return;
+      }
+    }
+
+    // 2. Fallback to FormSubmit AJAX endpoint
     try {
       final response = await http.post(
         Uri.parse('https://formsubmit.co/ajax/${AppConfig.formSubmitHash}'),
@@ -75,11 +99,11 @@ class _ContactScreenState extends State<ContactScreen> {
           'Accept': 'application/json',
         },
         body: jsonEncode({
-          '_subject': 'Contact Message: ${_nameController.text.trim()}',
+          '_subject': 'Contact Message: $name',
           '_template': 'table',
-          'Name': _nameController.text.trim(),
-          'Email': _emailController.text.trim(),
-          'Message': _messageController.text.trim(),
+          'Name': name,
+          'Email': email,
+          'Message': message,
         }),
       );
 

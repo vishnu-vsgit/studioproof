@@ -4,6 +4,7 @@ import '../../core/config/app_config.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/theme/responsive_breakpoints.dart';
+import '../../widgets/common/studio_process_timeline.dart';
 import '../../widgets/layout/page_scaffold.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -204,6 +205,28 @@ class AboutScreen extends StatelessWidget {
                           ),
                   ],
                 ),
+              ),
+            ),
+          ),
+
+          Divider(
+            color: isDark ? AppColors.borderDark : AppColors.borderLight,
+            height: 1,
+          ),
+
+          // 3B. STUDIO PROCESS TIMELINE
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(
+              horizontal: horizontalPadding,
+              vertical: isMobile ? 32.0 : 72.0,
+            ),
+            child: Center(
+              child: Container(
+                constraints: const BoxConstraints(
+                  maxWidth: ResponsiveBreakpoints.maxContentWidth,
+                ),
+                child: const StudioProcessTimeline(),
               ),
             ),
           ),

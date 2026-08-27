@@ -13,6 +13,16 @@ class AppConfig {
   static const String phoneUrl = 'tel:+918778944493';
   static const String instagramHandle = '@studioproof.design';
   static const String instagramUrl = 'https://instagram.com/studioproof.design';
+
+  // Supabase Backend Configuration
+  static const String supabaseUrl = String.fromEnvironment(
+    'SUPABASE_URL',
+    defaultValue: 'https://godwozrmgvuxuthzamrh.supabase.co',
+  );
+  static const String supabaseAnonKey = String.fromEnvironment(
+    'SUPABASE_ANON_KEY',
+    defaultValue: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvZHdvenJtZ3Z1eHV0aHphbXJoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4MTA5NzMsImV4cCI6MjEwMzM4Njk3M30.Z60FC9erYdAJjusySpxyrxN1E1ElngtWJ5kkHzF64xs',
+  );
   
   // Primary Tools used
   static const List<String> primaryTools = [

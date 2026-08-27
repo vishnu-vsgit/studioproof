@@ -8,6 +8,7 @@ import '../navigation/mobile_drawer.dart';
 import '../navigation/site_footer.dart';
 
 import '../common/floating_whatsapp_button.dart';
+import '../common/studio_cursor_follower.dart';
 
 class PageScaffold extends StatefulWidget {
   final Widget body;
@@ -77,8 +78,9 @@ class _PageScaffoldState extends State<PageScaffold> {
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: MobileDrawer(currentPath: widget.currentPath),
-      body: Stack(
-        children: [
+      body: StudioCursorFollower(
+        child: Stack(
+          children: [
           Column(
             children: [
               SelectionContainer.disabled(
@@ -142,6 +144,7 @@ class _PageScaffoldState extends State<PageScaffold> {
           ),
         ],
       ),
+    ),
       bottomNavigationBar: (isMobile && !hideBottomBarOnPaths)
           ? SelectionContainer.disabled(
               child: Container(

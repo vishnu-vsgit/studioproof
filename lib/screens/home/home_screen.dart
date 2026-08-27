@@ -5,6 +5,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/theme/responsive_breakpoints.dart';
 import '../../data/portfolio_data.dart';
+import '../../widgets/common/kinetic_marquee_widget.dart';
 import '../../widgets/layout/page_scaffold.dart';
 import '../../widgets/portfolio/work_carousel_widget.dart';
 
@@ -215,6 +216,22 @@ class HomeScreen extends StatelessWidget {
                       ),
               ),
             ),
+          ),
+          // 1.8 KINETIC MARQUEE TYPOGRAPHY BANNER
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            color: isDark ? AppColors.bgDark : AppColors.bgLight,
+            child: const KineticMarqueeWidget(
+              text: 'POSTER DESIGN • BRAND IDENTITY • CAMPAIGN KEY VISUALS • DESIGN TRAINING',
+              fontSize: 64,
+              opacity: 0.14,
+              speed: 40.0,
+            ),
+          ),
+
+          Divider(
+            color: isDark ? AppColors.borderDark : AppColors.borderLight,
+            height: 1,
           ),
 
           // 2. CONTENT BETWEEN HERO & RECENT DESIGNS: CORE HIGHLIGHTS SECTION
@@ -432,6 +449,19 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+          ),
+
+          // 3.5 REVERSE KINETIC MARQUEE TYPOGRAPHY BANNER
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+            child: const KineticMarqueeWidget(
+              text: 'HIGH-IMPACT VISUAL DIRECTION • CREATIVE MOMENTUM • PURPOSE BUILT DESIGN',
+              reverse: true,
+              fontSize: 56,
+              opacity: 0.12,
+              speed: 45.0,
             ),
           ),
 
