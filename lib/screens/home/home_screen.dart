@@ -98,73 +98,34 @@ class HomeScreen extends StatelessWidget {
                   maxWidth: ResponsiveBreakpoints.maxContentWidth,
                 ),
                 child: isMobile
-                    ? Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 14,
-                        ),
-                        decoration: BoxDecoration(
-                          color: isDark
-                              ? AppColors.surfaceDark
-                              : AppColors.surfaceLight,
-                          border: Border.all(
-                            color: isDark
-                                ? AppColors.borderDark
-                                : AppColors.borderLight,
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 8,
-                                  height: 8,
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFF22C55E),
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Text(
-                                    'ACCEPTING NEW COMMISSIONS & PARTNERSHIPS',
-                                    style:
-                                        AppTypography.labelUppercase(
-                                          color: isDark
-                                              ? AppColors.textPrimaryDark
-                                              : AppColors.textPrimaryLight,
-                                          scale: scale,
-                                        ).copyWith(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 11 * scale,
-                                          letterSpacing: 0.8,
-                                        ),
-                                  ),
-                                ),
-                              ],
+                    ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 8,
+                            height: 8,
+                            decoration: const BoxDecoration(
+                              color: Color(0xFF22C55E),
+                              shape: BoxShape.circle,
                             ),
-                            const SizedBox(height: 8),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 16),
-                              child: Text(
-                                'Completed Graphic Design & Training for Multiple Campus Communities & Individuals',
-                                style:
-                                    AppTypography.bodySmall(
-                                      color: isDark
-                                          ? AppColors.textSecondaryDark
-                                          : AppColors.textSecondaryLight,
-                                      scale: scale,
-                                    ).copyWith(
-                                      fontSize: 11.5 * scale,
-                                      height: 1.35,
-                                    ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              'ACCEPTING NEW COMMISSIONS & PARTNERSHIPS',
+                              style: AppTypography.labelUppercase(
+                                color: isDark
+                                    ? AppColors.textPrimaryDark
+                                    : AppColors.textPrimaryLight,
+                                scale: scale,
+                              ).copyWith(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 11 * scale,
+                                letterSpacing: 0.5,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       )
                     : Wrap(
                         alignment: WrapAlignment.spaceBetween,
@@ -217,22 +178,23 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          // 1.8 KINETIC MARQUEE TYPOGRAPHY BANNER
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            color: isDark ? AppColors.bgDark : AppColors.bgLight,
-            child: const KineticMarqueeWidget(
-              text: 'POSTER DESIGN • BRAND IDENTITY • CAMPAIGN KEY VISUALS • DESIGN TRAINING',
-              fontSize: 64,
-              opacity: 0.14,
-              speed: 40.0,
+          if (!isMobile) ...[
+            // 1.8 KINETIC MARQUEE TYPOGRAPHY BANNER
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              color: isDark ? AppColors.bgDark : AppColors.bgLight,
+              child: const KineticMarqueeWidget(
+                text: 'POSTER DESIGN • BRAND IDENTITY • CAMPAIGN KEY VISUALS • DESIGN TRAINING',
+                fontSize: 64,
+                opacity: 0.14,
+                speed: 40.0,
+              ),
             ),
-          ),
-
-          Divider(
-            color: isDark ? AppColors.borderDark : AppColors.borderLight,
-            height: 1,
-          ),
+            Divider(
+              color: isDark ? AppColors.borderDark : AppColors.borderLight,
+              height: 1,
+            ),
+          ],
 
           // 2. CONTENT BETWEEN HERO & RECENT DESIGNS: CORE HIGHLIGHTS SECTION
           Container(
@@ -283,62 +245,36 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 28),
 
-                    // 4 Core Highlights (Compact 2x2 Grid on Mobile, 4-column Row on Desktop)
+                    // 4 Core Highlights (Vertical 1-column list on Mobile, 4-column Row on Desktop)
                     if (isMobile)
                       Column(
                         children: const [
-                          IntrinsicHeight(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Expanded(
-                                  child: _HighlightCard(
-                                    number: '01',
-                                    title: 'Posters & Campaigns',
-                                    description:
-                                        'High-impact key visuals, festival posters & digital graphics.',
-                                    isCompact: true,
-                                  ),
-                                ),
-                                SizedBox(width: 12),
-                                Expanded(
-                                  child: _HighlightCard(
-                                    number: '02',
-                                    title: 'Brand Identity',
-                                    description:
-                                        'Clean visual identity, logos & typography guidelines.',
-                                    isCompact: true,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          _HighlightCard(
+                            number: '01',
+                            title: 'Posters & Campaigns',
+                            description:
+                                'High-impact key visuals, festival posters & digital promotional graphics.',
                           ),
                           SizedBox(height: 12),
-                          IntrinsicHeight(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Expanded(
-                                  child: _HighlightCard(
-                                    number: '03',
-                                    title: 'Design Training',
-                                    description:
-                                        'Paid 1-on-1 & workshop sessions in Photoshop & Figma.',
-                                    isCompact: true,
-                                  ),
-                                ),
-                                SizedBox(width: 12),
-                                Expanded(
-                                  child: _HighlightCard(
-                                    number: '04',
-                                    title: 'Design Support',
-                                    description:
-                                        'Ongoing monthly design partnership for clubs, startups & creators.',
-                                    isCompact: true,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          _HighlightCard(
+                            number: '02',
+                            title: 'Brand Identity',
+                            description:
+                                'Clean visual identity systems, logos & typography guidelines.',
+                          ),
+                          SizedBox(height: 12),
+                          _HighlightCard(
+                            number: '03',
+                            title: 'Design Training',
+                            description:
+                                'Paid 1-on-1 & workshop sessions in Photoshop & Figma.',
+                          ),
+                          SizedBox(height: 12),
+                          _HighlightCard(
+                            number: '04',
+                            title: 'Design Support',
+                            description:
+                                'Ongoing monthly design partnership for campus clubs, startups & creators.',
                           ),
                         ],
                       )
@@ -452,23 +388,24 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
 
-          // 3.5 REVERSE KINETIC MARQUEE TYPOGRAPHY BANNER
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-            child: const KineticMarqueeWidget(
-              text: 'HIGH-IMPACT VISUAL DIRECTION • CREATIVE MOMENTUM • PURPOSE BUILT DESIGN',
-              reverse: true,
-              fontSize: 56,
-              opacity: 0.12,
-              speed: 45.0,
+          if (!isMobile) ...[
+            // 3.5 REVERSE KINETIC MARQUEE TYPOGRAPHY BANNER
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+              child: const KineticMarqueeWidget(
+                text: 'HIGH-IMPACT VISUAL DIRECTION • CREATIVE MOMENTUM • PURPOSE BUILT DESIGN',
+                reverse: true,
+                fontSize: 56,
+                opacity: 0.12,
+                speed: 45.0,
+              ),
             ),
-          ),
-
-          Divider(
-            color: isDark ? AppColors.borderDark : AppColors.borderLight,
-            height: 1,
-          ),
+            Divider(
+              color: isDark ? AppColors.borderDark : AppColors.borderLight,
+              height: 1,
+            ),
+          ],
 
           // 4. STUDIO STATEMENT SECTION
           Container(
@@ -523,7 +460,7 @@ class HomeScreen extends StatelessWidget {
             height: 1,
           ),
 
-          // 5. PROCESS SECTION (Interactive Horizontal Step Cards on Mobile)
+          // 5. PROCESS SECTION (Vertical Steps on Mobile, Horizontal Row on Desktop)
           Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(
@@ -563,42 +500,30 @@ class HomeScreen extends StatelessWidget {
                     const SizedBox(height: 24),
 
                     if (isMobile)
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        physics: const BouncingScrollPhysics(),
-                        child: Row(
-                          children: const [
-                            SizedBox(
-                              width: 260,
-                              child: _ProcessStepItem(
-                                number: '01',
-                                title: 'Tell us what you need',
-                                body:
-                                    'Share goals, deadline & context through quick enquiry.',
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            SizedBox(
-                              width: 260,
-                              child: _ProcessStepItem(
-                                number: '02',
-                                title: 'We design',
-                                body:
-                                    'We develop visual concepts in Figma & Photoshop.',
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            SizedBox(
-                              width: 260,
-                              child: _ProcessStepItem(
-                                number: '03',
-                                title: 'You receive final files',
-                                body:
-                                    'Get print PDFs, high-res PNGs & source files.',
-                              ),
-                            ),
-                          ],
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          _ProcessStepItem(
+                            number: '01',
+                            title: 'Tell us what you need',
+                            body:
+                                'Share goals, deadline & context through quick enquiry form.',
+                          ),
+                          SizedBox(height: 24),
+                          _ProcessStepItem(
+                            number: '02',
+                            title: 'We design',
+                            body:
+                                'We develop visual concepts in Figma & Photoshop.',
+                          ),
+                          SizedBox(height: 24),
+                          _ProcessStepItem(
+                            number: '03',
+                            title: 'You receive final files',
+                            body:
+                                'Get print PDFs, high-res PNGs & source files.',
+                          ),
+                        ],
                       )
                     else
                       Row(
@@ -825,42 +750,7 @@ class HomeScreen extends StatelessWidget {
             scale: scale,
           ),
         ),
-        SizedBox(height: isMobile ? 20 : 36),
-
-        // Compact Studio Spec Pills on Mobile
-        if (isMobile) ...[
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            decoration: BoxDecoration(
-              color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-              border: Border.all(
-                color: isDark ? AppColors.borderDark : AppColors.borderLight,
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.flash_on_rounded,
-                  size: 16,
-                  color: AppColors.accent,
-                ),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Text(
-                    'Posters • Branding • Training Sessions',
-                    style: AppTypography.bodySmall(
-                      color: isDark
-                          ? AppColors.textPrimaryDark
-                          : AppColors.textPrimaryLight,
-                    ).copyWith(fontWeight: FontWeight.w600),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
-        ],
+        SizedBox(height: isMobile ? 24 : 36),
 
         // Action Buttons
         Wrap(
@@ -1075,22 +965,21 @@ class _HighlightCard extends StatelessWidget {
   final String number;
   final String title;
   final String description;
-  final bool isCompact;
 
   const _HighlightCard({
     required this.number,
     required this.title,
     required this.description,
-    this.isCompact = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isMobile = ResponsiveBreakpoints.isMobile(context);
 
     return Container(
-      constraints: isCompact ? const BoxConstraints(minHeight: 154) : null,
-      padding: EdgeInsets.all(isCompact ? 16.0 : 28.0),
+      width: double.infinity,
+      padding: EdgeInsets.all(isMobile ? 20.0 : 28.0),
       decoration: BoxDecoration(
         color: isDark ? AppColors.bgDark : AppColors.bgLight,
         border: Border.all(
@@ -1099,41 +988,21 @@ class _HighlightCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: isCompact
-            ? MainAxisAlignment.spaceBetween
-            : MainAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                number,
-                style: AppTypography.labelUppercase(color: AppColors.accent),
-              ),
-              SizedBox(height: isCompact ? 8 : 16),
-              Container(
-                constraints: isCompact
-                    ? const BoxConstraints(minHeight: 38)
-                    : null,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  title,
-                  style: isCompact
-                      ? AppTypography.heading3(
-                          color: isDark
-                              ? AppColors.textPrimaryDark
-                              : AppColors.textPrimaryLight,
-                        ).copyWith(fontSize: 15, height: 1.25)
-                      : AppTypography.heading3(
-                          color: isDark
-                              ? AppColors.textPrimaryDark
-                              : AppColors.textPrimaryLight,
-                        ),
-                ),
-              ),
-            ],
+          Text(
+            number,
+            style: AppTypography.labelUppercase(color: AppColors.accent),
           ),
-          SizedBox(height: isCompact ? 8 : 8),
+          const SizedBox(height: 12),
+          Text(
+            title,
+            style: AppTypography.heading3(
+              color: isDark
+                  ? AppColors.textPrimaryDark
+                  : AppColors.textPrimaryLight,
+            ),
+          ),
+          const SizedBox(height: 8),
           Text(
             description,
             style: AppTypography.bodySmall(

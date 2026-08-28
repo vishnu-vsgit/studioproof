@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/project_model.dart';
 import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_typography.dart';
 import '../../core/theme/responsive_breakpoints.dart';
 import 'project_artwork_card.dart';
 
@@ -48,61 +47,41 @@ class _WorkCarouselWidgetState extends State<WorkCarouselWidget> {
     final isMobile = ResponsiveBreakpoints.isMobile(context);
     final screenWidth = MediaQuery.of(context).size.width;
     final cardWidth = isMobile
-        ? (screenWidth - 48.0).clamp(240.0, 300.0)
+        ? (screenWidth - 60.0).clamp(260.0, 320.0)
         : 340.0;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Carousel Header & Navigation Arrows
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: AppColors.accent,
-                    shape: BoxShape.circle,
-                  ),
+        // Navigation Arrows
+        Align(
+          alignment: Alignment.centerRight,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                onPressed: _scrollLeft,
+                icon: const Icon(Icons.arrow_back_rounded, size: 20),
+                tooltip: 'Scroll left',
+                style: IconButton.styleFrom(
+                  side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                 ),
-                const SizedBox(width: 8),
-                Text(
-                  'RECENT DESIGN WORKS',
-                  style: AppTypography.labelUppercase(
-                    color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-                  ),
+              ),
+              const SizedBox(width: 8),
+              IconButton(
+                onPressed: _scrollRight,
+                icon: const Icon(Icons.arrow_forward_rounded, size: 20),
+                tooltip: 'Scroll right',
+                style: IconButton.styleFrom(
+                  side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                IconButton(
-                  onPressed: _scrollLeft,
-                  icon: const Icon(Icons.arrow_back_rounded, size: 20),
-                  tooltip: 'Scroll left',
-                  style: IconButton.styleFrom(
-                    side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  onPressed: _scrollRight,
-                  icon: const Icon(Icons.arrow_forward_rounded, size: 20),
-                  tooltip: 'Scroll right',
-                  style: IconButton.styleFrom(
-                    side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                  ),
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 16),
 
         // Horizontal Carousel Scroll View
         SizedBox(
