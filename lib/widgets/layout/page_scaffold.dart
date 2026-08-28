@@ -27,7 +27,7 @@ class PageScaffold extends StatefulWidget {
 class _PageScaffoldState extends State<PageScaffold> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
-  bool _showWhatsappButton = false;
+  bool _showBottomBar = false;
 
   @override
   void initState() {
@@ -42,10 +42,10 @@ class _PageScaffoldState extends State<PageScaffold> {
   }
 
   void _onScroll() {
-    final shouldShow = _scrollController.offset > 120;
-    if (shouldShow != _showWhatsappButton) {
+    final shouldShow = _scrollController.hasClients && _scrollController.offset > 200;
+    if (shouldShow != _showBottomBar) {
       setState(() {
-        _showWhatsappButton = shouldShow;
+        _showBottomBar = shouldShow;
       });
     }
   }
@@ -74,6 +74,7 @@ class _PageScaffoldState extends State<PageScaffold> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final isMobile = ResponsiveBreakpoints.isMobile(context);
     final hideBottomBarOnPaths = widget.currentPath == '/start';
+    final enableMobileBottomBar = isMobile && !hideBottomBarOnPaths;
 
     return Scaffold(
       key: _scaffoldKey,
@@ -81,138 +82,159 @@ class _PageScaffoldState extends State<PageScaffold> {
       body: StudioCursorFollower(
         child: Stack(
           children: [
-          Column(
-            children: [
-              SelectionContainer.disabled(
-                child: SiteHeader(
-                  currentPath: widget.currentPath,
-                  onOpenMobileMenu: () {
-                    _scaffoldKey.currentState?.openEndDrawer();
-                  },
+            Column(
+              children: [
+                SelectionContainer.disabled(
+                  child: SiteHeader(
+                    currentPath: widget.currentPath,
+                    onOpenMobileMenu: () {
+                      _scaffoldKey.currentState?.openEndDrawer();
+                    },
+                  ),
                 ),
-              ),
-              Expanded(
-                child: NotificationListener<ScrollNotification>(
-                  onNotification: (ScrollNotification notification) {
-                    if (notification.metrics.axis == Axis.vertical) {
-                      final shouldShow = notification.metrics.pixels > 50;
-                      if (shouldShow != _showWhatsappButton) {
-                        setState(() {
-                          _showWhatsappButton = shouldShow;
-                        });
+                Expanded(
+                  child: NotificationListener<ScrollNotification>(
+                    onNotification: (ScrollNotification notification) {
+                      if (notification.metrics.axis == Axis.vertical) {
+                        final shouldShow = notification.metrics.pixels > 200;
+                        if (shouldShow != _showBottomBar) {
+                          setState(() {
+                            _showBottomBar = shouldShow;
+                          });
+                        }
                       }
-                    }
-                    return false;
-                  },
-                  child: SingleChildScrollView(
-                    controller: _scrollController,
-                    physics: const ClampingScrollPhysics(),
-                    child: Column(
-                      children: [
-                        SelectionArea(
-                          child: widget.body,
-                        ),
-                        SelectionContainer.disabled(
-                          child: const SiteFooter(),
-                        ),
-                      ],
+                      return false;
+                    },
+                    child: SingleChildScrollView(
+                      controller: _scrollController,
+                      physics: const ClampingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          SelectionArea(
+                            child: widget.body,
+                          ),
+                          SelectionContainer.disabled(
+                            child: const SiteFooter(),
+                          ),
+                          if (enableMobileBottomBar)
+                            const SizedBox(height: 60.0),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            // Floating WhatsApp Quick Chat Button
+            Positioned(
+              right: isMobile ? 16.0 : 28.0,
+              bottom: (enableMobileBottomBar && _showBottomBar) ? 76.0 : 20.0,
+              child: SelectionContainer.disabled(
+                child: AnimatedSlide(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOutCubic,
+                  offset: _showBottomBar ? Offset.zero : const Offset(0, 0.4),
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 250),
+                    opacity: _showBottomBar ? 1.0 : 0.0,
+                    child: IgnorePointer(
+                      ignoring: !_showBottomBar,
+                      child: const FloatingWhatsappButton(),
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
-          // Floating WhatsApp Quick Chat Button
-          Positioned(
-            right: isMobile ? 16.0 : 28.0,
-            bottom: (isMobile && !hideBottomBarOnPaths) ? 16.0 : 28.0,
-            child: SelectionContainer.disabled(
-              child: AnimatedSlide(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeOutCubic,
-                offset: _showWhatsappButton ? Offset.zero : const Offset(0, 0.4),
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 250),
-                  opacity: _showWhatsappButton ? 1.0 : 0.0,
-                  child: IgnorePointer(
-                    ignoring: !_showWhatsappButton,
-                    child: const FloatingWhatsappButton(),
+            ),
+
+            // Animated Sticky Mobile Bottom Navigation Bar (Appears ONLY after scrolling past Hero)
+            if (enableMobileBottomBar)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: SelectionContainer.disabled(
+                  child: AnimatedSlide(
+                    duration: const Duration(milliseconds: 350),
+                    curve: Curves.easeOutCubic,
+                    offset: _showBottomBar ? Offset.zero : const Offset(0, 1.2),
+                    child: AnimatedOpacity(
+                      duration: const Duration(milliseconds: 250),
+                      opacity: _showBottomBar ? 1.0 : 0.0,
+                      child: IgnorePointer(
+                        ignoring: !_showBottomBar,
+                        child: Container(
+                          height: 60.0,
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                          decoration: BoxDecoration(
+                            color: (isDark ? AppColors.surfaceDark : AppColors.bgLight).withValues(alpha: 0.96),
+                            border: Border(
+                              top: BorderSide(
+                                color: isDark ? AppColors.borderDark : AppColors.borderLight,
+                                width: 1.0,
+                              ),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.12),
+                                blurRadius: 10,
+                                offset: const Offset(0, -4),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: OutlinedButton(
+                                  onPressed: () => context.go('/contact'),
+                                  style: OutlinedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(vertical: 12),
+                                    side: BorderSide(
+                                      color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                                    ),
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.zero,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'Contact',
+                                    style: AppTypography.buttonText(
+                                      color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                flex: 2,
+                                child: ElevatedButton(
+                                  onPressed: () => context.go('/start'),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.accent,
+                                    foregroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(vertical: 12),
+                                    elevation: 0,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.zero,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'Start Project →',
+                                    style: AppTypography.buttonText(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-      bottomNavigationBar: (isMobile && !hideBottomBarOnPaths)
-          ? SelectionContainer.disabled(
-              child: Container(
-              height: 60.0,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              decoration: BoxDecoration(
-                color: (isDark ? AppColors.surfaceDark : AppColors.bgLight).withValues(alpha: 0.96),
-                border: Border(
-                  top: BorderSide(
-                    color: isDark ? AppColors.borderDark : AppColors.borderLight,
-                    width: 1.0,
-                  ),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.08),
-                    blurRadius: 10,
-                    offset: const Offset(0, -4),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () => context.go('/contact'),
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        side: BorderSide(
-                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-                        ),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
-                        ),
-                      ),
-                      child: Text(
-                        'Contact',
-                        style: AppTypography.buttonText(
-                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    flex: 2,
-                    child: ElevatedButton(
-                      onPressed: () => context.go('/start'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.accent,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        elevation: 0,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
-                        ),
-                      ),
-                      child: Text(
-                        'Start Project →',
-                        style: AppTypography.buttonText(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-        : null,
     );
   }
 }
