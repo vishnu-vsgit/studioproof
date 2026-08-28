@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import '../../core/config/app_config.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
-import '../../core/theme/theme_provider.dart';
 
 class MobileDrawer extends StatelessWidget {
   final String currentPath;
@@ -45,34 +43,15 @@ class MobileDrawer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Row(
-                    children: [
-                      Consumer<ThemeProvider>(
-                        builder: (context, themeProvider, child) {
-                          return IconButton(
-                            icon: Icon(
-                              isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
-                              size: 22,
-                              color: isDark
-                                  ? AppColors.textPrimaryDark
-                                  : AppColors.textPrimaryLight,
-                            ),
-                            onPressed: () => themeProvider.toggleTheme(context),
-                            tooltip: 'Toggle Theme',
-                          );
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.close_rounded,
-                          size: 28,
-                          color: isDark
-                              ? AppColors.textPrimaryDark
-                              : AppColors.textPrimaryLight,
-                        ),
-                        onPressed: () => Navigator.of(context).pop(),
-                      ),
-                    ],
+                  IconButton(
+                    icon: Icon(
+                      Icons.close_rounded,
+                      size: 28,
+                      color: isDark
+                          ? AppColors.textPrimaryDark
+                          : AppColors.textPrimaryLight,
+                    ),
+                    onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],
               ),

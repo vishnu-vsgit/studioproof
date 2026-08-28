@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/responsive_breakpoints.dart';
 
 /// Swiss Studio Custom Cursor Follower Widget for Desktop Web.
 /// Renders a smooth, subtle crosshair / ring cursor indicator that follows mouse motion.
@@ -24,7 +25,8 @@ class _StudioCursorFollowerState extends State<StudioCursorFollower> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.enableFollower) {
+    final isMobile = ResponsiveBreakpoints.isMobileOrTablet(context);
+    if (!widget.enableFollower || isMobile) {
       return widget.child;
     }
 

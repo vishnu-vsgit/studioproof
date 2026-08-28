@@ -26,9 +26,9 @@ class StudioProofApp extends StatelessWidget {
           return MaterialApp.router(
             title: 'StudioProof',
             debugShowCheckedModeBanner: false,
-            theme: AppTheme.lightTheme,
+            theme: AppTheme.darkTheme,
             darkTheme: AppTheme.darkTheme,
-            themeMode: themeProvider.themeMode,
+            themeMode: ThemeMode.dark,
             routerConfig: appRouter,
           );
         },

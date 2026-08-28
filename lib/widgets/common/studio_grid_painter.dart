@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/responsive_breakpoints.dart';
 
 /// Interactive Swiss-Style Grid Canvas Background Widget.
 /// Renders crisp grid guidelines, crosshairs, alignment markers,
@@ -27,9 +28,11 @@ class _StudioGridBackgroundState extends State<StudioGridBackground> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isMobile = ResponsiveBreakpoints.isMobileOrTablet(context);
+    final enableTracking = widget.enableMouseTracking && !isMobile;
 
     return MouseRegion(
-      onHover: widget.enableMouseTracking
+      onHover: enableTracking
           ? (event) {
               setState(() {
                 _mousePosition = event.localPosition;

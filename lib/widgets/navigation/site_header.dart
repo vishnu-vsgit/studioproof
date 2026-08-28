@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import '../../core/config/app_config.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/theme/responsive_breakpoints.dart';
-import '../../core/theme/theme_provider.dart';
 
 class SiteHeader extends StatelessWidget {
   final String currentPath;
@@ -93,30 +91,7 @@ class SiteHeader extends StatelessWidget {
                       isActive: currentPath == '/contact',
                       onTap: () => context.go('/contact'),
                     ),
-                    const SizedBox(width: 24),
-                    // Theme Switcher Toggle Button
-                    Consumer<ThemeProvider>(
-                      builder: (context, themeProvider, child) {
-                        return IconButton(
-                          onPressed: () => themeProvider.toggleTheme(context),
-                          icon: Icon(
-                            isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
-                            size: 20,
-                            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-                          ),
-                          tooltip: isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode',
-                          style: IconButton.styleFrom(
-                            side: BorderSide(
-                              color: isDark ? AppColors.borderDark : AppColors.borderLight,
-                            ),
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 36),
                     // "Start a Project" Button
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
