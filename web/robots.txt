@@ -1,0 +1,8 @@
+# StudioProof — Independent Graphic Design & Training Studio
+# https://studioproof.design/robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap Location
+Sitemap: https://studioproof.design/sitemap.xml

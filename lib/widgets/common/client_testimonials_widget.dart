@@ -42,7 +42,7 @@ class _ClientTestimonialsWidgetState extends State<ClientTestimonialsWidget> {
       authorName: 'IEDC Student Lead',
       authorTitle: 'Event Coordinator',
       organization: 'IEDC ASET',
-      projectType: 'Robotics Workshop Poster',
+      projectType: 'Robotics Workshop ',
       rating: 5,
     ),
     TestimonialModel(
