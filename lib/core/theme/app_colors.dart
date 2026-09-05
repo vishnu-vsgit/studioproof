@@ -34,6 +34,38 @@ class AppColors {
   static const Color accentLight = Color(0xFFFDF0ED);
   static const Color accentDark = Color(0xFF38150D);
 
+  // Glassmorphic Surface Fills
+  static const Color surfaceGlassDark = Color(0x991B1B18); // ~60% opacity
+  static const Color surfaceGlassLight = Color(0xCCF4F1EA); // ~80% opacity
+  static const Color borderGlassDark = Color(0x33FFFFFF);
+  static const Color borderGlassLight = Color(0x22000000);
+
+  // Gradients & Glow Effects
+  static const LinearGradient accentGradient = LinearGradient(
+    colors: [Color(0xFFD94A26), Color(0xFFF27042)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const LinearGradient glassGradientDark = LinearGradient(
+    colors: [Color(0x33FFFFFF), Color(0x05FFFFFF)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const List<BoxShadow> glowAccent = [
+    BoxShadow(
+      color: Color(0x40D94A26),
+      blurRadius: 24,
+      spreadRadius: -4,
+      offset: Offset(0, 8),
+    ),
+  ];
+
+  // Status Indicator Colors
+  static const Color statusAvailable = Color(0xFF22C55E); // Green dot
+  static const Color statusBusy = Color(0xFFF59E0B); // Amber dot
+
   // Secondary Accents for Poster Visuals
   static const Color posterAmber = Color(0xFFE68A2E);
   static const Color posterCobalt = Color(0xFF2B4C7E);

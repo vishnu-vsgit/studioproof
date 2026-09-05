@@ -93,27 +93,34 @@ class _ClientTestimonialsWidgetState extends State<ClientTestimonialsWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: AppColors.accent,
-                    shape: BoxShape.circle,
+            Expanded(
+              child: Row(
+                children: [
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: const BoxDecoration(
+                      color: AppColors.accent,
+                      shape: BoxShape.circle,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'CLIENT REVIEWS & FEEDBACK',
-                  style: AppTypography.labelUppercase(
-                    color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-                    scale: scale,
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      'CLIENT REVIEWS & FEEDBACK',
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTypography.labelUppercase(
+                        color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                        scale: scale,
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+            const SizedBox(width: 12),
             Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
                   onPressed: _previous,
@@ -145,10 +152,15 @@ class _ClientTestimonialsWidgetState extends State<ClientTestimonialsWidget> {
         const SizedBox(height: 12),
         Text(
           'What clients & attendees say.',
-          style: AppTypography.heading1(
-            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-            scale: scale,
-          ),
+          style: isMobile
+              ? AppTypography.heading1(
+                  color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                  scale: scale,
+                )
+              : AppTypography.displaySmall(
+                  color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                  scale: scale,
+                ),
         ),
         const SizedBox(height: 24),
 
@@ -160,7 +172,7 @@ class _ClientTestimonialsWidgetState extends State<ClientTestimonialsWidget> {
           child: Container(
             key: ValueKey<int>(_currentIndex),
             width: double.infinity,
-            padding: EdgeInsets.all(isMobile ? 24.0 : 36.0),
+            padding: EdgeInsets.all(isMobile ? 20.0 : 36.0),
             decoration: BoxDecoration(
               color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
               border: Border.all(
@@ -172,15 +184,21 @@ class _ClientTestimonialsWidgetState extends State<ClientTestimonialsWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Rating Stars Row
-                Row(
+                Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 12,
+                  runSpacing: 8,
                   children: [
-                    ...List.generate(active.rating, (i) {
-                      return const Padding(
-                        padding: EdgeInsets.only(right: 4.0),
-                        child: Icon(Icons.star_rounded, size: 20, color: Colors.amber),
-                      );
-                    }),
-                    const Spacer(),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: List.generate(active.rating, (i) {
+                        return const Padding(
+                          padding: EdgeInsets.only(right: 4.0),
+                          child: Icon(Icons.star_rounded, size: 20, color: Colors.amber),
+                        );
+                      }),
+                    ),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
@@ -201,63 +219,118 @@ class _ClientTestimonialsWidgetState extends State<ClientTestimonialsWidget> {
                 const SizedBox(height: 20),
                 Text(
                   active.quote,
-                  style: AppTypography.heading2(
-                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-                    scale: scale,
-                  ).copyWith(
-                    fontStyle: FontStyle.italic,
-                    height: 1.45,
-                    fontSize: isMobile ? 18 * scale : 22 * scale,
-                  ),
+                  style: isMobile
+                      ? AppTypography.heading2(
+                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                          scale: scale,
+                        ).copyWith(
+                          fontStyle: FontStyle.italic,
+                          height: 1.45,
+                          fontSize: 17 * scale,
+                        )
+                      : AppTypography.heading1(
+                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                          scale: scale,
+                        ).copyWith(
+                          fontStyle: FontStyle.italic,
+                          height: 1.45,
+                          fontSize: 22 * scale,
+                        ),
                 ),
-                const SizedBox(height: 28),
+                const SizedBox(height: 24),
                 Divider(
                   color: isDark ? AppColors.borderDark : AppColors.borderLight,
                   height: 1,
                 ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          active.authorName,
-                          style: AppTypography.buttonText(
-                            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-                          ),
+                const SizedBox(height: 18),
+                if (isMobile)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        active.authorName,
+                        style: AppTypography.buttonText(
+                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                         ),
-                        const SizedBox(height: 2),
-                        Text(
-                          '${active.authorTitle} — ${active.organization}',
-                          style: AppTypography.bodySmall(
-                            color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
-                            scale: scale,
-                          ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        '${active.authorTitle} — ${active.organization}',
+                        style: AppTypography.bodySmall(
+                          color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                          scale: scale,
                         ),
-                      ],
-                    ),
-                    Row(
-                      children: List.generate(testimonials.length, (idx) {
-                        return GestureDetector(
-                          onTap: () => setState(() => _currentIndex = idx),
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            margin: const EdgeInsets.only(left: 6.0),
-                            width: idx == _currentIndex ? 24 : 8,
-                            height: 6,
-                            decoration: BoxDecoration(
-                              color: idx == _currentIndex
-                                  ? AppColors.accent
-                                  : (isDark ? AppColors.borderDark : AppColors.borderLight),
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: List.generate(testimonials.length, (idx) {
+                          return GestureDetector(
+                            onTap: () => setState(() => _currentIndex = idx),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              margin: const EdgeInsets.only(right: 6.0),
+                              width: idx == _currentIndex ? 24 : 8,
+                              height: 6,
+                              decoration: BoxDecoration(
+                                color: idx == _currentIndex
+                                    ? AppColors.accent
+                                    : (isDark ? AppColors.borderDark : AppColors.borderLight),
+                              ),
                             ),
-                          ),
-                        );
-                      }),
-                    ),
-                  ],
-                ),
+                          );
+                        }),
+                      ),
+                    ],
+                  )
+                else
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              active.authorName,
+                              style: AppTypography.buttonText(
+                                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              '${active.authorTitle} — ${active.organization}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTypography.bodySmall(
+                                color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                                scale: scale,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: List.generate(testimonials.length, (idx) {
+                          return GestureDetector(
+                            onTap: () => setState(() => _currentIndex = idx),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              margin: const EdgeInsets.only(left: 6.0),
+                              width: idx == _currentIndex ? 24 : 8,
+                              height: 6,
+                              decoration: BoxDecoration(
+                                color: idx == _currentIndex
+                                    ? AppColors.accent
+                                    : (isDark ? AppColors.borderDark : AppColors.borderLight),
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),

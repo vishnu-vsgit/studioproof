@@ -34,7 +34,9 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/start',
       name: 'start',
-      builder: (context, state) => const StartProjectScreen(),
+      builder: (context, state) => StartProjectScreen(
+        initialType: state.uri.queryParameters['type'],
+      ),
     ),
     GoRoute(
       path: '/privacy-policy',

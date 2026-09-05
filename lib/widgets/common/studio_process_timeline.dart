@@ -248,49 +248,7 @@ class _StudioProcessTimelineState extends State<StudioProcessTimeline> {
                     scale: scale,
                   ),
                 ),
-                const SizedBox(height: 24),
-                Divider(
-                  color: isDark ? AppColors.borderDark : AppColors.borderLight,
-                  height: 1,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'KEY DELIVERABLES',
-                  style: AppTypography.labelUppercase(
-                    color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-                    scale: scale,
-                  ).copyWith(fontSize: 11 * scale),
-                ),
                 const SizedBox(height: 12),
-                Wrap(
-                  spacing: 12,
-                  runSpacing: 8,
-                  children: activeModel.deliverables.map((item) {
-                    return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: isDark ? AppColors.bgDark : AppColors.bgLight,
-                        border: Border.all(
-                          color: isDark ? AppColors.borderDark : AppColors.borderLight,
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(Icons.check_rounded, size: 14, color: AppColors.accent),
-                          const SizedBox(width: 6),
-                          Text(
-                            item,
-                            style: AppTypography.bodySmall(
-                              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-                              scale: scale,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                ),
               ],
             ),
           ),

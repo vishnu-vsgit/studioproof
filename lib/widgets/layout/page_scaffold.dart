@@ -28,6 +28,7 @@ class _PageScaffoldState extends State<PageScaffold> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
   bool _showBottomBar = false;
+  double _scrollProgress = 0.0;
 
   @override
   void initState() {
@@ -42,11 +43,18 @@ class _PageScaffoldState extends State<PageScaffold> {
   }
 
   void _onScroll() {
-    final shouldShow = _scrollController.hasClients && _scrollController.offset > 200;
-    if (shouldShow != _showBottomBar) {
-      setState(() {
-        _showBottomBar = shouldShow;
-      });
+    if (_scrollController.hasClients) {
+      final maxExtent = _scrollController.position.maxScrollExtent;
+      final currentOffset = _scrollController.offset;
+      final progress = maxExtent > 0 ? (currentOffset / maxExtent).clamp(0.0, 1.0) : 0.0;
+      final shouldShow = currentOffset > 200;
+      
+      if (shouldShow != _showBottomBar || progress != _scrollProgress) {
+        setState(() {
+          _showBottomBar = shouldShow;
+          _scrollProgress = progress;
+        });
+      }
     }
   }
 
@@ -92,14 +100,29 @@ class _PageScaffoldState extends State<PageScaffold> {
                     },
                   ),
                 ),
+                // Top Scroll Progress Line
+                AnimatedOpacity(
+                  duration: const Duration(milliseconds: 200),
+                  opacity: _scrollProgress > 0.01 ? 1.0 : 0.0,
+                  child: SizedBox(
+                    height: 2.0,
+                    child: LinearProgressIndicator(
+                      value: _scrollProgress,
+                      backgroundColor: Colors.transparent,
+                      valueColor: const AlwaysStoppedAnimation<Color>(AppColors.accent),
+                    ),
+                  ),
+                ),
                 Expanded(
                   child: NotificationListener<ScrollNotification>(
                     onNotification: (ScrollNotification notification) {
-                      if (notification.metrics.axis == Axis.vertical) {
+                      if (notification.metrics.axis == Axis.vertical && notification.metrics.maxScrollExtent > 0) {
+                        final progress = (notification.metrics.pixels / notification.metrics.maxScrollExtent).clamp(0.0, 1.0);
                         final shouldShow = notification.metrics.pixels > 200;
-                        if (shouldShow != _showBottomBar) {
+                        if (shouldShow != _showBottomBar || progress != _scrollProgress) {
                           setState(() {
                             _showBottomBar = shouldShow;
+                            _scrollProgress = progress;
                           });
                         }
                       }

@@ -100,8 +100,6 @@ class ServicesScreen extends StatelessWidget {
                       title: 'Poster & Campaign Design',
                       description:
                           'High-impact event posters, festival key visuals, stage backdrops, and promotional print graphics designed to grab attention.',
-                      deliverables:
-                          'Main Posters, Digital Banners, Print PDFs, Source Files',
                       idealClient:
                           'Colleges, Clubs, Event Organizers, Performers',
                     ),
@@ -111,8 +109,6 @@ class ServicesScreen extends StatelessWidget {
                       title: 'Social Media Design',
                       description:
                           'Custom Instagram carousel guides, story graphics, feed templates, and YouTube thumbnail designs built for engagement.',
-                      deliverables:
-                          'Multi-slide Carousels, Story Formats, Feed Templates',
                       idealClient: 'Creators, Student Orgs, Brands, Marketers',
                     ),
                     Divider(),
@@ -121,51 +117,32 @@ class ServicesScreen extends StatelessWidget {
                       title: 'Event & College Design',
                       description:
                           'Complete visual identity packages for annual college fests, cultural nights, tech hackathons, and student elections.',
-                      deliverables:
-                          'Fest Key Visuals, ID Badges, Wristbands, Entry Gates',
                       idealClient:
                           'University Councils, Clubs, Fest Committees',
                     ),
                     Divider(),
                     _EditorialServiceRow(
                       number: '04',
-                      title: 'Startup Design',
+                      title: 'Startup & Business Design',
                       description:
-                          'Product launch graphics, pitch deck presentations, social teasers, and feature announcement cards.',
-                      deliverables:
-                          'Investor Pitch Decks, Product Hunt Creatives, Social Cards',
+                          'Product launch graphics, pitch decks, social teasers, menus, flyers, promotional print graphics, and marketing collateral.',
                       idealClient:
-                          'Tech Startups, Early-stage Founders, Incubators',
+                          'Tech Startups, Early-stage Founders, Small Businesses, Cafes',
                     ),
                     Divider(),
                     _EditorialServiceRow(
                       number: '05',
-                      title: 'Business Design',
-                      description:
-                          'Promotional flyers, restaurant menus, product packaging tags, artisan market signage, and marketing collateral.',
-                      deliverables:
-                          'Print Flyers, Digital Menus, Packaging Collateral',
-                      idealClient:
-                          'Small Businesses, Local Shops, Cafes, Collectives',
-                    ),
-                    Divider(),
-                    _EditorialServiceRow(
-                      number: '06',
                       title: 'Design Training & Workshops',
                       description:
                           'Hands-on paid training sessions in Photoshop, Figma, poster design principles, and visual layout tailored for beginners, college clubs, and aspiring designers.',
-                      deliverables:
-                          'Live 1-on-1 Mentorship, Group Masterclasses, Resource Kits & Templates',
                       idealClient: 'Students, Campus Clubs, Creators, Junior Designers',
                     ),
                     Divider(),
                     _EditorialServiceRow(
-                      number: '07',
+                      number: '06',
                       title: 'Custom Projects',
                       description:
                           'Specialized graphic requests, custom typography layouts, presentation decks, or unique visual challenges.',
-                      deliverables:
-                          'Tailored Asset Package based on requirements',
                       idealClient: 'Individuals, Companies, Creative Directors',
                     ),
                   ],
@@ -219,7 +196,7 @@ class ServicesScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 32),
                           ElevatedButton(
-                            onPressed: () => context.go('/start'),
+                            onPressed: () => context.go('/start?type=retainer'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.accent,
                               foregroundColor: Colors.white,
@@ -296,7 +273,7 @@ class ServicesScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 32),
                                 ElevatedButton(
-                                  onPressed: () => context.go('/start'),
+                                  onPressed: () => context.go('/start?type=retainer'),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.accent,
                                     foregroundColor: Colors.white,
@@ -472,14 +449,12 @@ class _EditorialServiceRow extends StatefulWidget {
   final String number;
   final String title;
   final String description;
-  final String deliverables;
   final String idealClient;
 
   const _EditorialServiceRow({
     required this.number,
     required this.title,
     required this.description,
-    required this.deliverables,
     required this.idealClient,
   });
 
@@ -493,36 +468,35 @@ class _EditorialServiceRowState extends State<_EditorialServiceRow> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final isMobile = ResponsiveBreakpoints.isMobile(context);
+    final isMobile = ResponsiveBreakpoints.isMobileOrTablet(context);
 
     if (isMobile) {
       return InkWell(
         onTap: () => setState(() => _isExpanded = !_isExpanded),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 4.0),
+          padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 4.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        widget.number,
-                        style: AppTypography.heading3(color: AppColors.accent),
-                      ),
-                      const SizedBox(width: 12),
-                      Text(
-                        widget.title,
-                        style: AppTypography.heading3(
-                          color: isDark
-                              ? AppColors.textPrimaryDark
-                              : AppColors.textPrimaryLight,
-                        ).copyWith(fontSize: 16),
-                      ),
-                    ],
+                  Text(
+                    widget.number,
+                    style: AppTypography.heading3(color: AppColors.accent),
                   ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Text(
+                      widget.title,
+                      style: AppTypography.heading3(
+                        color: isDark
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimaryLight,
+                      ).copyWith(fontSize: 16),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
                   Icon(
                     _isExpanded
                         ? Icons.keyboard_arrow_up_rounded
@@ -548,15 +522,6 @@ class _EditorialServiceRowState extends State<_EditorialServiceRow> {
                   style: AppTypography.bodySmall(
                     color: AppColors.accent,
                   ).copyWith(fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Deliverables: ${widget.deliverables}',
-                  style: AppTypography.bodySmall(
-                    color: isDark
-                        ? AppColors.textMutedDark
-                        : AppColors.textMutedLight,
-                  ),
                 ),
               ],
             ],
@@ -603,27 +568,13 @@ class _EditorialServiceRowState extends State<_EditorialServiceRow> {
           const SizedBox(width: 32),
           Expanded(
             flex: 5,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.description,
-                  style: AppTypography.bodyLarge(
-                    color: isDark
-                        ? AppColors.textSecondaryDark
-                        : AppColors.textSecondaryLight,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  'Deliverables: ${widget.deliverables}',
-                  style: AppTypography.bodySmall(
-                    color: isDark
-                        ? AppColors.textMutedDark
-                        : AppColors.textMutedLight,
-                  ),
-                ),
-              ],
+            child: Text(
+              widget.description,
+              style: AppTypography.bodyLarge(
+                color: isDark
+                    ? AppColors.textSecondaryDark
+                    : AppColors.textSecondaryLight,
+              ),
             ),
           ),
         ],

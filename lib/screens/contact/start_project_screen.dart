@@ -9,10 +9,12 @@ import '../../core/theme/app_typography.dart';
 import '../../core/theme/responsive_breakpoints.dart';
 import '../../widgets/layout/page_scaffold.dart';
 
-enum FormCategory { design, training }
+enum FormCategory { design, retainer, training }
 
 class StartProjectScreen extends StatefulWidget {
-  const StartProjectScreen({super.key});
+  final String? initialType;
+
+  const StartProjectScreen({super.key, this.initialType});
 
   @override
   State<StartProjectScreen> createState() => _StartProjectScreenState();
@@ -35,6 +37,22 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
   bool _isSubmitting = false;
   bool _isSubmitted = false;
   String? _errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialType == 'retainer' || widget.initialType == 'monthly') {
+      _selectedCategory = FormCategory.retainer;
+      _selectedProjectType = _retainerProjectTypes.first;
+      _selectedBudget = 'Not sure yet';
+      _selectedDeadline = 'Start Immediately';
+    } else if (widget.initialType == 'training') {
+      _selectedCategory = FormCategory.training;
+      _selectedProjectType = _trainingProjectTypes.first;
+      _selectedBudget = 'Not sure yet';
+      _selectedDeadline = 'Flexible Dates';
+    }
+  }
 
   Future<void> _launchUrl(String urlString) async {
     final Uri? url = Uri.tryParse(urlString);
@@ -59,6 +77,13 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
     'Other Design',
   ];
 
+  final List<String> _retainerProjectTypes = [
+    '2–4 Graphics / mo',
+    '5–8 Graphics / mo',
+    '8–15 Graphics / mo',
+    'Custom Retainer Scope',
+  ];
+
   final List<String> _trainingProjectTypes = [
     'Figma & UI Basics',
     'Poster Design Principles',
@@ -73,6 +98,14 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
     '₹3,000–₹5,000',
     '₹5,000–₹10,000',
     '₹10,000+',
+    'Not sure yet',
+  ];
+
+  final List<String> _retainerBudgetOptions = [
+    '₹3,000–₹5,000 / mo',
+    '₹5,000–₹10,000 / mo',
+    '₹10,000–₹20,000 / mo',
+    '₹20,000+ / mo',
     'Not sure yet',
   ];
 
@@ -91,26 +124,51 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
     'Flexible',
   ];
 
+  final List<String> _retainerDeadlineOptions = [
+    'Start Immediately',
+    'Within 1–2 Weeks',
+    'Next Month',
+    'Flexible',
+  ];
+
   final List<String> _trainingScheduleOptions = [
     'This Week / ASAP',
     'Within 2 Weeks',
     'Flexible Dates',
   ];
 
-  List<String> get _currentProjectTypes =>
-      _selectedCategory == FormCategory.training
-      ? _trainingProjectTypes
-      : _designProjectTypes;
+  List<String> get _currentProjectTypes {
+    switch (_selectedCategory) {
+      case FormCategory.training:
+        return _trainingProjectTypes;
+      case FormCategory.retainer:
+        return _retainerProjectTypes;
+      case FormCategory.design:
+        return _designProjectTypes;
+    }
+  }
 
-  List<String> get _currentBudgetOptions =>
-      _selectedCategory == FormCategory.training
-      ? _trainingBudgetOptions
-      : _designBudgetOptions;
+  List<String> get _currentBudgetOptions {
+    switch (_selectedCategory) {
+      case FormCategory.training:
+        return _trainingBudgetOptions;
+      case FormCategory.retainer:
+        return _retainerBudgetOptions;
+      case FormCategory.design:
+        return _designBudgetOptions;
+    }
+  }
 
-  List<String> get _currentDeadlineOptions =>
-      _selectedCategory == FormCategory.training
-      ? _trainingScheduleOptions
-      : _designDeadlineOptions;
+  List<String> get _currentDeadlineOptions {
+    switch (_selectedCategory) {
+      case FormCategory.training:
+        return _trainingScheduleOptions;
+      case FormCategory.retainer:
+        return _retainerDeadlineOptions;
+      case FormCategory.design:
+        return _designDeadlineOptions;
+    }
+  }
 
   @override
   void dispose() {
@@ -130,6 +188,10 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
         _selectedProjectType = _trainingProjectTypes.first;
         _selectedBudget = 'Not sure yet';
         _selectedDeadline = 'Flexible Dates';
+      } else if (_selectedCategory == FormCategory.retainer) {
+        _selectedProjectType = _retainerProjectTypes.first;
+        _selectedBudget = 'Not sure yet';
+        _selectedDeadline = 'Start Immediately';
       } else {
         _selectedProjectType = _designProjectTypes.first;
         _selectedBudget = 'Not sure yet';
@@ -140,17 +202,21 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
 
   void _sendDirectEmail() {
     final isTraining = _selectedCategory == FormCategory.training;
+    final isRetainer = _selectedCategory == FormCategory.retainer;
+    final categoryLabel = isTraining
+        ? "Design Training & Workshop"
+        : (isRetainer ? "Monthly Design Retainer" : "Visual Design Project");
     final subject = Uri.encodeComponent(
-      '${isTraining ? "Training Enquiry" : "Project Enquiry"}: ${_nameController.text.trim()}',
+      '${isTraining ? "Training Enquiry" : (isRetainer ? "Retainer Enquiry" : "Project Enquiry")}: ${_nameController.text.trim()}',
     );
     final body = Uri.encodeComponent(
-      'Category: ${isTraining ? "Design Training & Workshop" : "Visual Design Project"}\n'
+      'Category: $categoryLabel\n'
       'Name: ${_nameController.text.trim()}\n'
       'Email: ${_emailController.text.trim()}\n'
       'Organization / Institution: ${_organizationController.text.trim()}\n'
-      '${isTraining ? "Topic / Format" : "Project Type"}: $_selectedProjectType\n'
-      '${isTraining ? "Budget / Batch Estimate" : "Budget Range"}: $_selectedBudget\n'
-      '${isTraining ? "Preferred Schedule" : "Deadline"}: $_selectedDeadline\n\n'
+      '${isTraining ? "Topic / Format" : (isRetainer ? "Monthly Volume" : "Project Type")}: $_selectedProjectType\n'
+      '${isTraining ? "Budget / Batch Estimate" : (isRetainer ? "Monthly Budget" : "Budget Range")}: $_selectedBudget\n'
+      '${isTraining ? "Preferred Schedule" : (isRetainer ? "Start Timeline" : "Deadline")}: $_selectedDeadline\n\n'
       'Details / Goals:\n${_descriptionController.text.trim()}',
     );
     _launchUrl('mailto:${AppConfig.contactEmail}?subject=$subject&body=$body');
@@ -167,11 +233,14 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
     });
 
     final isTraining = _selectedCategory == FormCategory.training;
+    final isRetainer = _selectedCategory == FormCategory.retainer;
     final name = _nameController.text.trim();
     final email = _emailController.text.trim();
     final organization = _organizationController.text.trim();
     final description = _descriptionController.text.trim();
-    final categoryStr = isTraining ? 'Design Training & Workshop' : 'Visual Design Project';
+    final categoryStr = isTraining
+        ? 'Design Training & Workshop'
+        : (isRetainer ? 'Monthly Design Retainer' : 'Visual Design Project');
 
     // 1. Try Supabase Database submission
     if (SupabaseService.isInitialized) {
@@ -206,19 +275,28 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
         },
         body: jsonEncode({
           '_subject':
-              '${isTraining ? "New Training Enquiry" : "New Project Brief"}: $name',
+              '${isTraining ? "New Training Enquiry" : (isRetainer ? "New Retainer Enquiry" : "New Project Brief")}: $name',
           '_template': 'table',
           'Inquiry Category': categoryStr,
           'Name': name,
           'Email': email,
           'Organization / Institution':
               organization.isEmpty ? 'N/A' : organization,
-          isTraining ? 'Training Topic / Format' : 'Project Type':
+          isTraining
+              ? 'Training Topic / Format'
+              : (isRetainer ? 'Monthly Volume' : 'Project Type'):
               _selectedProjectType,
-          isTraining ? 'Budget / Batch Estimate' : 'Budget Range':
+          isTraining
+              ? 'Budget / Batch Estimate'
+              : (isRetainer ? 'Monthly Budget' : 'Budget Range'):
               _selectedBudget,
-          isTraining ? 'Preferred Schedule' : 'Deadline': _selectedDeadline,
-          isTraining ? 'Training Goals & Topics' : 'Project Message':
+          isTraining
+              ? 'Preferred Schedule'
+              : (isRetainer ? 'Start Timeline' : 'Deadline'):
+              _selectedDeadline,
+          isTraining
+              ? 'Training Goals & Topics'
+              : (isRetainer ? 'Retainer Requirements' : 'Project Message'):
               description,
         }),
       );
@@ -293,6 +371,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
     );
     final scale = ResponsiveBreakpoints.getTypographyScale(context);
     final isTraining = _selectedCategory == FormCategory.training;
+    final isRetainer = _selectedCategory == FormCategory.retainer;
 
     return Title(
       title: 'Start a Project — StudioProof',
@@ -322,7 +401,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                       Text(
                         isTraining
                             ? 'BOOK A TRAINING SESSION'
-                            : 'START A PROJECT',
+                            : (isRetainer ? 'MONTHLY DESIGN PARTNERSHIP' : 'START A PROJECT'),
                         style: AppTypography.labelUppercase(
                           color: AppColors.accent,
                           scale: scale,
@@ -332,7 +411,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                       Text(
                         isTraining
                             ? 'Tell us what you’d like to learn'
-                            : 'Tell us what you’re building',
+                            : (isRetainer
+                                ? 'Ask about ongoing design support'
+                                : 'Tell us what you’re building'),
                         style: isMobile
                             ? AppTypography.heading1(
                                 color: isDark
@@ -349,7 +430,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                       Text(
                         isTraining
                             ? 'Fill out the form below with your learning goals, target software, preferred schedule, and batch size.'
-                            : 'Fill out the brief below with your project details, scope, and target deadline.',
+                            : (isRetainer
+                                ? 'Tell us your monthly graphic requirements, anticipated volume, and priority turnaround expectations.'
+                                : 'Fill out the brief below with your project details, scope, and target deadline.'),
                         style: AppTypography.bodyLarge(
                           color: isDark
                               ? AppColors.textSecondaryDark
@@ -432,6 +515,14 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
             ),
             const SizedBox(height: 4),
             _CategoryTabButton(
+              icon: Icons.repeat_rounded,
+              label: 'Monthly Retainer',
+              isSelected: _selectedCategory == FormCategory.retainer,
+              onTap: () => _onCategoryChanged(FormCategory.retainer),
+              isDark: isDark,
+            ),
+            const SizedBox(height: 4),
+            _CategoryTabButton(
               icon: Icons.school_outlined,
               label: 'Training / Workshop',
               isSelected: _selectedCategory == FormCategory.training,
@@ -464,6 +555,16 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           const SizedBox(width: 4),
           Expanded(
             child: _CategoryTabButton(
+              icon: Icons.repeat_rounded,
+              label: 'Monthly Retainer',
+              isSelected: _selectedCategory == FormCategory.retainer,
+              onTap: () => _onCategoryChanged(FormCategory.retainer),
+              isDark: isDark,
+            ),
+          ),
+          const SizedBox(width: 4),
+          Expanded(
+            child: _CategoryTabButton(
               icon: Icons.school_outlined,
               label: 'Training / Workshop',
               isSelected: _selectedCategory == FormCategory.training,
@@ -478,6 +579,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
 
   Widget _buildFormOrSuccess(bool isDark, bool isMobile) {
     final isTraining = _selectedCategory == FormCategory.training;
+    final isRetainer = _selectedCategory == FormCategory.retainer;
 
     if (_isSubmitted) {
       return Container(
@@ -498,7 +600,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
             Text(
               isTraining
                   ? 'Training Enquiry Received!'
-                  : 'Project Brief Received!',
+                  : (isRetainer
+                      ? 'Retainer Enquiry Received!'
+                      : 'Project Brief Received!'),
               style: AppTypography.heading1(
                 color: isDark
                     ? AppColors.textPrimaryDark
@@ -509,7 +613,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
             Text(
               isTraining
                   ? 'Thank you for your training enquiry. We will review your learning goals and respond within 24 hours with a custom session outline and schedule options.'
-                  : 'Thank you for sharing your project details. We typically review briefs and respond within 24 hours with timeline estimates and initial concepts.',
+                  : (isRetainer
+                      ? 'Thank you for asking about monthly design support. We will review your requirements and reach out within 24 hours to discuss retainer scope, slots, and workflow.'
+                      : 'Thank you for sharing your project details. We typically review briefs and respond within 24 hours with timeline estimates and initial concepts.'),
               style: AppTypography.bodyLarge(
                 color: isDark
                     ? AppColors.textSecondaryDark
@@ -532,7 +638,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
                 ),
               ),
               child: Text(
-                isTraining ? 'Submit another enquiry' : 'Submit another brief',
+                isTraining
+                    ? 'Submit another enquiry'
+                    : (isRetainer ? 'Submit another retainer request' : 'Submit another brief'),
                 style: AppTypography.buttonText(
                   color: isDark
                       ? AppColors.textPrimaryDark
@@ -673,7 +781,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           const SizedBox(height: 28),
 
           Text(
-            isTraining ? 'TRAINING TOPIC / FORMAT' : 'PROJECT TYPE',
+            isTraining
+                ? 'TRAINING TOPIC / FORMAT'
+                : (isRetainer ? 'ESTIMATED MONTHLY VOLUME' : 'PROJECT TYPE'),
             style: AppTypography.labelUppercase(
               color: isDark
                   ? AppColors.textMutedDark
@@ -729,7 +839,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           const SizedBox(height: 28),
 
           Text(
-            isTraining ? 'BUDGET / BATCH ESTIMATE' : 'BUDGET RANGE',
+            isTraining
+                ? 'BUDGET / BATCH ESTIMATE'
+                : (isRetainer ? 'MONTHLY RETAINER BUDGET' : 'BUDGET RANGE'),
             style: AppTypography.labelUppercase(
               color: isDark
                   ? AppColors.textMutedDark
@@ -789,7 +901,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           const SizedBox(height: 28),
 
           Text(
-            isTraining ? 'PREFERRED TRAINING SCHEDULE' : 'TIMELINE / DEADLINE',
+            isTraining
+                ? 'PREFERRED TRAINING SCHEDULE'
+                : (isRetainer ? 'TARGET START DATE' : 'TIMELINE / DEADLINE'),
             style: AppTypography.labelUppercase(
               color: isDark
                   ? AppColors.textMutedDark
@@ -851,7 +965,9 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           Text(
             isTraining
                 ? 'TRAINING GOALS & SPECIFIC TOPICS *'
-                : 'PROJECT DESCRIPTION & GOALS *',
+                : (isRetainer
+                    ? 'RETAINER SCOPE & DESIGN REQUIREMENTS *'
+                    : 'PROJECT DESCRIPTION & GOALS *'),
             style: AppTypography.labelUppercase(
               color: isDark
                   ? AppColors.textMutedDark
@@ -871,13 +987,17 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
               isDark,
               hint: isTraining
                   ? 'What tools or skills do you want to learn? (e.g. Photoshop layers, poster composition, Figma UI, 1-on-1 or group size, preferred duration).'
-                  : 'What are you creating? Mention event details, visual preferences, key dates or deliverables.',
+                  : (isRetainer
+                      ? 'Tell us about your organization or club, weekly design volume needed, turnarounds required, and preferred workflow.'
+                      : 'What are you creating? Mention event details, visual preferences, key dates or goals.'),
             ),
             validator: (value) {
               if (value == null || value.trim().length < 10) {
                 return isTraining
                     ? 'Please describe your learning goals (at least 10 characters)'
-                    : 'Please provide a short description (at least 10 characters)';
+                    : (isRetainer
+                        ? 'Please describe your recurring design requirements (at least 10 characters)'
+                        : 'Please provide a short description (at least 10 characters)');
               }
               return null;
             },

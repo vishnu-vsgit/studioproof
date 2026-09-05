@@ -120,4 +120,20 @@ class AppTypography {
       color: color,
     );
   }
+
+  // Gradient Text Mask Helper
+  static Widget gradientText({
+    required String text,
+    required TextStyle style,
+    Gradient gradient = AppColors.accentGradient,
+    TextAlign textAlign = TextAlign.left,
+  }) {
+    return ShaderMask(
+      blendMode: BlendMode.srcIn,
+      shaderCallback: (bounds) => gradient.createShader(
+        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+      ),
+      child: Text(text, style: style, textAlign: textAlign),
+    );
+  }
 }
