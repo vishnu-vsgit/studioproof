@@ -173,7 +173,7 @@ class _StudioProcessTimelineState extends State<StudioProcessTimeline> {
           child: Container(
             key: ValueKey<int>(_activeStep),
             width: double.infinity,
-            padding: const EdgeInsets.all(28.0),
+            padding: EdgeInsets.all(isMobile ? 18.0 : 28.0),
             decoration: BoxDecoration(
               color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
               border: Border.all(
@@ -200,8 +200,11 @@ class _StudioProcessTimelineState extends State<StudioProcessTimeline> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Wrap(
+                            alignment: WrapAlignment.spaceBetween,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            spacing: 8,
+                            runSpacing: 6,
                             children: [
                               Text(
                                 activeModel.title,
@@ -211,7 +214,7 @@ class _StudioProcessTimelineState extends State<StudioProcessTimeline> {
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: isDark ? AppColors.borderDark : AppColors.borderLight,

@@ -171,7 +171,7 @@ class ServicesScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'RECURRING RETAINER',
+                            'MONTHLY DESIGN PLAN',
                             style: AppTypography.labelUppercase(
                               color: AppColors.accent,
                             ),

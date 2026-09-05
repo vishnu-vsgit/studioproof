@@ -140,7 +140,7 @@ class _PageScaffoldState extends State<PageScaffold> {
                             child: const SiteFooter(),
                           ),
                           if (enableMobileBottomBar)
-                            const SizedBox(height: 60.0),
+                            const SizedBox(height: 100.0),
                         ],
                       ),
                     ),

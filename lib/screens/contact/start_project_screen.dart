@@ -68,13 +68,11 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
 
   final List<String> _designProjectTypes = [
     'Poster',
+    'Logo Design',
     'Social Media',
     'Event / College',
     'Startup',
     'Branding',
-    'Presentation',
-    'Business Design',
-    'Other Design',
   ];
 
   final List<String> _retainerProjectTypes = [
@@ -516,7 +514,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
             const SizedBox(height: 4),
             _CategoryTabButton(
               icon: Icons.repeat_rounded,
-              label: 'Monthly Retainer',
+              label: 'Monthly Design Plan',
               isSelected: _selectedCategory == FormCategory.retainer,
               onTap: () => _onCategoryChanged(FormCategory.retainer),
               isDark: isDark,
@@ -556,7 +554,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           Expanded(
             child: _CategoryTabButton(
               icon: Icons.repeat_rounded,
-              label: 'Monthly Retainer',
+              label: 'Monthly Design Plan',
               isSelected: _selectedCategory == FormCategory.retainer,
               onTap: () => _onCategoryChanged(FormCategory.retainer),
               isDark: isDark,
@@ -841,7 +839,7 @@ class _StartProjectScreenState extends State<StartProjectScreen> {
           Text(
             isTraining
                 ? 'BUDGET / BATCH ESTIMATE'
-                : (isRetainer ? 'MONTHLY RETAINER BUDGET' : 'BUDGET RANGE'),
+                : (isRetainer ? 'MONTHLY PLAN BUDGET' : 'BUDGET RANGE'),
             style: AppTypography.labelUppercase(
               color: isDark
                   ? AppColors.textMutedDark

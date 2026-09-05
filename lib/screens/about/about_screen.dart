@@ -266,13 +266,16 @@ class AboutScreen extends StatelessWidget {
                             ),
                     ),
                     const SizedBox(height: 16),
-                    Text(
-                      'Open for select graphic design commissions, event branding, and creative partnerships.',
-                      textAlign: TextAlign.center,
-                      style: AppTypography.bodyMedium(
-                        color: isDark
-                            ? AppColors.textSecondaryDark
-                            : AppColors.textSecondaryLight,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: isMobile ? 12.0 : 0.0),
+                      child: Text(
+                        'Open for select graphic design commissions, event branding, and creative partnerships.',
+                        textAlign: TextAlign.center,
+                        style: AppTypography.bodyMedium(
+                          color: isDark
+                              ? AppColors.textSecondaryDark
+                              : AppColors.textSecondaryLight,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 32),
