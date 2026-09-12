@@ -19,50 +19,32 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
-    );
-  }
-
-  static ThemeData get darkTheme {
-    return ThemeData(
-      useMaterial3: true,
-      scaffoldBackgroundColor: AppColors.bgDark,
-      colorScheme: const ColorScheme.dark(
-        surface: AppColors.surfaceDark,
-        primary: AppColors.textPrimaryDark,
-        secondary: AppColors.accent,
-        onPrimary: AppColors.bgDark,
-        onSurface: AppColors.textPrimaryDark,
-      ),
-      dividerColor: AppColors.borderDark,
-      dividerTheme: const DividerThemeData(
-        color: AppColors.borderDark,
-        thickness: 1,
-        space: 1,
-      ),
       cardTheme: CardThemeData(
-        color: AppColors.surfaceGlassDark,
+        color: AppColors.surfaceLight,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(color: AppColors.borderDark, width: 1),
+          side: const BorderSide(color: AppColors.borderLight, width: 1),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.surfaceSubtleDark,
+        fillColor: AppColors.surfaceSubtleLight,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.borderDark),
+          borderSide: const BorderSide(color: AppColors.borderLight),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.borderDark),
+          borderSide: const BorderSide(color: AppColors.borderLight),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.accent, width: 1.5),
+          borderSide: const BorderSide(color: AppColors.textPrimaryLight, width: 1.5),
         ),
       ),
     );
   }
+
+  static ThemeData get darkTheme => lightTheme;
 }

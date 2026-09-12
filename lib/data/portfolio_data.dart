@@ -3,6 +3,22 @@ import '../models/project_model.dart';
 class PortfolioData {
   static const List<Project> projects = [
     Project(
+      id: 'skill-development-program',
+      title: 'SKILL DEVELOPMENT PROGRAM — IEDC',
+      category: 'Workshop Poster',
+      year: '2026',
+      tagline: 'Event poster for the Concepts of Designing & Basics of Figma workshop at Ahalia School of Engineering & Technology.',
+      clientType: 'IEDC ASET',
+      description: 'Official event poster for the Skill Development Program on Concepts of Designing & Basics of Figma, presented by IEDC at Ahalia School of Engineering & Technology on 11 September 2026.',
+      deliverables: [
+        'Workshop Event Poster',
+        'Instagram Announcement Graphic',
+        'Campus & Digital Screen Collateral',
+      ],
+      imageAsset: 'assets/images/work_5.jpg',
+      aspectRatio: 0.77,
+    ),
+    Project(
       id: 'robotics-workshop',
       title: 'ROBOTICS WORKSHOP — IEDC ASET',
       category: 'Workshop Poster',

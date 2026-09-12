@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 
 /// Centralized Theme Provider for manual Dark / Light / System theme switching.
 class ThemeProvider extends ChangeNotifier {
-  ThemeMode get themeMode => ThemeMode.dark;
+  ThemeMode get themeMode => ThemeMode.light;
 
   bool isDarkMode(BuildContext context) {
-    return true;
+    return false;
   }
 
   void toggleTheme(BuildContext context) {
-    // Theme is fixed to Dark Mode
+    // Primary theme is White background & Black typography
   }
 
   void setThemeMode(ThemeMode mode) {
-    // Theme is fixed to Dark Mode
+    // Primary theme is White background & Black typography
   }
 }
