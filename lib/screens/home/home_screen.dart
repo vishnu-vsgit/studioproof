@@ -1179,11 +1179,16 @@ class _ScrollEntranceAnimationState extends State<_ScrollEntranceAnimation>
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
-        return Opacity(
-          opacity: _fadeAnimation.value,
-          child: Transform.translate(
-            offset: Offset(0, _slideAnimation.value),
-            child: child,
+        if (_controller.isCompleted) {
+          return RepaintBoundary(child: widget.child);
+        }
+        return RepaintBoundary(
+          child: Opacity(
+            opacity: _fadeAnimation.value,
+            child: Transform.translate(
+              offset: Offset(0, _slideAnimation.value),
+              child: child,
+            ),
           ),
         );
       },

@@ -85,8 +85,8 @@ class NotFoundScreen extends StatelessWidget {
                           horizontal: 28,
                           vertical: 18,
                         ),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24),
                         ),
                       ),
                       child: Text(
@@ -106,15 +106,16 @@ class NotFoundScreen extends StatelessWidget {
                             : AppColors.textPrimaryLight,
                         side: BorderSide(
                           color: isDark
-                              ? AppColors.borderDark
-                              : AppColors.borderLight,
+                              ? AppColors.textPrimaryDark
+                              : AppColors.textPrimaryLight,
+                          width: 1.5,
                         ),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 28,
                           vertical: 18,
                         ),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24),
                         ),
                       ),
                       child: Text(

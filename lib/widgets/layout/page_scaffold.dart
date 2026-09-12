@@ -27,8 +27,8 @@ class PageScaffold extends StatefulWidget {
 class _PageScaffoldState extends State<PageScaffold> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
+  final ValueNotifier<double> _scrollProgressNotifier = ValueNotifier<double>(0.0);
   bool _showBottomBar = false;
-  double _scrollProgress = 0.0;
 
   @override
   void initState() {
@@ -43,18 +43,20 @@ class _PageScaffoldState extends State<PageScaffold> {
   }
 
   void _onScroll() {
-    if (_scrollController.hasClients) {
-      final maxExtent = _scrollController.position.maxScrollExtent;
-      final currentOffset = _scrollController.offset;
-      final progress = maxExtent > 0 ? (currentOffset / maxExtent).clamp(0.0, 1.0) : 0.0;
-      final shouldShow = currentOffset > 200;
-      
-      if (shouldShow != _showBottomBar || progress != _scrollProgress) {
-        setState(() {
-          _showBottomBar = shouldShow;
-          _scrollProgress = progress;
-        });
-      }
+    if (!_scrollController.hasClients) return;
+    final maxExtent = _scrollController.position.maxScrollExtent;
+    final currentOffset = _scrollController.offset;
+    final progress = maxExtent > 0 ? (currentOffset / maxExtent).clamp(0.0, 1.0) : 0.0;
+    
+    if ((_scrollProgressNotifier.value - progress).abs() > 0.001) {
+      _scrollProgressNotifier.value = progress;
+    }
+    
+    final shouldShow = currentOffset > 200;
+    if (shouldShow != _showBottomBar) {
+      setState(() {
+        _showBottomBar = shouldShow;
+      });
     }
   }
 
@@ -74,6 +76,7 @@ class _PageScaffoldState extends State<PageScaffold> {
   void dispose() {
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
+    _scrollProgressNotifier.dispose();
     super.dispose();
   }
 
@@ -100,49 +103,43 @@ class _PageScaffoldState extends State<PageScaffold> {
                     },
                   ),
                 ),
-                // Top Scroll Progress Line
-                AnimatedOpacity(
-                  duration: const Duration(milliseconds: 200),
-                  opacity: _scrollProgress > 0.01 ? 1.0 : 0.0,
-                  child: SizedBox(
-                    height: 2.0,
-                    child: LinearProgressIndicator(
-                      value: _scrollProgress,
-                      backgroundColor: Colors.transparent,
-                      valueColor: const AlwaysStoppedAnimation<Color>(AppColors.accent),
-                    ),
-                  ),
+                // Top Scroll Progress Line (Isolated rebuild via ValueListenableBuilder)
+                ValueListenableBuilder<double>(
+                  valueListenable: _scrollProgressNotifier,
+                  builder: (context, progress, child) {
+                    return AnimatedOpacity(
+                      duration: const Duration(milliseconds: 150),
+                      opacity: progress > 0.01 ? 1.0 : 0.0,
+                      child: SizedBox(
+                        height: 2.0,
+                        child: LinearProgressIndicator(
+                          value: progress,
+                          backgroundColor: Colors.transparent,
+                          valueColor: const AlwaysStoppedAnimation<Color>(AppColors.accent),
+                        ),
+                      ),
+                    );
+                  },
                 ),
                 Expanded(
-                  child: NotificationListener<ScrollNotification>(
-                    onNotification: (ScrollNotification notification) {
-                      if (notification.metrics.axis == Axis.vertical && notification.metrics.maxScrollExtent > 0) {
-                        final progress = (notification.metrics.pixels / notification.metrics.maxScrollExtent).clamp(0.0, 1.0);
-                        final shouldShow = notification.metrics.pixels > 200;
-                        if (shouldShow != _showBottomBar || progress != _scrollProgress) {
-                          setState(() {
-                            _showBottomBar = shouldShow;
-                            _scrollProgress = progress;
-                          });
-                        }
-                      }
-                      return false;
-                    },
-                    child: SingleChildScrollView(
-                      controller: _scrollController,
-                      physics: const ClampingScrollPhysics(),
-                      child: Column(
-                        children: [
-                          SelectionArea(
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                    child: Column(
+                      children: [
+                        RepaintBoundary(
+                          child: SelectionArea(
                             child: widget.body,
                           ),
-                          SelectionContainer.disabled(
+                        ),
+                        RepaintBoundary(
+                          child: SelectionContainer.disabled(
                             child: const SiteFooter(),
                           ),
-                          if (enableMobileBottomBar)
-                            const SizedBox(height: 100.0),
-                        ],
-                      ),
+                        ),
+                        if (enableMobileBottomBar)
+                          const SizedBox(height: 100.0),
+                      ],
                     ),
                   ),
                 ),

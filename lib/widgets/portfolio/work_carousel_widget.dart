@@ -139,20 +139,22 @@ class _WorkCarouselWidgetState extends State<WorkCarouselWidget> {
                     final scaleVal = (1.0 - (absOffset * 0.08)).clamp(0.92, 1.0);
                     final opacityVal = (1.0 - (absOffset * 0.45)).clamp(0.55, 1.0);
 
-                    return Transform.scale(
-                      scale: scaleVal,
-                      child: Opacity(
-                        opacity: opacityVal,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: gap / 2),
-                          child: Center(
-                            child: SizedBox(
-                              height: targetHeight,
-                              child: AspectRatio(
-                                aspectRatio: project.aspectRatio,
-                                child: _PosterCard(
-                                  project: project,
-                                  isActive: index == _currentIndex,
+                    return RepaintBoundary(
+                      child: Transform.scale(
+                        scale: scaleVal,
+                        child: Opacity(
+                          opacity: opacityVal,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: gap / 2),
+                            child: Center(
+                              child: SizedBox(
+                                height: targetHeight,
+                                child: AspectRatio(
+                                  aspectRatio: project.aspectRatio,
+                                  child: _PosterCard(
+                                    project: project,
+                                    isActive: index == _currentIndex,
+                                  ),
                                 ),
                               ),
                             ),

@@ -25,7 +25,7 @@ class _SkeletonLoaderState extends State<SkeletonLoader>
       vsync: this,
     )..repeat(reverse: true);
 
-    _animation = Tween<double>(begin: 0.4, end: 0.95).animate(
+    _animation = Tween<double>(begin: 0.65, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
   }
@@ -71,11 +71,11 @@ class SkeletonBox extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: customColor ?? const Color(0xFFEBEBEB),
+        color: customColor ?? AppColors.surfaceSubtleLight,
         borderRadius: BorderRadius.circular(borderRadius),
         border: Border.all(
-          color: const Color(0xFFE0E0E0),
-          width: 0.5,
+          color: AppColors.borderLight,
+          width: 1.0,
         ),
       ),
     );

@@ -76,18 +76,20 @@ class SiteHeader extends StatelessWidget {
                   if (!isMobile)
                     Row(
                       children: [
+                        if (currentPath != '/') ...[
+                          _NavLink(
+                            label: 'Home',
+                            path: '/',
+                            isActive: false,
+                            onTap: () => context.go('/'),
+                          ),
+                          const SizedBox(width: 36),
+                        ],
                         _NavLink(
                           label: 'Services',
                           path: '/services',
                           isActive: currentPath == '/services',
                           onTap: () => context.go('/services'),
-                        ),
-                        const SizedBox(width: 36),
-                        _NavLink(
-                          label: 'About',
-                          path: '/about',
-                          isActive: currentPath == '/about',
-                          onTap: () => context.go('/about'),
                         ),
                         const SizedBox(width: 36),
                         _NavLink(

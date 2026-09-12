@@ -1,7 +1,6 @@
 import 'package:go_router/go_router.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/services/services_screen.dart';
-import '../screens/about/about_screen.dart';
 import '../screens/contact/contact_screen.dart';
 import '../screens/contact/start_project_screen.dart';
 import '../screens/legal/privacy_policy_screen.dart';
@@ -20,11 +19,6 @@ final GoRouter appRouter = GoRouter(
       path: '/services',
       name: 'services',
       builder: (context, state) => const ServicesScreen(),
-    ),
-    GoRoute(
-      path: '/about',
-      name: 'about',
-      builder: (context, state) => const AboutScreen(),
     ),
     GoRoute(
       path: '/contact',
