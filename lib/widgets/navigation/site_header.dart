@@ -55,7 +55,7 @@ class SiteHeader extends StatelessWidget {
                         children: [
                           Image.asset(
                             'assets/images/header_logo.png',
-                            height: 28,
+                            height: isMobile ? 36.0 : 44.0,
                             fit: BoxFit.contain,
                             color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                             errorBuilder: (context, error, stackTrace) {

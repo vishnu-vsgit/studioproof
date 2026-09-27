@@ -121,6 +121,16 @@ class AppTypography {
     );
   }
 
+  static TextStyle labelMonoSmall({Color color = AppColors.textMutedLight, double scale = 1.0}) {
+    return GoogleFonts.jetBrainsMono(
+      fontSize: 11 * scale,
+      height: 1.2,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 1.2,
+      color: color,
+    );
+  }
+
   // Gradient Text Mask Helper
   static Widget gradientText({
     required String text,
@@ -137,3 +147,4 @@ class AppTypography {
     );
   }
 }
+

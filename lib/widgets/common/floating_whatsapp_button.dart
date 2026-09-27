@@ -16,7 +16,7 @@ class _FloatingWhatsappButtonState extends State<FloatingWhatsappButton> {
   bool _isHovered = false;
 
   Future<void> _launchWhatsapp() async {
-    final message = Uri.encodeComponent("Hi StudioProof! I'd like to discuss a design project.");
+    final message = Uri.encodeComponent("Hi ${AppConfig.studioName}! I'd like to discuss a design project.");
     final url = Uri.parse('https://wa.me/${AppConfig.whatsappNumber}?text=$message');
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);

@@ -1,18 +1,18 @@
 /// Studio Proof - Centralized Application Configuration
 class AppConfig {
-  static const String studioName = 'StudioProof';
+  static const String studioName = 'Kalaa.png';
   static const String studioTagline = 'Independent Graphic Design Studio';
   static const String designerTitle = 'Graphic Designer & Student';
   static const String designerBioHeadline = 'Clear visual direction. Designed for real impact.';
   
   // Primary Contact Info
-  static const String contactEmail = 'studioproof.ds@gmail.com';
-  static const String formSubmitHash = '4c5019a76f3f63374053c4c81cbe2736';
+  static const String contactEmail = 'kalaa.png@gmail.com';
+  static const String formSubmitHash = 'kalaa.png@gmail.com';
   static const String whatsappNumber = '918778944493';
   static const String phoneNumber = '+91 87789 44493';
   static const String phoneUrl = 'tel:+918778944493';
-  static const String instagramHandle = '@studioproof.design';
-  static const String instagramUrl = 'https://instagram.com/studioproof.design';
+  static const String instagramHandle = '@_kala.png_';
+  static const String instagramUrl = 'https://instagram.com/_kala.png_';
 
   // Supabase Backend Configuration
   static const String supabaseUrl = String.fromEnvironment(

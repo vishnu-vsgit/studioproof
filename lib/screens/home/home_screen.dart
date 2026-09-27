@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final allProjects = PortfolioData.projects;
 
     return Title(
-      title: 'StudioProof — Independent Graphic Design Studio',
+      title: '${AppConfig.studioName} — Independent Graphic Design Studio',
       color: AppColors.bgLight,
       child: PageScaffold(
         currentPath: '/',
@@ -287,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'StudioProof brings structure, sharp typography, and bold visual hierarchy to posters, social campaigns, and design workshops.',
+                          '${AppConfig.studioName} brings structure, sharp typography, and bold visual hierarchy to posters, social campaigns, and design workshops.',
                           style: AppTypography.bodyLarge(
                             color: AppColors.textSecondaryLight,
                             scale: scale,
@@ -645,7 +645,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           index: 3,
                           question: 'How do I share project details and request a quote?',
                           answer:
-                              'You can submit details through our "Start Project" form or reach out directly on WhatsApp (+91 87789 44493) or Email (studioproof.ds@gmail.com).',
+                              'You can submit details through our "Start Project" form or reach out directly on WhatsApp (+91 87789 44493) or Email (${AppConfig.contactEmail}).',
                         ),
                         _buildFaqItem(
                           index: 4,
@@ -669,8 +669,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const Divider(color: AppColors.borderLight, height: 1),
 
             // ==========================================
-            // 6. FINAL CTA SECTION
-            // Clear CTAs & Direct Contact Details
+            // 6. FINAL CTA SECTION — Clean Light Panel
             // ==========================================
             _ScrollEntranceAnimation(
               staggerIndex: 6,
@@ -679,139 +678,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AppColors.bgLight,
                 padding: EdgeInsets.symmetric(
                   horizontal: horizontalPadding,
-                  vertical: isMobile ? 56.0 : 96.0,
+                  vertical: isMobile ? 64.0 : 96.0,
                 ),
                 child: Center(
                   child: Container(
                     constraints: const BoxConstraints(
                       maxWidth: ResponsiveBreakpoints.maxContentWidth,
                     ),
-                    child: Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(isMobile ? 32.0 : 64.0),
-                      decoration: BoxDecoration(
-                        color: AppColors.bgLight,
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(color: AppColors.textPrimaryLight, width: 2.0),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x1A000000),
-                            blurRadius: 32,
-                            spreadRadius: -4,
-                            offset: Offset(0, 16),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'START YOUR PROJECT',
-                            style: AppTypography.labelUppercase(
-                              color: AppColors.textPrimaryLight,
-                              scale: scale,
-                            ).copyWith(fontWeight: FontWeight.w800, fontSize: 12 * scale),
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            'Give Your Next Event Or Brand Clear Visual Direction.',
-                            textAlign: TextAlign.center,
-                            style: AppTypography.displayMedium(
-                              color: AppColors.textPrimaryLight,
-                              scale: scale,
-                            ).copyWith(
-                              fontSize: (isMobile ? 32 : 48) * scale,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: -0.5,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 700),
-                            child: Text(
-                              'Whether you need an event poster, social campaign collateral, or a design workshop for your team, we are ready to collaborate.',
-                              textAlign: TextAlign.center,
-                              style: AppTypography.bodyLarge(
-                                color: AppColors.textSecondaryLight,
-                                scale: scale,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 40),
-
-                          // Action Buttons
-                          isMobile
-                              ? Column(
-                                  children: [
-                                    _buildPrimaryCtaButton(context, scale, isMobile: true),
-                                    const SizedBox(height: 16),
-                                    _buildWhatsAppButton(scale, isMobile: true),
-                                  ],
-                                )
-                              : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    _buildPrimaryCtaButton(context, scale, isMobile: false),
-                                    const SizedBox(width: 20),
-                                    _buildWhatsAppButton(scale, isMobile: false),
-                                  ],
-                                ),
-
-                          const SizedBox(height: 36),
-
-                          // Direct Contact Details Pill
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-                            decoration: BoxDecoration(
-                              color: AppColors.surfaceSubtleLight,
-                              borderRadius: BorderRadius.circular(30),
-                              border: Border.all(color: AppColors.borderLight),
-                            ),
-                            child: Wrap(
-                              alignment: WrapAlignment.center,
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              spacing: 16,
-                              runSpacing: 8,
-                              children: [
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const Icon(Icons.email_outlined, size: 16, color: AppColors.textPrimaryLight),
-                                    const SizedBox(width: 6),
-                                    Text(
-                                      AppConfig.contactEmail,
-                                      style: AppTypography.bodySmall(color: AppColors.textPrimaryLight).copyWith(fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const Icon(Icons.phone_outlined, size: 16, color: AppColors.textPrimaryLight),
-                                    const SizedBox(width: 6),
-                                    Text(
-                                      AppConfig.phoneNumber,
-                                      style: AppTypography.bodySmall(color: AppColors.textPrimaryLight).copyWith(fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const Icon(Icons.camera_alt_outlined, size: 16, color: AppColors.textPrimaryLight),
-                                    const SizedBox(width: 6),
-                                    Text(
-                                      AppConfig.instagramHandle,
-                                      style: AppTypography.bodySmall(color: AppColors.textPrimaryLight).copyWith(fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    child: isMobile
+                        ? _buildCtaMobileLayout(context, scale)
+                        : _buildCtaDesktopLayout(context, scale),
                   ),
                 ),
               ),
@@ -838,8 +714,8 @@ class _HomeScreenState extends State<HomeScreen> {
               fontSize: 11 * scale,
               letterSpacing: 1.5,
             ),
-            children: const [
-              TextSpan(text: 'STUDIO PROOF '),
+            children: [
+              TextSpan(text: '${AppConfig.studioName.toUpperCase()} '),
               TextSpan(
                 text: '• ',
                 style: TextStyle(
@@ -1047,75 +923,266 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // CTA Primary Button
-  Widget _buildPrimaryCtaButton(BuildContext context, double scale, {required bool isMobile}) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: ElevatedButton(
-        onPressed: () => context.go('/start'),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.textPrimaryLight,
-          foregroundColor: AppColors.bgLight,
-          padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 32 : 40,
-            vertical: isMobile ? 18 : 22,
+  // ── CTA Desktop Split Layout ─────────────────────────────────────────────
+  Widget _buildCtaDesktopLayout(BuildContext context, double scale) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // LEFT — Oversized editorial headline
+        Expanded(
+          flex: 55,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'START YOUR PROJECT',
+                style: AppTypography.labelUppercase(
+                  color: AppColors.textSecondaryLight,
+                  scale: scale,
+                ).copyWith(fontSize: 11 * scale, letterSpacing: 2.5),
+              ),
+              const SizedBox(height: 28),
+              Text(
+                'Give Your Next Event Or Brand\nClear Visual Direction.',
+                style: AppTypography.displayMedium(
+                  color: AppColors.textPrimaryLight,
+                  scale: scale,
+                ).copyWith(
+                  fontSize: 52 * scale,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: -1.5,
+                  height: 1.0,
+                ),
+              ),
+            ],
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          elevation: 0,
         ),
-        child: Row(
-          mainAxisSize: isMobile ? MainAxisSize.max : MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Start Project Brief',
-              style: AppTypography.buttonText(
-                color: AppColors.bgLight,
+        const SizedBox(width: 72),
+        // RIGHT — Description, CTAs, contact
+        Expanded(
+          flex: 45,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Whether you need an event poster, social campaign collateral, or a design workshop for your team, we are ready to collaborate.',
+                style: AppTypography.bodyLarge(
+                  color: AppColors.textSecondaryLight,
+                  scale: scale,
+                ).copyWith(height: 1.6),
+              ),
+              const SizedBox(height: 36),
+              // Primary CTA
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: ElevatedButton(
+                  onPressed: () => context.go('/start'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.textPrimaryLight,
+                    foregroundColor: AppColors.bgLight,
+                    padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    elevation: 0,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Start Project Brief',
+                        style: AppTypography.buttonText(
+                          color: AppColors.bgLight,
+                          scale: scale,
+                        ).copyWith(fontWeight: FontWeight.w700, fontSize: 15 * scale),
+                      ),
+                      const SizedBox(width: 10),
+                      const Icon(Icons.arrow_forward_rounded, size: 18, color: AppColors.bgLight),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 14),
+              // WhatsApp secondary CTA
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: OutlinedButton(
+                  onPressed: () => _launchUrl('https://wa.me/${AppConfig.whatsappNumber}'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.textPrimaryLight,
+                    padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 20),
+                    side: const BorderSide(color: AppColors.textPrimaryLight, width: 1.5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.chat_bubble_outline_rounded, size: 17, color: AppColors.textPrimaryLight),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Chat on WhatsApp',
+                        style: AppTypography.buttonText(
+                          color: AppColors.textPrimaryLight,
+                          scale: scale,
+                        ).copyWith(fontWeight: FontWeight.w600, fontSize: 15 * scale),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 40),
+              // Contact details — stacked chips
+              _buildCtaContactRow(
+                icon: Icons.email_outlined,
+                label: AppConfig.contactEmail,
                 scale: scale,
-              ).copyWith(fontWeight: FontWeight.bold, fontSize: 15 * scale),
-            ),
-            const SizedBox(width: 10),
-            const Icon(Icons.arrow_forward_rounded, size: 20, color: AppColors.bgLight),
-          ],
+              ),
+              const SizedBox(height: 12),
+              _buildCtaContactRow(
+                icon: Icons.phone_outlined,
+                label: AppConfig.phoneNumber,
+                scale: scale,
+              ),
+              const SizedBox(height: 12),
+              _buildCtaContactRow(
+                icon: Icons.camera_alt_outlined,
+                label: AppConfig.instagramHandle,
+                scale: scale,
+              ),
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 
-  // CTA WhatsApp Direct Button
-  Widget _buildWhatsAppButton(double scale, {required bool isMobile}) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: OutlinedButton(
-        onPressed: () => _launchUrl('https://wa.me/${AppConfig.whatsappNumber}'),
-        style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.textPrimaryLight,
-          padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 28 : 36,
-            vertical: isMobile ? 18 : 22,
-          ),
-          side: const BorderSide(color: AppColors.textPrimaryLight, width: 1.5),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+  // ── CTA Mobile Stacked Layout ────────────────────────────────────────────
+  Widget _buildCtaMobileLayout(BuildContext context, double scale) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'START YOUR PROJECT',
+          style: AppTypography.labelUppercase(
+            color: AppColors.textSecondaryLight,
+            scale: scale,
+          ).copyWith(fontSize: 10 * scale, letterSpacing: 2.0),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          'Give Your Next Event Or Brand Clear Visual Direction.',
+          style: AppTypography.displayMedium(
+            color: AppColors.textPrimaryLight,
+            scale: scale,
+          ).copyWith(
+            fontSize: 34 * scale,
+            fontWeight: FontWeight.w800,
+            letterSpacing: -1.0,
+            height: 1.05,
           ),
         ),
-        child: Row(
-          mainAxisSize: isMobile ? MainAxisSize.max : MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.chat_bubble_outline_rounded, size: 18, color: AppColors.textPrimaryLight),
-            const SizedBox(width: 8),
-            Text(
-              'Chat on WhatsApp',
-              style: AppTypography.buttonText(
-                color: AppColors.textPrimaryLight,
-                scale: scale,
-              ).copyWith(fontWeight: FontWeight.w600, fontSize: 15 * scale),
+        const SizedBox(height: 20),
+        Text(
+          'Whether you need an event poster, social campaign collateral, or a design workshop for your team, we are ready to collaborate.',
+          style: AppTypography.bodyLarge(
+            color: AppColors.textSecondaryLight,
+            scale: scale,
+          ).copyWith(height: 1.6),
+        ),
+        const SizedBox(height: 32),
+        // Primary CTA full-width
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () => context.go('/start'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.textPrimaryLight,
+                foregroundColor: AppColors.bgLight,
+                padding: const EdgeInsets.symmetric(vertical: 18),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                elevation: 0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Start Project Brief',
+                    style: AppTypography.buttonText(
+                      color: AppColors.bgLight,
+                      scale: scale,
+                    ).copyWith(fontWeight: FontWeight.w700, fontSize: 15 * scale),
+                  ),
+                  const SizedBox(width: 10),
+                  const Icon(Icons.arrow_forward_rounded, size: 18, color: AppColors.bgLight),
+                ],
+              ),
             ),
-          ],
+          ),
         ),
-      ),
+        const SizedBox(height: 12),
+        // WhatsApp CTA full-width
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              onPressed: () => _launchUrl('https://wa.me/${AppConfig.whatsappNumber}'),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.textPrimaryLight,
+                padding: const EdgeInsets.symmetric(vertical: 18),
+                side: const BorderSide(color: AppColors.textPrimaryLight, width: 1.5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.chat_bubble_outline_rounded, size: 17, color: AppColors.textPrimaryLight),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Chat on WhatsApp',
+                    style: AppTypography.buttonText(
+                      color: AppColors.textPrimaryLight,
+                      scale: scale,
+                    ).copyWith(fontWeight: FontWeight.w600, fontSize: 15 * scale),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 36),
+        // Contact details
+        _buildCtaContactRow(icon: Icons.email_outlined, label: AppConfig.contactEmail, scale: scale),
+        const SizedBox(height: 12),
+        _buildCtaContactRow(icon: Icons.phone_outlined, label: AppConfig.phoneNumber, scale: scale),
+        const SizedBox(height: 12),
+        _buildCtaContactRow(icon: Icons.camera_alt_outlined, label: AppConfig.instagramHandle, scale: scale),
+      ],
+    );
+  }
+
+  // ── Shared: single contact detail row ────────────────────────────────────
+  Widget _buildCtaContactRow({required IconData icon, required String label, required double scale}) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 15, color: AppColors.textSecondaryLight),
+        const SizedBox(width: 8),
+        Text(
+          label,
+          style: AppTypography.bodySmall(
+            color: AppColors.textPrimaryLight,
+          ).copyWith(fontWeight: FontWeight.w500, fontSize: 13 * scale),
+        ),
+      ],
     );
   }
 }
@@ -1149,7 +1216,7 @@ class _ScrollEntranceAnimationState extends State<_ScrollEntranceAnimation>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 280),
     );
 
     _fadeAnimation = CurvedAnimation(
@@ -1157,12 +1224,12 @@ class _ScrollEntranceAnimationState extends State<_ScrollEntranceAnimation>
       curve: Curves.easeOut,
     );
 
-    _slideAnimation = Tween<double>(begin: 28.0, end: 0.0).animate(
+    _slideAnimation = Tween<double>(begin: 14.0, end: 0.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
     );
 
-    // Staggered delay: each section starts 80ms after the previous one
-    final delay = Duration(milliseconds: widget.staggerIndex * 80);
+    // Staggered delay: each section starts 40ms after the previous one
+    final delay = Duration(milliseconds: widget.staggerIndex * 40);
     Future.delayed(delay, () {
       if (mounted) _controller.forward();
     });
@@ -1371,14 +1438,14 @@ class _LastMinuteVsStudioProofComparison extends StatelessWidget {
               if (isNarrow) {
                 return Column(
                   children: [
-                    _buildComparisonColumn('Last-Minute / DIY Design', [
-                      'Turnaround: Unpredictable delays',
-                      'Typography: Overcrowded & hard to read',
+                    _buildComparisonColumn('Other Agencies', [
+                      'Turnaround: Slow, unpredictable delays',
+                      'Typography: Generic templates, hard to read',
                       'Layout: Disconnected social & print graphics',
                       'Impact: Blends into noisy social feeds',
                     ], isBetter: false),
                     const SizedBox(height: 20),
-                    _buildComparisonColumn('StudioProof Direction', [
+                    _buildComparisonColumn('${AppConfig.studioName} Direction', [
                       'Turnaround: Reliable 48–72h delivery',
                       'Typography: Clear, bold visual hierarchy',
                       'Layout: Cohesive post, story & banner suite',
@@ -1391,16 +1458,16 @@ class _LastMinuteVsStudioProofComparison extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: _buildComparisonColumn('Last-Minute / DIY Design', [
-                      'Turnaround: Unpredictable delays',
-                      'Typography: Overcrowded & hard to read',
+                    child: _buildComparisonColumn('Other Agencies', [
+                      'Turnaround: Slow, unpredictable delays',
+                      'Typography: Generic templates, hard to read',
                       'Layout: Disconnected social & print graphics',
                       'Impact: Blends into noisy social feeds',
                     ], isBetter: false),
                   ),
                   const SizedBox(width: 24),
                   Expanded(
-                    child: _buildComparisonColumn('StudioProof Direction', [
+                    child: _buildComparisonColumn('${AppConfig.studioName} Direction', [
                       'Turnaround: Reliable 48–72h delivery',
                       'Typography: Clear, bold visual hierarchy',
                       'Layout: Cohesive post, story & banner suite',

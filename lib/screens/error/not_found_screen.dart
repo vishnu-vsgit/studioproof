@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/config/app_config.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
@@ -16,7 +17,7 @@ class NotFoundScreen extends StatelessWidget {
     final scale = ResponsiveBreakpoints.getTypographyScale(context);
 
     return Title(
-      title: '404 — Page Not Found | StudioProof',
+      title: '404 — Page Not Found | ${AppConfig.studioName}',
       color: isDark ? AppColors.bgDark : AppColors.bgLight,
       child: PageScaffold(
         currentPath: '/404',

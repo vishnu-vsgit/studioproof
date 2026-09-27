@@ -17,7 +17,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
     final scale = ResponsiveBreakpoints.getTypographyScale(context);
 
     return Title(
-      title: 'Privacy Policy — StudioProof',
+      title: 'Privacy Policy — ${AppConfig.studioName}',
       color: isDark ? AppColors.bgDark : AppColors.bgLight,
       child: PageScaffold(
         currentPath: '/privacy-policy',

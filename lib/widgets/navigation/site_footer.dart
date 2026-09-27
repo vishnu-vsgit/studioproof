@@ -46,7 +46,7 @@ class SiteFooter extends StatelessWidget {
                   children: [
                     Image.asset(
                       'assets/images/header_logo.png',
-                      height: 28,
+                      height: 36.0,
                       fit: BoxFit.contain,
                       color: isDark
                           ? AppColors.textPrimaryDark

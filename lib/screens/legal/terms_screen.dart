@@ -17,7 +17,7 @@ class TermsScreen extends StatelessWidget {
     final scale = ResponsiveBreakpoints.getTypographyScale(context);
 
     return Title(
-      title: 'Terms & Conditions — StudioProof',
+      title: 'Terms & Conditions — ${AppConfig.studioName}',
       color: isDark ? AppColors.bgDark : AppColors.bgLight,
       child: PageScaffold(
         currentPath: '/terms-and-conditions',

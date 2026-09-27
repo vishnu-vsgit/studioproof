@@ -72,4 +72,13 @@ class AppColors {
   static const Color posterOlive = Color(0xFF15803D);
   static const Color posterPlum = Color(0xFF7E22CE);
   static const Color posterClay = Color(0xFFC2410C);
+
+  // Studio Loader Palette (Matching StudioProof Crisp White & Black Studio aesthetic)
+  static const Color loaderBg = Color(0xFFFFFFFF); // Crisp pure white background
+  static const Color loaderSurface = Color(0xFFFAFAFA); // Studio surface card
+  static const Color loaderAccent = Color(0xFFC2410C); // Terracotta clay accent
+  static const Color loaderGlow = Color(0xFFF7EFEA); // Soft warm studio terracotta ambient sheen
+  static const Color loaderBorder = Color(0xFFE2E8F0); // Delicate border matching studio cards
 }
+
+

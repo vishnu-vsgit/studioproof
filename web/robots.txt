@@ -1,4 +1,4 @@
-# StudioProof — Independent Graphic Design & Training Studio
+# Kalaa.png — Independent Graphic Design & Training Studio
 # https://studioproof.design/robots.txt
 
 User-agent: *
