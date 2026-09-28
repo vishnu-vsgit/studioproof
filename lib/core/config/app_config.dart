@@ -11,8 +11,8 @@ class AppConfig {
   static const String whatsappNumber = '918778944493';
   static const String phoneNumber = '+91 87789 44493';
   static const String phoneUrl = 'tel:+918778944493';
-  static const String instagramHandle = '@_kala.png_';
-  static const String instagramUrl = 'https://instagram.com/_kala.png_';
+  static const String instagramHandle = '@kalaaaa.png';
+  static const String instagramUrl = 'https://instagram.com/kalaaaa.png';
 
   // Supabase Backend Configuration
   static const String supabaseUrl = String.fromEnvironment(
