@@ -45,9 +45,12 @@ class _WorkCarouselWidgetState extends State<WorkCarouselWidget> {
 
     final isMobile = width < 700;
     final isTablet = width >= 700 && width < 1050;
+    final isLargeDesktop = width >= 1440;
 
     // Refined compact poster heights
-    final double targetHeight = isMobile ? 310.0 : (isTablet ? 350.0 : 380.0);
+    final double targetHeight = isMobile
+        ? 310.0
+        : (isTablet ? 350.0 : (isLargeDesktop ? 400.0 : 380.0));
     final double posterWidth = targetHeight * 0.77;
     final double gap = isMobile ? 14.0 : 20.0;
     final double desiredSlotWidth = posterWidth + gap;
@@ -56,7 +59,7 @@ class _WorkCarouselWidgetState extends State<WorkCarouselWidget> {
     // On tablet: show 1 center + 1–2 partial on each side
     // On mobile: show 1 center + partial on each side
     final double fraction = (desiredSlotWidth / width).clamp(
-      isMobile ? 0.62 : 0.18,
+      isMobile ? 0.62 : 0.14,
       isMobile ? 0.82 : 0.36,
     );
 
@@ -94,12 +97,15 @@ class _WorkCarouselWidgetState extends State<WorkCarouselWidget> {
     final width = MediaQuery.sizeOf(context).width;
     final isMobile = width < 700;
     final isTablet = width >= 700 && width < 1050;
+    final isLargeDesktop = width >= 1440;
     final scale = ResponsiveBreakpoints.getTypographyScale(context);
     final projects = widget.projects;
 
     if (projects.isEmpty) return const SizedBox.shrink();
 
-    final double targetHeight = isMobile ? 310.0 : (isTablet ? 350.0 : 380.0);
+    final double targetHeight = isMobile
+        ? 310.0
+        : (isTablet ? 350.0 : (isLargeDesktop ? 400.0 : 380.0));
     final double gap = isMobile ? 14.0 : 20.0;
 
     return Column(

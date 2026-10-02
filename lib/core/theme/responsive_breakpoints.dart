@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ResponsiveBreakpoints {
   static const double mobileMax = 767.0;
   static const double tabletMax = 1023.0;
-  static const double maxContentWidth = 1360.0;
+  static const double maxContentWidth = 1400.0;
 
   static bool isMobile(BuildContext context) =>
       MediaQuery.of(context).size.width <= mobileMax;
@@ -26,6 +26,8 @@ class ResponsiveBreakpoints {
       return 18.0;
     } else if (width <= tabletMax) {
       return 36.0;
+    } else if (width <= 1440.0) {
+      return 48.0;
     } else {
       return 64.0;
     }

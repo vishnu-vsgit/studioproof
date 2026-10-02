@@ -19,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // Active state for single expanded FAQ item (null if all closed)
-  int? _expandedFaqIndex = 0;
+  int? _expandedFaqIndex;
 
   Future<void> _launchUrl(String urlString) async {
     final Uri url = Uri.parse(urlString);
@@ -190,6 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (!isMobile) ...[
               // KINETIC MARQUEE TYPOGRAPHY
               Container(
+                width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 color: AppColors.bgLight,
                 child: const KineticMarqueeWidget(
@@ -302,21 +303,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: 'Poster & Campaign Key Visuals',
                               description:
                                   'High-contrast event posters, fest announcements, and keynote speaker reveal graphics designed in Figma & Photoshop.',
-                              icon: Icons.campaign_rounded,
                             ),
                             SizedBox(height: 20),
                             _FeatureValueCard(
                               title: 'Startup & Business Visual Identity',
                               description:
                                   'Clean logo marks, visual systems, and brand assets tailored for tech startups, small businesses, and creators.',
-                              icon: Icons.business_center_rounded,
                             ),
                             SizedBox(height: 20),
                             _FeatureValueCard(
                               title: 'Design Training & Workshops',
                               description:
                                   'Hands-on practical graphic design training sessions covering Figma, Photoshop fundamentals, poster layout, and visual hierarchy.',
-                              icon: Icons.school_rounded,
                             ),
                           ],
                         ),
@@ -333,6 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _ScrollEntranceAnimation(
               staggerIndex: 3,
               child: Container(
+                width: double.infinity,
                 color: AppColors.bgLight,
                 padding: EdgeInsets.symmetric(vertical: isMobile ? 36.0 : 60.0),
                 child: Column(
@@ -1537,12 +1536,10 @@ class _LastMinuteVsStudioProofComparison extends StatelessWidget {
 class _FeatureValueCard extends StatelessWidget {
   final String title;
   final String description;
-  final IconData icon;
 
   const _FeatureValueCard({
     required this.title,
     required this.description,
-    required this.icon,
   });
 
   @override
@@ -1555,38 +1552,22 @@ class _FeatureValueCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.borderLight),
       ),
-      child: Row(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: AppColors.textPrimaryLight,
-              borderRadius: BorderRadius.circular(12),
+          Text(
+            title,
+            style: AppTypography.heading2(color: AppColors.textPrimaryLight).copyWith(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
-            child: Icon(icon, color: AppColors.bgLight, size: 24),
           ),
-          const SizedBox(width: 24),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTypography.heading2(color: AppColors.textPrimaryLight).copyWith(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  description,
-                  style: AppTypography.bodyLarge(color: AppColors.textSecondaryLight).copyWith(
-                    fontSize: 15,
-                    height: 1.55,
-                  ),
-                ),
-              ],
+          const SizedBox(height: 8),
+          Text(
+            description,
+            style: AppTypography.bodyLarge(color: AppColors.textSecondaryLight).copyWith(
+              fontSize: 15,
+              height: 1.55,
             ),
           ),
         ],

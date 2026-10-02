@@ -245,6 +245,7 @@ class ServicesScreen extends StatelessWidget {
 
             // ── 2. KINETIC MARQUEE ────────────────────────────────────────
             Container(
+              width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               color: AppColors.bgLight,
               child: const KineticMarqueeWidget(
