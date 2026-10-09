@@ -156,17 +156,19 @@ class ProjectPreviewModal extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 12),
-                            ...['Brand Identity Systems', 'High-Res Vector Exports', 'Editorial Layout Guides', 'Web & Mobile Assets'].map(
+                            ...project.deliverables.map(
                               (item) => Padding(
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Row(
                                   children: [
                                     const Icon(Icons.check_circle_outline_rounded, size: 16, color: AppColors.accent),
                                     const SizedBox(width: 8),
-                                    Text(
-                                      item,
-                                      style: AppTypography.bodyMedium(
-                                        color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                                    Expanded(
+                                      child: Text(
+                                        item,
+                                        style: AppTypography.bodyMedium(
+                                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -192,6 +194,24 @@ class ProjectPreviewModal extends StatelessWidget {
                                 child: Text(
                                   'Commission Similar Project →',
                                   style: AppTypography.buttonText(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Center(
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: GestureDetector(
+                                  onTap: () => Navigator.of(context).pop(),
+                                  child: Text(
+                                    'Close & browse more work ↓',
+                                    style: AppTypography.bodySmall(
+                                      color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                    ).copyWith(
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

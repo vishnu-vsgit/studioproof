@@ -43,51 +43,51 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ==========================================
-            // 1. HERO SECTION
-            // End Result + Fear Elimination + Supporting Visual
-            // ==========================================
-            _ScrollEntranceAnimation(
-              staggerIndex: 0,
-              child: Container(
-                width: double.infinity,
-                color: AppColors.bgLight,
-                padding: EdgeInsets.symmetric(
-                  horizontal: horizontalPadding,
-                  vertical: isMobile ? 36.0 : 64.0,
-                ),
-                child: Center(
-                  child: Container(
-                    constraints: const BoxConstraints(
-                      maxWidth: ResponsiveBreakpoints.maxContentWidth,
+              // ==========================================
+              // 1. HERO SECTION
+              // End Result + Fear Elimination + Supporting Visual
+              // ==========================================
+              _ScrollEntranceAnimation(
+                staggerIndex: 0,
+                child: Container(
+                  width: double.infinity,
+                  color: AppColors.bgLight,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: horizontalPadding,
+                    vertical: isMobile ? 36.0 : 64.0,
+                  ),
+                  child: Center(
+                    child: Container(
+                      constraints: const BoxConstraints(
+                        maxWidth: ResponsiveBreakpoints.maxContentWidth,
+                      ),
+                      child: isMobile
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildHeroLeftText(context, scale, isMobile),
+                                const SizedBox(height: 36),
+                                const _HeroVisualCard(),
+                              ],
+                            )
+                          : Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  flex: 6,
+                                  child: _buildHeroLeftText(context, scale, isMobile),
+                                ),
+                                const SizedBox(width: 48),
+                                const Expanded(
+                                  flex: 5,
+                                  child: _HeroVisualCard(),
+                                ),
+                              ],
+                            ),
                     ),
-                    child: isMobile
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildHeroLeftText(context, scale, isMobile),
-                              const SizedBox(height: 36),
-                              const _HeroVisualCard(),
-                            ],
-                          )
-                        : Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                flex: 6,
-                                child: _buildHeroLeftText(context, scale, isMobile),
-                              ),
-                              const SizedBox(width: 48),
-                              const Expanded(
-                                flex: 5,
-                                child: _HeroVisualCard(),
-                              ),
-                            ],
-                          ),
                   ),
                 ),
               ),
-            ),
 
             const Divider(color: AppColors.borderLight, height: 1),
 
@@ -300,18 +300,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         Column(
                           children: const [
                             _FeatureValueCard(
+                              icon: Icons.image_outlined,
                               title: 'Poster & Campaign Key Visuals',
                               description:
                                   'High-contrast event posters, fest announcements, and keynote speaker reveal graphics designed in Figma & Photoshop.',
                             ),
                             SizedBox(height: 20),
                             _FeatureValueCard(
+                              icon: Icons.business_center_outlined,
                               title: 'Startup & Business Visual Identity',
                               description:
                                   'Clean logo marks, visual systems, and brand assets tailored for tech startups, small businesses, and creators.',
                             ),
                             SizedBox(height: 20),
                             _FeatureValueCard(
+                              icon: Icons.school_outlined,
                               title: 'Design Training & Workshops',
                               description:
                                   'Hands-on practical graphic design training sessions covering Figma, Photoshop fundamentals, poster layout, and visual hierarchy.',
@@ -431,102 +434,96 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             // 1. Desktop & Large Monitors (1024px+): 4 equal-size cards side by side
                             if (width >= 1024) {
-                              return IntrinsicHeight(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: const [
-                                    Expanded(
-                                      child: _StepCard(
-                                        stepNumber: '01',
-                                        title: 'Share Brief & Content',
-                                        description:
-                                            'Fill out our quick project form or send event details, text content, and logo assets via WhatsApp/Email.',
-                                      ),
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Expanded(
+                                    child: _StepCard(
+                                      stepNumber: '01',
+                                      title: 'Share Brief & Content',
+                                      description:
+                                          'Fill out our quick project form or send event details, text content, and logo assets via WhatsApp/Email.',
                                     ),
-                                    SizedBox(width: 16),
-                                    Expanded(
-                                      child: _StepCard(
-                                        stepNumber: '02',
-                                        title: 'Concept Creation',
-                                        description:
-                                            'Visual concepts and layout directions are crafted in Figma and Photoshop with strong typographic hierarchy.',
-                                      ),
+                                  ),
+                                  SizedBox(width: 16),
+                                  Expanded(
+                                    child: _StepCard(
+                                      stepNumber: '02',
+                                      title: 'Concept Creation',
+                                      description:
+                                          'Visual concepts and layout directions are crafted in Figma and Photoshop with strong typographic hierarchy.',
                                     ),
-                                    SizedBox(width: 16),
-                                    Expanded(
-                                      child: _StepCard(
-                                        stepNumber: '03',
-                                        title: 'Review & Refine',
-                                        description:
-                                            'Review high-res drafts, suggest layout adjustments, and finalize text and color details together.',
-                                      ),
+                                  ),
+                                  SizedBox(width: 16),
+                                  Expanded(
+                                    child: _StepCard(
+                                      stepNumber: '03',
+                                      title: 'Review & Refine',
+                                      description:
+                                          'Review high-res drafts, suggest layout adjustments, and finalize text and color details together.',
                                     ),
-                                    SizedBox(width: 16),
-                                    Expanded(
-                                      child: _StepCard(
-                                        stepNumber: '04',
-                                        title: 'Delivery & Launch',
-                                        description:
-                                            'Receive print-ready PDFs and digital PNG/JPG assets formatted for social media and event screens.',
-                                      ),
+                                  ),
+                                  SizedBox(width: 16),
+                                  Expanded(
+                                    child: _StepCard(
+                                      stepNumber: '04',
+                                      title: 'Delivery & Launch',
+                                      description:
+                                          'Receive print-ready PDFs and digital PNG/JPG assets formatted for social media and event screens.',
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               );
                             }
 
-                            // 2. Tablet & Medium Screens (640px to 1023px): 2x2 grid with equal height per row
+                            // 2. Tablet & Medium Screens (640px to 1023px): 2x2 grid
                             if (width >= 640) {
                               return Column(
                                 children: const [
-                                  IntrinsicHeight(
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                                      children: [
-                                        Expanded(
-                                          child: _StepCard(
-                                            stepNumber: '01',
-                                            title: 'Share Brief & Content',
-                                            description:
-                                                'Fill out our quick project form or send event details, text content, and logo assets via WhatsApp/Email.',
-                                          ),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: _StepCard(
+                                          stepNumber: '01',
+                                          title: 'Share Brief & Content',
+                                          description:
+                                              'Fill out our quick project form or send event details, text content, and logo assets via WhatsApp/Email.',
                                         ),
-                                        SizedBox(width: 16),
-                                        Expanded(
-                                          child: _StepCard(
-                                            stepNumber: '02',
-                                            title: 'Concept Creation',
-                                            description:
-                                                'Visual concepts and layout directions are crafted in Figma and Photoshop with strong typographic hierarchy.',
-                                          ),
+                                      ),
+                                      SizedBox(width: 16),
+                                      Expanded(
+                                        child: _StepCard(
+                                          stepNumber: '02',
+                                          title: 'Concept Creation',
+                                          description:
+                                              'Visual concepts and layout directions are crafted in Figma and Photoshop with strong typographic hierarchy.',
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                   SizedBox(height: 16),
-                                  IntrinsicHeight(
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                                      children: [
-                                        Expanded(
-                                          child: _StepCard(
-                                            stepNumber: '03',
-                                            title: 'Review & Refine',
-                                            description:
-                                                'Review high-res drafts, suggest layout adjustments, and finalize text and color details together.',
-                                          ),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: _StepCard(
+                                          stepNumber: '03',
+                                          title: 'Review & Refine',
+                                          description:
+                                              'Review high-res drafts, suggest layout adjustments, and finalize text and color details together.',
                                         ),
-                                        SizedBox(width: 16),
-                                        Expanded(
-                                          child: _StepCard(
-                                            stepNumber: '04',
-                                            title: 'Delivery & Launch',
-                                            description:
-                                                'Receive print-ready PDFs and digital PNG/JPG assets formatted for social media and event screens.',
-                                          ),
+                                      ),
+                                      SizedBox(width: 16),
+                                      Expanded(
+                                        child: _StepCard(
+                                          stepNumber: '04',
+                                          title: 'Delivery & Launch',
+                                          description:
+                                              'Receive print-ready PDFs and digital PNG/JPG assets formatted for social media and event screens.',
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               );
@@ -658,6 +655,65 @@ class _HomeScreenState extends State<HomeScreen> {
                           answer:
                               'You will receive high-resolution PNG/JPG files optimized for social media feeds and digital screens, along with print-ready CMYK PDF files.',
                         ),
+                        const SizedBox(height: 24),
+                        // Still have questions CTA
+                        Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: AppColors.bgLight,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: AppColors.borderLight),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.chat_bubble_outline_rounded,
+                                  size: 22, color: AppColors.textPrimaryLight),
+                              const SizedBox(width: 14),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Still have questions?',
+                                      style: AppTypography.heading3(
+                                        color: AppColors.textPrimaryLight,
+                                      ).copyWith(fontWeight: FontWeight.bold),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'Reach out directly \u2014 we\'ll respond within a few hours.',
+                                      style: AppTypography.bodySmall(
+                                        color: AppColors.textSecondaryLight,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: GestureDetector(
+                                  onTap: () => context.go('/contact'),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 18, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.textPrimaryLight,
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    child: Text(
+                                      'Contact Us',
+                                      style: AppTypography.buttonText(
+                                        color: AppColors.bgLight,
+                                        scale: scale,
+                                      ).copyWith(fontSize: 13 * scale),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -668,7 +724,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const Divider(color: AppColors.borderLight, height: 1),
 
             // ==========================================
-            // 6. FINAL CTA SECTION — Clean Light Panel
+            // 6. FINAL CTA SECTION — Premium Dark Studio Banner Card
             // ==========================================
             _ScrollEntranceAnimation(
               staggerIndex: 6,
@@ -676,17 +732,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 color: AppColors.bgLight,
                 padding: EdgeInsets.symmetric(
-                  horizontal: horizontalPadding,
-                  vertical: isMobile ? 64.0 : 96.0,
+                  horizontal: isMobile ? 16.0 : horizontalPadding,
+                  vertical: isMobile ? 48.0 : 80.0,
                 ),
                 child: Center(
                   child: Container(
                     constraints: const BoxConstraints(
                       maxWidth: ResponsiveBreakpoints.maxContentWidth,
                     ),
-                    child: isMobile
-                        ? _buildCtaMobileLayout(context, scale)
-                        : _buildCtaDesktopLayout(context, scale),
+                    child: _GradientStrokeCard(
+                      borderRadius: 24,
+                      backgroundColor: AppColors.bgLight,
+                      padding: EdgeInsets.all(isMobile ? 24.0 : 48.0),
+                      child: isMobile
+                          ? _buildCtaMobileLayout(context, scale)
+                          : _buildCtaDesktopLayout(context, scale),
+                    ),
                   ),
                 ),
               ),
@@ -826,6 +887,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+        const SizedBox(height: 28),
+        // Social proof trust bar
+        Wrap(
+          spacing: 20,
+          runSpacing: 10,
+          children: [
+            _TrustBadge(icon: Icons.check_circle_outline_rounded, label: '50+ Events Designed'),
+            _TrustBadge(icon: Icons.timer_outlined, label: '48–72h Turnaround'),
+            _TrustBadge(icon: Icons.school_outlined, label: 'Campus & Startup Clients'),
+          ],
+        ),
       ],
     );
   }
@@ -921,7 +993,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // CTA Primary Button
   // ── CTA Desktop Split Layout ─────────────────────────────────────────────
   Widget _buildCtaDesktopLayout(BuildContext context, double scale) {
     return Row(
@@ -935,122 +1006,144 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Text(
                 'START YOUR PROJECT',
-                style: AppTypography.labelUppercase(
-                  color: AppColors.textSecondaryLight,
-                  scale: scale,
-                ).copyWith(fontSize: 11 * scale, letterSpacing: 2.5),
+                style: AppTypography.labelUppercase(color: AppColors.textPrimaryLight, scale: scale).copyWith(
+                  fontSize: 11 * scale,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2.5,
+                ),
               ),
-              const SizedBox(height: 28),
+              const SizedBox(height: 24),
               Text(
                 'Give Your Next Event Or Brand\nClear Visual Direction.',
-                style: AppTypography.displayMedium(
-                  color: AppColors.textPrimaryLight,
-                  scale: scale,
-                ).copyWith(
-                  fontSize: 52 * scale,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: -1.5,
-                  height: 1.0,
+                style: AppTypography.displayMedium(color: AppColors.textPrimaryLight, scale: scale).copyWith(
+                  fontSize: 48 * scale,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 0.8,
+                  height: 1.15,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Whether you need an event poster, social campaign collateral, or a design workshop for your team, we are ready to collaborate.',
+                style: AppTypography.bodyLarge(color: AppColors.textSecondaryLight, scale: scale).copyWith(
+                  height: 1.6,
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(width: 72),
-        // RIGHT — Description, CTAs, contact
+        const SizedBox(width: 48),
+        // RIGHT — Action Box Card
         Expanded(
           flex: 45,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Whether you need an event poster, social campaign collateral, or a design workshop for your team, we are ready to collaborate.',
-                style: AppTypography.bodyLarge(
-                  color: AppColors.textSecondaryLight,
-                  scale: scale,
-                ).copyWith(height: 1.6),
-              ),
-              const SizedBox(height: 36),
-              // Primary CTA
-              MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: ElevatedButton(
-                  onPressed: () => context.go('/start'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.textPrimaryLight,
-                    foregroundColor: AppColors.bgLight,
-                    padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 20),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Start Project Brief',
-                        style: AppTypography.buttonText(
-                          color: AppColors.bgLight,
-                          scale: scale,
-                        ).copyWith(fontWeight: FontWeight.w700, fontSize: 15 * scale),
-                      ),
-                      const SizedBox(width: 10),
-                      const Icon(Icons.arrow_forward_rounded, size: 18, color: AppColors.bgLight),
-                    ],
+          child: Container(
+            padding: const EdgeInsets.all(32),
+            decoration: BoxDecoration(
+              color: AppColors.surfaceLight,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: AppColors.borderLight, width: 1.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 16,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Start Collaboration',
+                  style: AppTypography.heading2(color: AppColors.textPrimaryLight, scale: scale).copyWith(
+                    fontSize: 22 * scale,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
-              ),
-              const SizedBox(height: 14),
-              // WhatsApp secondary CTA
-              MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: OutlinedButton(
-                  onPressed: () => _launchUrl('https://wa.me/${AppConfig.whatsappNumber}'),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.textPrimaryLight,
-                    padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 20),
-                    side: const BorderSide(color: AppColors.textPrimaryLight, width: 1.5),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
+                const SizedBox(height: 6),
+                Text(
+                  'Choose your preferred way to connect',
+                  style: AppTypography.bodyMedium(color: AppColors.textSecondaryLight, scale: scale),
+                ),
+                const SizedBox(height: 24),
+                // Primary CTA
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () => context.go('/start'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.textPrimaryLight,
+                        foregroundColor: AppColors.bgLight,
+                        padding: const EdgeInsets.symmetric(vertical: 18),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Start Project Brief',
+                            style: AppTypography.buttonText(color: AppColors.bgLight, scale: scale).copyWith(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15 * scale,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          const Icon(Icons.arrow_forward_rounded, size: 18, color: AppColors.bgLight),
+                        ],
+                      ),
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.chat_bubble_outline_rounded, size: 17, color: AppColors.textPrimaryLight),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Chat on WhatsApp',
-                        style: AppTypography.buttonText(
-                          color: AppColors.textPrimaryLight,
-                          scale: scale,
-                        ).copyWith(fontWeight: FontWeight.w600, fontSize: 15 * scale),
+                ),
+                const SizedBox(height: 12),
+                // WhatsApp CTA
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton(
+                      onPressed: () => _launchUrl('https://wa.me/${AppConfig.whatsappNumber}'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.textPrimaryLight,
+                        padding: const EdgeInsets.symmetric(vertical: 18),
+                        side: const BorderSide(color: AppColors.textPrimaryLight, width: 1.5),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
-                    ],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.chat_bubble_outline_rounded, size: 18, color: AppColors.textPrimaryLight),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Chat on WhatsApp',
+                            style: AppTypography.buttonText(color: AppColors.textPrimaryLight, scale: scale).copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15 * scale,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 40),
-              // Contact details — stacked chips
-              _buildCtaContactRow(
-                icon: Icons.email_outlined,
-                label: AppConfig.contactEmail,
-                scale: scale,
-              ),
-              const SizedBox(height: 12),
-              _buildCtaContactRow(
-                icon: Icons.phone_outlined,
-                label: AppConfig.phoneNumber,
-                scale: scale,
-              ),
-              const SizedBox(height: 12),
-              _buildCtaContactRow(
-                icon: Icons.camera_alt_outlined,
-                label: AppConfig.instagramHandle,
-                scale: scale,
-              ),
-            ],
+                const SizedBox(height: 24),
+                const Divider(color: AppColors.borderLight, height: 1),
+                const SizedBox(height: 20),
+                // Direct Contact Chips
+                _buildCtaContactRow(icon: Icons.email_outlined, label: AppConfig.contactEmail, scale: scale),
+                const SizedBox(height: 10),
+                _buildCtaContactRow(icon: Icons.phone_outlined, label: AppConfig.phoneNumber, scale: scale),
+                const SizedBox(height: 10),
+                _buildCtaContactRow(icon: Icons.camera_alt_outlined, label: AppConfig.instagramHandle, scale: scale),
+              ],
+            ),
           ),
         ),
       ],
@@ -1064,106 +1157,119 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         Text(
           'START YOUR PROJECT',
-          style: AppTypography.labelUppercase(
-            color: AppColors.textSecondaryLight,
-            scale: scale,
-          ).copyWith(fontSize: 10 * scale, letterSpacing: 2.0),
+          style: AppTypography.labelUppercase(color: AppColors.textPrimaryLight, scale: scale).copyWith(
+            fontSize: 10 * scale,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 2.0,
+          ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 16),
         Text(
           'Give Your Next Event Or Brand Clear Visual Direction.',
-          style: AppTypography.displayMedium(
-            color: AppColors.textPrimaryLight,
-            scale: scale,
-          ).copyWith(
-            fontSize: 34 * scale,
-            fontWeight: FontWeight.w800,
-            letterSpacing: -1.0,
-            height: 1.05,
+          style: AppTypography.displayMedium(color: AppColors.textPrimaryLight, scale: scale).copyWith(
+            fontSize: 30 * scale,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 0.6,
+            height: 1.15,
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 14),
         Text(
           'Whether you need an event poster, social campaign collateral, or a design workshop for your team, we are ready to collaborate.',
-          style: AppTypography.bodyLarge(
-            color: AppColors.textSecondaryLight,
-            scale: scale,
-          ).copyWith(height: 1.6),
-        ),
-        const SizedBox(height: 32),
-        // Primary CTA full-width
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () => context.go('/start'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.textPrimaryLight,
-                foregroundColor: AppColors.bgLight,
-                padding: const EdgeInsets.symmetric(vertical: 18),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                elevation: 0,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Start Project Brief',
-                    style: AppTypography.buttonText(
-                      color: AppColors.bgLight,
-                      scale: scale,
-                    ).copyWith(fontWeight: FontWeight.w700, fontSize: 15 * scale),
-                  ),
-                  const SizedBox(width: 10),
-                  const Icon(Icons.arrow_forward_rounded, size: 18, color: AppColors.bgLight),
-                ],
-              ),
-            ),
+          style: AppTypography.bodyLarge(color: AppColors.textSecondaryLight, scale: scale).copyWith(
+            fontSize: 14 * scale,
+            height: 1.5,
           ),
         ),
-        const SizedBox(height: 12),
-        // WhatsApp CTA full-width
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: SizedBox(
-            width: double.infinity,
-            child: OutlinedButton(
-              onPressed: () => _launchUrl('https://wa.me/${AppConfig.whatsappNumber}'),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.textPrimaryLight,
-                padding: const EdgeInsets.symmetric(vertical: 18),
-                side: const BorderSide(color: AppColors.textPrimaryLight, width: 1.5),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
+        const SizedBox(height: 28),
+        // White Action Card for Mobile
+        Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: AppColors.surfaceLight,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppColors.borderLight, width: 1.0),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Primary CTA
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => context.go('/start'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.textPrimaryLight,
+                      foregroundColor: AppColors.bgLight,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      elevation: 0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Start Project Brief',
+                          style: AppTypography.buttonText(color: AppColors.bgLight, scale: scale).copyWith(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15 * scale,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(Icons.arrow_forward_rounded, size: 18, color: AppColors.bgLight),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.chat_bubble_outline_rounded, size: 17, color: AppColors.textPrimaryLight),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Chat on WhatsApp',
-                    style: AppTypography.buttonText(
-                      color: AppColors.textPrimaryLight,
-                      scale: scale,
-                    ).copyWith(fontWeight: FontWeight.w600, fontSize: 15 * scale),
+              const SizedBox(height: 10),
+              // WhatsApp CTA
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    onPressed: () => _launchUrl('https://wa.me/${AppConfig.whatsappNumber}'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.textPrimaryLight,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      side: const BorderSide(color: AppColors.textPrimaryLight, width: 1.5),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.chat_bubble_outline_rounded, size: 18, color: AppColors.textPrimaryLight),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Chat on WhatsApp',
+                          style: AppTypography.buttonText(color: AppColors.textPrimaryLight, scale: scale).copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15 * scale,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
+                ),
               ),
-            ),
+              const SizedBox(height: 20),
+              const Divider(color: AppColors.borderLight, height: 1),
+              const SizedBox(height: 16),
+              _buildCtaContactRow(icon: Icons.email_outlined, label: AppConfig.contactEmail, scale: scale),
+              const SizedBox(height: 10),
+              _buildCtaContactRow(icon: Icons.phone_outlined, label: AppConfig.phoneNumber, scale: scale),
+              const SizedBox(height: 10),
+              _buildCtaContactRow(icon: Icons.camera_alt_outlined, label: AppConfig.instagramHandle, scale: scale),
+            ],
           ),
         ),
-        const SizedBox(height: 36),
-        // Contact details
-        _buildCtaContactRow(icon: Icons.email_outlined, label: AppConfig.contactEmail, scale: scale),
-        const SizedBox(height: 12),
-        _buildCtaContactRow(icon: Icons.phone_outlined, label: AppConfig.phoneNumber, scale: scale),
-        const SizedBox(height: 12),
-        _buildCtaContactRow(icon: Icons.camera_alt_outlined, label: AppConfig.instagramHandle, scale: scale),
       ],
     );
   }
@@ -1190,7 +1296,35 @@ class _HomeScreenState extends State<HomeScreen> {
 // SUPPORTING WIDGET COMPONENTS
 // ==========================================
 
-/// Smooth Staggered Fade+Slide In Animation for Landing Sections
+/// Trust Badge used in the Hero section
+class _TrustBadge extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  const _TrustBadge({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 15, color: AppColors.statusAvailable),
+        const SizedBox(width: 6),
+        Text(
+          label,
+          style: AppTypography.bodySmall(
+            color: AppColors.textSecondaryLight,
+          ).copyWith(fontWeight: FontWeight.w500, fontSize: 13),
+        ),
+      ],
+    );
+  }
+}
+
+/// Smooth Staggered Fade+Slide In Animation for Landing Sections.
+/// Each section delays its entrance by staggerIndex * 80ms, so
+/// above-the-fold sections appear immediately while lower sections
+/// are fully rendered before the user scrolls to them.
 class _ScrollEntranceAnimation extends StatefulWidget {
   final Widget child;
   final int staggerIndex;
@@ -1215,7 +1349,7 @@ class _ScrollEntranceAnimationState extends State<_ScrollEntranceAnimation>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 280),
+      duration: const Duration(milliseconds: 380),
     );
 
     _fadeAnimation = CurvedAnimation(
@@ -1223,12 +1357,12 @@ class _ScrollEntranceAnimationState extends State<_ScrollEntranceAnimation>
       curve: Curves.easeOut,
     );
 
-    _slideAnimation = Tween<double>(begin: 14.0, end: 0.0).animate(
+    _slideAnimation = Tween<double>(begin: 20.0, end: 0.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
     );
 
-    // Staggered delay: each section starts 40ms after the previous one
-    final delay = Duration(milliseconds: widget.staggerIndex * 40);
+    // Stagger: each section starts 80ms after the previous one
+    final delay = Duration(milliseconds: widget.staggerIndex * 80);
     Future.delayed(delay, () {
       if (mounted) _controller.forward();
     });
@@ -1297,7 +1431,7 @@ class _HeroVisualCard extends StatelessWidget {
                     width: 10,
                     height: 10,
                     decoration: const BoxDecoration(
-                      color: AppColors.statusAvailable,
+                      color: AppColors.textPrimaryLight,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -1511,7 +1645,9 @@ class _LastMinuteVsStudioProofComparison extends StatelessWidget {
                   Icon(
                     isBetter ? Icons.check_circle_rounded : Icons.cancel_rounded,
                     size: 18,
-                    color: isBetter ? AppColors.statusAvailable : AppColors.textMutedLight,
+                    color: isBetter
+                        ? AppColors.textPrimaryLight
+                        : AppColors.textMutedLight,
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -1536,10 +1672,12 @@ class _LastMinuteVsStudioProofComparison extends StatelessWidget {
 class _FeatureValueCard extends StatelessWidget {
   final String title;
   final String description;
+  final IconData icon;
 
   const _FeatureValueCard({
     required this.title,
     required this.description,
+    this.icon = Icons.star_outline_rounded,
   });
 
   @override
@@ -1552,22 +1690,38 @@ class _FeatureValueCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.borderLight),
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: AppTypography.heading2(color: AppColors.textPrimaryLight).copyWith(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: AppColors.surfaceSubtleLight,
+              borderRadius: BorderRadius.circular(10),
             ),
+            child: Icon(icon, size: 22, color: AppColors.textPrimaryLight),
           ),
-          const SizedBox(height: 8),
-          Text(
-            description,
-            style: AppTypography.bodyLarge(color: AppColors.textSecondaryLight).copyWith(
-              fontSize: 15,
-              height: 1.55,
+          const SizedBox(width: 20),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTypography.heading2(color: AppColors.textPrimaryLight).copyWith(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  description,
+                  style: AppTypography.bodyLarge(color: AppColors.textSecondaryLight).copyWith(
+                    fontSize: 15,
+                    height: 1.55,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -1592,7 +1746,7 @@ class _StepCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(28.0),
+      padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
         color: AppColors.bgLight,
         borderRadius: BorderRadius.circular(16),
@@ -1607,6 +1761,7 @@ class _StepCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -1622,11 +1777,11 @@ class _StepCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 14),
           Text(
             title,
             style: AppTypography.heading3(color: AppColors.textPrimaryLight).copyWith(
-              fontSize: 18,
+              fontSize: 17,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -1634,8 +1789,8 @@ class _StepCard extends StatelessWidget {
           Text(
             description,
             style: AppTypography.bodyMedium(color: AppColors.textSecondaryLight).copyWith(
-              height: 1.55,
-              fontSize: 14,
+              height: 1.5,
+              fontSize: 13.5,
             ),
           ),
         ],
@@ -1643,3 +1798,83 @@ class _StepCard extends StatelessWidget {
     );
   }
 }
+
+/// A container widget that renders a static, sleek black gradient stroke border around a card.
+class _GradientStrokeCard extends StatelessWidget {
+  final Widget child;
+  final double borderRadius;
+  final Color backgroundColor;
+  final EdgeInsetsGeometry padding;
+
+  const _GradientStrokeCard({
+    required this.child,
+    this.borderRadius = 24.0,
+    this.backgroundColor = AppColors.bgLight,
+    required this.padding,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      foregroundPainter: _GradientStrokePainter(
+        borderRadius: borderRadius,
+        strokeWidth: 1.5,
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(borderRadius),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 32,
+              offset: const Offset(0, 12),
+            ),
+          ],
+        ),
+        padding: padding,
+        child: child,
+      ),
+    );
+  }
+}
+
+class _GradientStrokePainter extends CustomPainter {
+  final double borderRadius;
+  final double strokeWidth;
+
+  const _GradientStrokePainter({
+    required this.borderRadius,
+    required this.strokeWidth,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
+    final rrect = RRect.fromRectAndRadius(rect, Radius.circular(borderRadius));
+
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth
+      ..shader = const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          Color(0xFF0F0F0F),       // Rich solid black at top-left
+          Color(0x330F0F0F),       // Soft subtle black fade
+          Color(0xFF0F0F0F),       // Solid black accent
+          Color(0x550F0F0F),       // Semi-dark black at bottom-right
+        ],
+        stops: [0.0, 0.45, 0.75, 1.0],
+      ).createShader(rect);
+
+    canvas.drawRRect(rrect, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant _GradientStrokePainter oldDelegate) {
+    return oldDelegate.borderRadius != borderRadius || oldDelegate.strokeWidth != strokeWidth;
+  }
+}
+
+
