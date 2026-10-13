@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final allProjects = PortfolioData.projects;
 
     return Title(
-      title: '${AppConfig.studioName} — Independent Graphic Design Studio',
+      title: AppConfig.studioName,
       color: AppColors.bgLight,
       child: PageScaffold(
         currentPath: '/',
